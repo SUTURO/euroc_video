@@ -1,68 +1,77 @@
-/*
- * Copyright (C) 2012-2015 Open Source Robotics Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
-*/
-
 #include <gazebo/transport/transport.hh>
 #include <gazebo/msgs/msgs.hh>
 #include <gazebo/gazebo.hh>
 
-#include <NamedPoseStamped.h>
+#include <gazebo_model_state_publisher/NamedPoseStamped.h>
 
 #include "ros/ros.h"
 
 #include <iostream>
 
-/////////////////////////////////////////////////
-// Function is called everytime a message is received.
-void cb(ConstPosesStampedPtr &_msg)
-{
-  // Dump the message contents to stdout.
-  std::cout << _msg->DebugString();
+ros::Publisher pub;
+std::vector<std::string> ignored_objects;
 
-  ::gazebo::msg::Time time = _msg->time();
+void callback(ConstPosesStampedPtr &_msg)
+{
+  /* std::cout << _msg->DebugString(); */
+
+  gazebo::msgs::Time gz_time = _msg->time();
 
   for(int i = 0; i < _msg->pose_size(); i++) {
-    ::gazebo::msg::Pose pose _msg->pose(i);
-    ::std::string pose.name();
+    gazebo::msgs::Pose gz_pose = _msg->pose(i);
 
-    ::gazebo::msgs::Vector3d position = pose.position();
-    double position_x = position.x();
-    double position_y = position.y();
-    double position_z = position.z();
+    if(std::find(ignored_objects.begin(),
+                 ignored_objects.end(),
+                 gz_pose.name()) != ignored_objects.end()) {
+      // Ignore model
+      continue;
+    }
 
-    ::gazebo::msgs::Quaternion orientation = pose.orientation();
-    double orientation_x = orientation.x();
-    double orientation_y = orientation.y();
-    double orientation_z = orientation.z();
-    double orientation_w = orientation.w();
+    geometry_msgs::PoseStamped ros_pose_stamped;
+    geometry_msgs::Pose ros_pose;
 
-    NamedPoseStamped named_pose;
+    std_msgs::Header ros_header;
+    ros_header.frame_id = "/base_footprint";
+    ros_header.stamp = ros::Time(gz_time.sec(), gz_time.nsec());
+    ros_pose_stamped.header = ros_header;
+
+    gazebo::msgs::Vector3d gz_position = gz_pose.position();
+    geometry_msgs::Point ros_position;
+    ros_position.x = gz_position.x();
+    ros_position.y = gz_position.y();
+    ros_position.z = gz_position.z();
+    ros_pose.position = ros_position;
+
+    gazebo::msgs::Quaternion gz_orientation = gz_pose.orientation();
+    geometry_msgs::Quaternion ros_orientation;
+    ros_orientation.x = gz_orientation.x();
+    ros_orientation.y = gz_orientation.y();
+    ros_orientation.z = gz_orientation.z();
+    ros_orientation.w = gz_orientation.w();
+    ros_pose.orientation = ros_orientation;
+
+    ros_pose_stamped.pose = ros_pose;
+
+    gazebo_model_state_publisher::NamedPoseStamped ros_named_pose_stamped;
+    ros_named_pose_stamped.name = gz_pose.name();
+    ros_named_pose_stamped.posestamped = ros_pose_stamped;
+
+    pub.publish(ros_named_pose_stamped);
+    
   }
 }
 
-/////////////////////////////////////////////////
-int main(int _argc, char **_argv)
+int main(int _argc, char *_argv[])
 {
+
+  ignored_objects.assign(_argv + 1, _argv + _argc);
 
   ros::init(_argc, _argv, "gazebo_model_state_publisher");
   gazebo::load(_argc, _argv);
 
   ros::NodeHandle n;
 
-  ros::Publisher pub = n.advertise<NamedPoseStamped>("/gazebo/model_states", 1000);
+  pub = n.advertise<gazebo_model_state_publisher::NamedPoseStamped>("/gazebo/model_poses", 1000);
 
   ros::Rate loop_rate(10);
 
@@ -72,7 +81,7 @@ int main(int _argc, char **_argv)
   gazebo::transport::NodePtr node(new gazebo::transport::Node());
   node->Init();
 
-  gazebo::transport::SubscriberPtr sub = node->Subscribe("~/pose/info", cb);
+  gazebo::transport::SubscriberPtr sub = node->Subscribe("~/pose/info", callback);
 
   ros::spin();
 
