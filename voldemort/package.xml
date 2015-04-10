@@ -4,7 +4,7 @@
   <version>0.0.0</version>
   <description>The voldemort package</description>
 
-  <maintainer email="suturo-video@suturo.de">Dementoren</maintainer>
+  <maintainer email="ai-euroc-video@tzi.de">Dementoren</maintainer>
 
   <license>TODO</license>
 
@@ -16,5 +16,5 @@
 
   <export>
   </export>
-  
+
 </package>
