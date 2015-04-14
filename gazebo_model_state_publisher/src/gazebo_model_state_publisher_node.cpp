@@ -7,23 +7,30 @@
 #include "ros/ros.h"
 
 #include <iostream>
+#include <sys/time.h>
+#include <boost/unordered_map.hpp>
 
 ros::Publisher pub;
 std::vector<std::string> ignored_objects;
+boost::unordered_map<std::string, long long> last_updated;
+struct timeval tp;
 
 void callback(ConstPosesStampedPtr &_msg)
 {
   /* std::cout << _msg->DebugString(); */
 
   gazebo::msgs::Time gz_time = _msg->time();
+  gettimeofday(&tp, NULL);
+  long long current_time = (long long) tp.tv_sec * 1000 + tp.tv_usec / 1000;
 
   for(int i = 0; i < _msg->pose_size(); i++) {
     gazebo::msgs::Pose gz_pose = _msg->pose(i);
 
     if(std::find(ignored_objects.begin(),
                  ignored_objects.end(),
-                 gz_pose.name()) != ignored_objects.end()) {
-      // Ignore model
+                 gz_pose.name()) != ignored_objects.end() ||
+       current_time - last_updated[gz_pose.name()] < 500) {
+      // Skip model update
       continue;
     }
 
@@ -57,6 +64,8 @@ void callback(ConstPosesStampedPtr &_msg)
     ros_named_pose_stamped.posestamped = ros_pose_stamped;
 
     pub.publish(ros_named_pose_stamped);
+
+    last_updated[gz_pose.name()] = current_time;
     
   }
 }
