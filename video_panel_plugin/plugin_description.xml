@@ -1,0 +1,9 @@
+<library path="lib/libvideo_panel_plugin">
+  <class name="video_panel_plugin/VideoPanel"
+   type="video_panel_plugin::VideoPanel"
+   base_class_type="rviz::Panel">
+   <description>
+    A panel widget to control the video sequences created by voldemort.
+  </description>
+</class>
+</library>
