@@ -1,0 +1,2659 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#">
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
+    <!ENTITY knowrob "http://knowrob.org/kb/knowrob.owl#">
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#">
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <!ENTITY log "http://knowrob.org/kb/cram_log.owl#">
+]>
+
+<rdf:RDF xmlns="http://knowrob.org/kb/cram_log.owl#"
+     xml:base="http://knowrob.org/kb/cram_log.owl"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:knowrob="http://knowrob.org/kb/knowrob.owl#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:log="http://knowrob.org/kb/cram_log.owl#">
+
+    <owl:Ontology rdf:about="http://knowrob.org/kb/cram_log.owl">
+        <owl:imports rdf:resource="package://knowrob_common/owl/knowrob.owl"/>
+    </owl:Ontology>
+
+    <!-- Property Definitions -->
+
+    <owl:ObjectProperty rdf:about="&knowrob;taskContext"/>
+
+    <owl:ObjectProperty rdf:about="&knowrob;taskSuccess"/>
+
+    <owl:ObjectProperty rdf:about="&knowrob;startTime"/>
+
+    <owl:ObjectProperty rdf:about="&knowrob;endTime"/>
+
+    <owl:ObjectProperty rdf:about="&knowrob;designator"/>
+
+    <owl:ObjectProperty rdf:about="&knowrob;subAction"/>
+
+    <owl:ObjectProperty rdf:about="&knowrob;failureHandlingClauses"/>
+
+    <owl:ObjectProperty rdf:about="&knowrob;nextAction"/>
+
+    <owl:ObjectProperty rdf:about="&knowrob;capturedImage"/>
+
+    <owl:ObjectProperty rdf:about="&knowrob;previousAction"/>
+
+    <owl:ObjectProperty rdf:about="&knowrob;goalContext"/>
+
+    <owl:ObjectProperty rdf:about="&knowrob;linkToImageFile"/>
+
+    <owl:ObjectProperty rdf:about="&knowrob;rosTopic"/>
+
+    <owl:ObjectProperty rdf:about="&knowrob;captureTime"/>
+
+    <owl:ObjectProperty rdf:about="&knowrob;creationTime"/>
+
+    <owl:ObjectProperty rdf:about="&knowrob;experimentName"/>
+
+    <owl:ObjectProperty rdf:about="&knowrob;owlExporterVersion"/>
+
+    <!-- Class Definitions -->
+
+    <owl:Class rdf:about="&knowrob;PerformOnProcessModule"/>
+
+    <owl:Class rdf:about="&knowrob;WithFailureHandling"/>
+
+    <owl:Class rdf:about="&knowrob;PerformActionDesignator"/>
+
+    <owl:Class rdf:about="&knowrob;CRAMPerform"/>
+
+    <owl:Class rdf:about="&knowrob;WithDesignators"/>
+
+    <owl:Class rdf:about="&knowrob;CRAMAction"/>
+
+    <owl:Class rdf:about="&knowrob;CRAMAchieve"/>
+
+    <owl:Class rdf:about="&knowrob;CameraImage"/>
+
+    <owl:Class rdf:about="&knowrob;CRAMDesignator"/>
+
+    <owl:Class rdf:about="&knowrob;TimePoint"/>
+
+    <owl:Class rdf:about="&knowrob;RobotExperiment"/>
+
+    <owl:Class rdf:about="&knowrob;AnnotationInformation"/>
+
+    <!-- Event Individuals -->
+
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_Myo3A5gHu9UX2glp">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_0.000"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_18.289"/>
+        <knowrob:designator rdf:resource="&log;action_14uCBksP4lPqAQ"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_0QmeODPBFEk9UzZz">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_0.000"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_18.299"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_Myo3A5gHu9UX2glp"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_mlJsEL39SHYFiX"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_uxeMhzkY9UY2vzRe">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_0.000"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_18.305"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_0QmeODPBFEk9UzZz"/>
+        <knowrob:designator rdf:resource="&log;action_3SsM696hf698mb"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_gQ1CoUhe2pC6Aa1u">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_0.000"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_18.310"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_uxeMhzkY9UY2vzRe"/>
+        <knowrob:nextAction rdf:resource="&log;WithFailureHandling_jjigUlQcsneKHn2w"/>
+        <knowrob:designator rdf:resource="&log;action_hstInqAADF6W2R"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_rzaf5IUpTAN9JI7k">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_18.396"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_21.783"/>
+        <knowrob:capturedImage rdf:resource="&log;PerformOnProcessModule_rzaf5IUpTAN9JI7k_image_0"/>
+        <knowrob:designator rdf:resource="&log;action_WathEXFiThEGCn"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_gXDdATyaunQTBN0W">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_18.389"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_21.788"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_rzaf5IUpTAN9JI7k"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_yLXXlRXCWRbNer"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_l9quUdV4WD97Pst9">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_18.382"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_21.790"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_gXDdATyaunQTBN0W"/>
+        <knowrob:designator rdf:resource="&log;action_fbe3NiWEF6p3zg"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_mt9V5uCO1rK4klTn">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_18.320"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_21.793"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_l9quUdV4WD97Pst9"/>
+        <knowrob:designator rdf:resource="&log;action_ZNd1wU1DXV1TwG"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_jjigUlQcsneKHn2w">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_18.313"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_21.811"/>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_mt9V5uCO1rK4klTn"/>
+        <knowrob:previousAction rdf:resource="&log;CRAMPerform_gQ1CoUhe2pC6Aa1u"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_q2WN9MYRNgPzTz"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_Yfdr8U3YYBcBto6N">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_0.000"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_21.816"/>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_gQ1CoUhe2pC6Aa1u"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_jjigUlQcsneKHn2w"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_WSBdz06imcuOlD"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithDesignators_WlG6yyiOVei6ErQt">
+        <rdf:type rdf:resource="&knowrob;WithDesignators"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-DESIGNATORS</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_0.000"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_21.820"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_Yfdr8U3YYBcBto6N"/>
+        <knowrob:nextAction rdf:resource="&log;WithDesignators_oJHL9jxze17jILnl"/>
+        <knowrob:designator rdf:resource="&log;action_3SsM696hf698mb"/>
+        <knowrob:designator rdf:resource="&log;action_fbe3NiWEF6p3zg"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_hLHErdi2wdZidLD5">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_21.930"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_22.848"/>
+        <knowrob:designator rdf:resource="&log;action_iF1sWRHLd4FI09"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_84I4CoQsltWZCV46">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_21.923"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_22.848"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_hLHErdi2wdZidLD5"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_VtVrCwLZWyoZcT"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_Nqw6W0vxRLGUBQb4">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_21.911"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_22.848"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_84I4CoQsltWZCV46"/>
+        <knowrob:designator rdf:resource="&log;action_vidKw9cx8Qr0Cx"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_AQ2OVNgo1e7e4XUs">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_21.855"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_22.848"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_Nqw6W0vxRLGUBQb4"/>
+        <knowrob:nextAction rdf:resource="&log;WithFailureHandling_QBHOMU0Psw6wkXSS"/>
+        <knowrob:designator rdf:resource="&log;action_ynLObKs5q2HDli"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_7M8LEn3VAhSkxfRc">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_22.940"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_27.092"/>
+        <knowrob:capturedImage rdf:resource="&log;PerformOnProcessModule_7M8LEn3VAhSkxfRc_image_0"/>
+        <knowrob:designator rdf:resource="&log;action_cJQdjqNXxjsGNe"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_gI45kBleaZHks0Fm">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_22.936"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_27.096"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_7M8LEn3VAhSkxfRc"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_GZBbygPNf7eweR"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_wtFkWuRm6oAG6Xv9">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_22.923"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_27.099"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_gI45kBleaZHks0Fm"/>
+        <knowrob:designator rdf:resource="&log;action_P8pZnHMjtKMqaC"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_Xt9TXwUqvHqGGn8s">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_22.865"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_27.102"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_wtFkWuRm6oAG6Xv9"/>
+        <knowrob:designator rdf:resource="&log;action_NTkUDcGJGxdJ63"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_QBHOMU0Psw6wkXSS">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_22.848"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_27.105"/>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_Xt9TXwUqvHqGGn8s"/>
+        <knowrob:previousAction rdf:resource="&log;CRAMPerform_AQ2OVNgo1e7e4XUs"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_iWe9PrjLzPAsdJ"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_JgfplhQ8y9GrEmnX">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_21.843"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_27.111"/>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_AQ2OVNgo1e7e4XUs"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_QBHOMU0Psw6wkXSS"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_IDsEDJUb3FaSRL"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithDesignators_oJHL9jxze17jILnl">
+        <rdf:type rdf:resource="&knowrob;WithDesignators"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-DESIGNATORS</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_21.823"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_27.114"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_JgfplhQ8y9GrEmnX"/>
+        <knowrob:previousAction rdf:resource="&log;WithDesignators_WlG6yyiOVei6ErQt"/>
+        <knowrob:nextAction rdf:resource="&log;WithDesignators_sT677BFPs0mYNKBQ"/>
+        <knowrob:designator rdf:resource="&log;action_vidKw9cx8Qr0Cx"/>
+        <knowrob:designator rdf:resource="&log;action_P8pZnHMjtKMqaC"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_XgPplwjtG9u9FMkZ">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_27.217"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_28.338"/>
+        <knowrob:designator rdf:resource="&log;action_3lRAHCxsqCGQL5"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_cJ4j8zZmM7dfETpi">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_27.207"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_28.342"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_XgPplwjtG9u9FMkZ"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_TEQh4OjqV54bnQ"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_wQZaVvdxamv7rR3B">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_27.193"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_28.345"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_cJ4j8zZmM7dfETpi"/>
+        <knowrob:designator rdf:resource="&log;action_PXL1zukpyXflcT"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_PvE2CyZErauBgpk9">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_27.140"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_28.348"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_wQZaVvdxamv7rR3B"/>
+        <knowrob:nextAction rdf:resource="&log;WithFailureHandling_1tXB5EdoWyLYLPZi"/>
+        <knowrob:designator rdf:resource="&log;action_dlKzKdrJU8ZRmI"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_7hKbYOk1HJ4jqoMl">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_28.436"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_31.965"/>
+        <knowrob:capturedImage rdf:resource="&log;PerformOnProcessModule_7hKbYOk1HJ4jqoMl_image_0"/>
+        <knowrob:designator rdf:resource="&log;action_reHEZFO0b1EabF"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_uczEMVr3iNl0bqyl">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_28.428"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_31.968"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_7hKbYOk1HJ4jqoMl"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_Re7PEfjSp2HIhp"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_7oDeCclKjBioC6wm">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_28.421"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_31.970"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_uczEMVr3iNl0bqyl"/>
+        <knowrob:designator rdf:resource="&log;action_2DGwUOzQHD9N42"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_fhnTC1QYWgfWdPUG">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_28.364"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_31.977"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_7oDeCclKjBioC6wm"/>
+        <knowrob:designator rdf:resource="&log;action_Dwem5tZyUsLhBN"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_1tXB5EdoWyLYLPZi">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_28.351"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_31.981"/>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_fhnTC1QYWgfWdPUG"/>
+        <knowrob:previousAction rdf:resource="&log;CRAMPerform_PvE2CyZErauBgpk9"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_IWVOWmyKlfyGKz"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_uhuFq5x0VRXxxk3c">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_27.131"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_31.985"/>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_PvE2CyZErauBgpk9"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_1tXB5EdoWyLYLPZi"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_18uvX9MrKY590s"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithDesignators_sT677BFPs0mYNKBQ">
+        <rdf:type rdf:resource="&knowrob;WithDesignators"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-DESIGNATORS</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_27.119"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_31.988"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_uhuFq5x0VRXxxk3c"/>
+        <knowrob:previousAction rdf:resource="&log;WithDesignators_oJHL9jxze17jILnl"/>
+        <knowrob:nextAction rdf:resource="&log;WithDesignators_ovNhMC2pQ3C6YVQ2"/>
+        <knowrob:designator rdf:resource="&log;action_PXL1zukpyXflcT"/>
+        <knowrob:designator rdf:resource="&log;action_2DGwUOzQHD9N42"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_wX9GyVIa9jpb1iSz">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_32.097"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_33.225"/>
+        <knowrob:designator rdf:resource="&log;action_tbhVNCmj7RpMJz"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_bh52CG1OzwWFEOEq">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_32.091"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_33.229"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_wX9GyVIa9jpb1iSz"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_aNMuFavNBz3wOD"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_Io4Wwt5HvEapHV8B">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_32.075"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_33.233"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_bh52CG1OzwWFEOEq"/>
+        <knowrob:designator rdf:resource="&log;action_EiqEtJViXUuSYp"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_SNe6VhfKLb8hwyJi">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_32.017"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_33.236"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_Io4Wwt5HvEapHV8B"/>
+        <knowrob:nextAction rdf:resource="&log;WithFailureHandling_OsjkS1BpMjTFA23N"/>
+        <knowrob:designator rdf:resource="&log;action_N6xDQ0eIdLK3LU"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_WxF4lTiowYUZKwRc">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_33.287"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_37.000"/>
+        <knowrob:capturedImage rdf:resource="&log;PerformOnProcessModule_WxF4lTiowYUZKwRc_image_0"/>
+        <knowrob:designator rdf:resource="&log;action_oHALOUctDLxLbB"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_QVdNKtK6Jg6Ms8Wb">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_33.278"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_37.002"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_WxF4lTiowYUZKwRc"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_tFuDh6MB9mkAie"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_BhguShKDyNYjemGZ">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_33.270"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_37.005"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_QVdNKtK6Jg6Ms8Wb"/>
+        <knowrob:designator rdf:resource="&log;action_hNEdZWdzhuFsiT"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_l1ARIXqA1EG20KN8">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_33.250"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_37.012"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_BhguShKDyNYjemGZ"/>
+        <knowrob:designator rdf:resource="&log;action_yOHUYr5kWVNxV2"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_OsjkS1BpMjTFA23N">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_33.239"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_37.013"/>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_l1ARIXqA1EG20KN8"/>
+        <knowrob:previousAction rdf:resource="&log;CRAMPerform_SNe6VhfKLb8hwyJi"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_qTH4GPdU87r2dR"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_SS1TVqRyu5RAJGya">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_32.010"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_37.015"/>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_SNe6VhfKLb8hwyJi"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_OsjkS1BpMjTFA23N"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_6bvAdVIhfmgJxb"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithDesignators_ovNhMC2pQ3C6YVQ2">
+        <rdf:type rdf:resource="&knowrob;WithDesignators"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-DESIGNATORS</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_31.989"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_37.025"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_SS1TVqRyu5RAJGya"/>
+        <knowrob:previousAction rdf:resource="&log;WithDesignators_sT677BFPs0mYNKBQ"/>
+        <knowrob:nextAction rdf:resource="&log;WithDesignators_c03AI8awhmVyI1Zp"/>
+        <knowrob:designator rdf:resource="&log;action_EiqEtJViXUuSYp"/>
+        <knowrob:designator rdf:resource="&log;action_hNEdZWdzhuFsiT"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_SVNdI4AmqextIjuC">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_37.105"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_38.070"/>
+        <knowrob:designator rdf:resource="&log;action_95iCClhtl2XFyK"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_9IOisw5ih3UJI7gB">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_37.088"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_38.072"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_SVNdI4AmqextIjuC"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_F2e4SWPemDwcS6"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_eaJIXInSAd4Cv6Zp">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_37.081"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_38.075"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_9IOisw5ih3UJI7gB"/>
+        <knowrob:designator rdf:resource="&log;action_e7VZa3DV9s5fsq"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_cDmn0mQ9ftzSx6Oe">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_37.061"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_38.078"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_eaJIXInSAd4Cv6Zp"/>
+        <knowrob:nextAction rdf:resource="&log;WithFailureHandling_yqUEQkHVL9FzHqGW"/>
+        <knowrob:designator rdf:resource="&log;action_ZyUlxcrun8O62o"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_AFzMRSemUEYECWVt">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_38.134"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_41.854"/>
+        <knowrob:capturedImage rdf:resource="&log;PerformOnProcessModule_AFzMRSemUEYECWVt_image_0"/>
+        <knowrob:designator rdf:resource="&log;action_of4cFy9JltlxVY"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_hKEHvl6NaNkwLsDH">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_38.124"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_41.867"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_AFzMRSemUEYECWVt"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_2u8xYCvikxnPiF"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_hWjVf9UvhYbiuW0V">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_38.119"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_41.870"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_hKEHvl6NaNkwLsDH"/>
+        <knowrob:designator rdf:resource="&log;action_lTDApADiJbkqYf"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_Y27zfJisdaj7bNTK">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_38.088"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_41.873"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_hWjVf9UvhYbiuW0V"/>
+        <knowrob:designator rdf:resource="&log;action_L1kwT0Lh5MpwOs"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_yqUEQkHVL9FzHqGW">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_38.081"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_41.882"/>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_Y27zfJisdaj7bNTK"/>
+        <knowrob:previousAction rdf:resource="&log;CRAMPerform_cDmn0mQ9ftzSx6Oe"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_mVZWkQmYjhzDVE"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_0gHzFQllZCCP646e">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_37.046"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_41.884"/>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_cDmn0mQ9ftzSx6Oe"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_yqUEQkHVL9FzHqGW"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_aurREUIaW55cq5"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithDesignators_c03AI8awhmVyI1Zp">
+        <rdf:type rdf:resource="&knowrob;WithDesignators"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-DESIGNATORS</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_37.028"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_41.889"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_0gHzFQllZCCP646e"/>
+        <knowrob:previousAction rdf:resource="&log;WithDesignators_ovNhMC2pQ3C6YVQ2"/>
+        <knowrob:designator rdf:resource="&log;action_e7VZa3DV9s5fsq"/>
+        <knowrob:designator rdf:resource="&log;action_lTDApADiJbkqYf"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMAction_8Ttmq0Q8Tqjx7yIu">
+        <rdf:type rdf:resource="&knowrob;CRAMAction"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">REPLACEABLE-FUNCTION-SCAN-MAP-MAST-CAM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_0.000"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_41.914"/>
+        <knowrob:subAction rdf:resource="&log;WithDesignators_WlG6yyiOVei6ErQt"/>
+        <knowrob:subAction rdf:resource="&log;WithDesignators_oJHL9jxze17jILnl"/>
+        <knowrob:subAction rdf:resource="&log;WithDesignators_sT677BFPs0mYNKBQ"/>
+        <knowrob:subAction rdf:resource="&log;WithDesignators_ovNhMC2pQ3C6YVQ2"/>
+        <knowrob:subAction rdf:resource="&log;WithDesignators_c03AI8awhmVyI1Zp"/>
+        <knowrob:nextAction rdf:resource="&log;CRAMAction_TUWzztnmbims04eE"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_9omRfrI3JFbhjQ0a">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_42.024"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_50.391"/>
+        <knowrob:designator rdf:resource="&log;action_LoI9YYB01J8DI8"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_3lLIlC7MoAoXGxjl">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_42.017"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_50.392"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_9omRfrI3JFbhjQ0a"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_3GNNfeNFP7xjWX"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_QfnoL4jChCCBTUUu">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_42.006"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_50.396"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_3lLIlC7MoAoXGxjl"/>
+        <knowrob:designator rdf:resource="&log;action_lMSM12rEhKDOXc"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_LEFdonDEg4SzfzoA">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_41.946"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_50.400"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_QfnoL4jChCCBTUUu"/>
+        <knowrob:nextAction rdf:resource="&log;WithFailureHandling_tbONiTVojETe8G6m"/>
+        <knowrob:designator rdf:resource="&log;action_70Y56QoXFPbbWc"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_H1tKzFgNY6ILaK9d">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_50.442"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_54.318"/>
+        <knowrob:capturedImage rdf:resource="&log;PerformOnProcessModule_H1tKzFgNY6ILaK9d_image_0"/>
+        <knowrob:designator rdf:resource="&log;action_Y0I9b3V0j1MIoN"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_UJaFtk7JEzddiPF5">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_50.438"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_54.321"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_H1tKzFgNY6ILaK9d"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_7uBY1nmqMVRajf"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_DSkkrIOMUjx48jGI">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_50.437"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_54.324"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_UJaFtk7JEzddiPF5"/>
+        <knowrob:designator rdf:resource="&log;action_iLGP1ATACg6SzY"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_owGU5s9KZ4XoP3Ct">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_50.411"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_54.328"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_DSkkrIOMUjx48jGI"/>
+        <knowrob:designator rdf:resource="&log;action_CNFDivt9CdLqrc"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_tbONiTVojETe8G6m">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_50.403"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_54.333"/>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_owGU5s9KZ4XoP3Ct"/>
+        <knowrob:previousAction rdf:resource="&log;CRAMPerform_LEFdonDEg4SzfzoA"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_kyXldzb12OdEl0"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_WKqn1WI9GepQRPvU">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_41.937"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_54.338"/>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_LEFdonDEg4SzfzoA"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_tbONiTVojETe8G6m"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_liRyi7m8toi7mF"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithDesignators_gWkHfF9oJkTctThX">
+        <rdf:type rdf:resource="&knowrob;WithDesignators"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-DESIGNATORS</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_41.921"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_54.350"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_WKqn1WI9GepQRPvU"/>
+        <knowrob:nextAction rdf:resource="&log;WithDesignators_7024JpxZdkHpMYXD"/>
+        <knowrob:designator rdf:resource="&log;action_lMSM12rEhKDOXc"/>
+        <knowrob:designator rdf:resource="&log;action_iLGP1ATACg6SzY"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_jsQAqfHRn4End4fV">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_54.399"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_57.959"/>
+        <knowrob:designator rdf:resource="&log;action_U2XFSTluZ3W73g"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_JV39pDEttXL7iMNq">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_54.398"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_57.961"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_jsQAqfHRn4End4fV"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_Hl1Bqt0fS5P5n0"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_Za778xe1AHbbxR8v">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_54.398"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_57.964"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_JV39pDEttXL7iMNq"/>
+        <knowrob:designator rdf:resource="&log;action_APllwonXqstsWL"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_bmuGsIC1pa5ERu5D">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_54.380"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_57.973"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_Za778xe1AHbbxR8v"/>
+        <knowrob:nextAction rdf:resource="&log;WithFailureHandling_bfGFhfCws1H7TiIJ"/>
+        <knowrob:designator rdf:resource="&log;action_bM6maXK0e0WxgP"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_7kcUYDtNLBrK6UE4">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_58.059"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_61.262"/>
+        <knowrob:capturedImage rdf:resource="&log;PerformOnProcessModule_7kcUYDtNLBrK6UE4_image_0"/>
+        <knowrob:designator rdf:resource="&log;action_Hg2iubVq9jSLnC"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_sIbZrXcwlUBS7e98">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_58.051"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_61.269"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_7kcUYDtNLBrK6UE4"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_CuiKYIYIPubGgv"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_K93gu9EISZime6Ht">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_58.042"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_61.271"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_sIbZrXcwlUBS7e98"/>
+        <knowrob:designator rdf:resource="&log;action_4P6utP9zWo8Xa1"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_cPMV6VXlNC9a4Smd">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_57.994"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_61.274"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_K93gu9EISZime6Ht"/>
+        <knowrob:designator rdf:resource="&log;action_fl0ST9A0NTcGuG"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_bfGFhfCws1H7TiIJ">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_57.983"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_61.277"/>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_cPMV6VXlNC9a4Smd"/>
+        <knowrob:previousAction rdf:resource="&log;CRAMPerform_bmuGsIC1pa5ERu5D"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_sqIyAaN0iUPPFJ"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_wqyHeYyK18oEmsfU">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_54.372"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_61.286"/>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_bmuGsIC1pa5ERu5D"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_bfGFhfCws1H7TiIJ"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_fFvJmPJ0vb3hZg"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithDesignators_7024JpxZdkHpMYXD">
+        <rdf:type rdf:resource="&knowrob;WithDesignators"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-DESIGNATORS</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_54.357"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_61.288"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_wqyHeYyK18oEmsfU"/>
+        <knowrob:previousAction rdf:resource="&log;WithDesignators_gWkHfF9oJkTctThX"/>
+        <knowrob:designator rdf:resource="&log;action_APllwonXqstsWL"/>
+        <knowrob:designator rdf:resource="&log;action_4P6utP9zWo8Xa1"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMAction_TUWzztnmbims04eE">
+        <rdf:type rdf:resource="&knowrob;CRAMAction"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">REPLACEABLE-FUNCTION-SCAN-SHADOW</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_41.917"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_61.291"/>
+        <knowrob:subAction rdf:resource="&log;WithDesignators_gWkHfF9oJkTctThX"/>
+        <knowrob:subAction rdf:resource="&log;WithDesignators_7024JpxZdkHpMYXD"/>
+        <knowrob:previousAction rdf:resource="&log;CRAMAction_8Ttmq0Q8Tqjx7yIu"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMAchieve_eONhl3K6diRlmoFC">
+        <rdf:type rdf:resource="&knowrob;CRAMAchieve"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-ACHIEVE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_0.000"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_61.297"/>
+        <knowrob:goalContext rdf:datatype="&xsd;string">(MAP-SCANNED)</knowrob:goalContext>
+        <knowrob:subAction rdf:resource="&log;CRAMAction_8Ttmq0Q8Tqjx7yIu"/>
+        <knowrob:subAction rdf:resource="&log;CRAMAction_TUWzztnmbims04eE"/>
+        <knowrob:nextAction rdf:resource="&log;WithFailureHandling_Nw7pPoP97XbQufGv"/>
+        <knowrob:designator rdf:resource="&log;action_MywTmDcVB9uJ4a"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_g8nB8Q38UNMV57N6">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_61.440"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_61.662"/>
+        <knowrob:designator rdf:resource="&log;action_l88Qsx6NInJlzv"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_NHsUnhnqOdx4FYGX">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_61.434"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_61.667"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_g8nB8Q38UNMV57N6"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_8JkePiGwhjsvJa"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_q0mxzHf8R5lfMveb">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_61.423"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_61.695"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_NHsUnhnqOdx4FYGX"/>
+        <knowrob:designator rdf:resource="&log;action_3lQP3dOWC9ixGt"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_jw1P0GmKbICytUhY">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_61.348"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_61.698"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_q0mxzHf8R5lfMveb"/>
+        <knowrob:designator rdf:resource="&log;action_weqlDMZFceOQMa"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMAchieve_k4E6Ecd7tdD79y8z">
+        <rdf:type rdf:resource="&knowrob;CRAMAchieve"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-ACHIEVE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_61.341"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_61.702"/>
+        <knowrob:goalContext rdf:datatype="&xsd;string">(OBJECTS-LOCATED ?OBJECTS)</knowrob:goalContext>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_jw1P0GmKbICytUhY"/>
+        <knowrob:nextAction rdf:resource="&log;WithFailureHandling_BQfznSya6iP5NVN0"/>
+        <knowrob:designator rdf:resource="&log;action_Yoka0hrfGqvT0p"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_WsKZ9jCYpYv2uFIP">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_63.036"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_73.217"/>
+        <knowrob:designator rdf:resource="&log;action_CeZ6f4HRFYrtDn"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_aSllnnyZ9GKaMI2C">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_63.029"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_73.219"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_WsKZ9jCYpYv2uFIP"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_J9Ar4BPVtOrGG2"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_zlZII72AgcfPmQCO">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_63.021"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_73.225"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_aSllnnyZ9GKaMI2C"/>
+        <knowrob:designator rdf:resource="&log;action_GxPTmq0LQHkGXt"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_KLZWajZZwUFjQ8t1">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_62.945"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_73.237"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_zlZII72AgcfPmQCO"/>
+        <knowrob:nextAction rdf:resource="&log;CRAMPerform_0wbLwwj47kgzirEZ"/>
+        <knowrob:designator rdf:resource="&log;action_f61TxLBAHH7ab9"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_AJVwXTIYeaAMJXIe">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_73.318"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_74.475"/>
+        <knowrob:designator rdf:resource="&log;action_GnbEdginvf0606"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_9TPuH29DEM8No7BW">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_73.301"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_74.477"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_AJVwXTIYeaAMJXIe"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_jnXsVDN6UUCOR7"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_0uk1OmmHJNF6eWH8">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_73.295"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_74.478"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_9TPuH29DEM8No7BW"/>
+        <knowrob:designator rdf:resource="&log;action_h9W5S5fQkdU6Ke"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_0wbLwwj47kgzirEZ">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_73.251"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_74.487"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_0uk1OmmHJNF6eWH8"/>
+        <knowrob:previousAction rdf:resource="&log;CRAMPerform_KLZWajZZwUFjQ8t1"/>
+        <knowrob:designator rdf:resource="&log;action_WW8z2oyoatbWQm"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMAchieve_vFIQMl6kjA779QtS">
+        <rdf:type rdf:resource="&knowrob;CRAMAchieve"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-ACHIEVE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_61.727"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_74.490"/>
+        <knowrob:goalContext rdf:datatype="&xsd;string">(UNKNOWN-SCANNED ?REGION)</knowrob:goalContext>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_KLZWajZZwUFjQ8t1"/>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_0wbLwwj47kgzirEZ"/>
+        <knowrob:nextAction rdf:resource="&log;WithFailureHandling_uW0bLM16YnaS8TRX"/>
+        <knowrob:designator rdf:resource="&log;action_cNbhzlissD6sGS"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_7HoS1xZSEC0YFtkv">
+        <rdf:type rdf:resource="&knowrob;PerformOnProcessModule"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM-ON-PROCESS-MODULE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_74.630"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_77.837"/>
+        <knowrob:designator rdf:resource="&log;action_JgLaTEs237uXnf"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_8kjdEglN1HweXwu1">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_74.621"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_77.845"/>
+        <knowrob:subAction rdf:resource="&log;PerformOnProcessModule_7HoS1xZSEC0YFtkv"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_8FMy3ZhZrGeiaJ"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformActionDesignator_cRZVqw8kUmDc9WZm">
+        <rdf:type rdf:resource="&knowrob;PerformActionDesignator"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">PERFORM-ACTION-DESIGNATOR</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_74.609"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_77.848"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_8kjdEglN1HweXwu1"/>
+        <knowrob:designator rdf:resource="&log;action_vpJ9088WmcHx0q"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_QZcMdJSHBKILxvQl">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_74.524"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_77.855"/>
+        <knowrob:subAction rdf:resource="&log;PerformActionDesignator_cRZVqw8kUmDc9WZm"/>
+        <knowrob:designator rdf:resource="&log;action_vuIOcXkOUgRb36"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMAchieve_s8JW6x1haZ6OZ2B1">
+        <rdf:type rdf:resource="&knowrob;CRAMAchieve"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-ACHIEVE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_74.514"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_77.861"/>
+        <knowrob:goalContext rdf:datatype="&xsd;string">(OBJECT-CLASSIFIED ?OBJECT)</knowrob:goalContext>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_QZcMdJSHBKILxvQl"/>
+        <knowrob:nextAction rdf:resource="&log;WithFailureHandling_bhzOTP2BDYMZNIfF"/>
+        <knowrob:designator rdf:resource="&log;action_XRF4bMLB2Vk9nv"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMPerform_CJCxYqNjYJXc0Af3">
+        <rdf:type rdf:resource="&knowrob;CRAMPerform"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-PERFORM</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_77.925"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_77.950"/>
+        <knowrob:designator rdf:resource="&log;action_udE2dr5qCrYAxm"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMAchieve_Qfu40zMpWtaCbmJ8">
+        <rdf:type rdf:resource="&knowrob;CRAMAchieve"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-ACHIEVE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_77.878"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_77.955"/>
+        <knowrob:goalContext rdf:datatype="&xsd;string">(POSE-ESTIMATED ?OBJECT)</knowrob:goalContext>
+        <knowrob:subAction rdf:resource="&log;CRAMPerform_CJCxYqNjYJXc0Af3"/>
+        <knowrob:designator rdf:resource="&log;action_gk0m4yb81KqQM7"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_bhzOTP2BDYMZNIfF">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_77.865"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_77.957"/>
+        <knowrob:subAction rdf:resource="&log;CRAMAchieve_Qfu40zMpWtaCbmJ8"/>
+        <knowrob:previousAction rdf:resource="&log;CRAMAchieve_s8JW6x1haZ6OZ2B1"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_4aCn3ttXIFVzlm"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_uW0bLM16YnaS8TRX">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_74.493"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_77.959"/>
+        <knowrob:subAction rdf:resource="&log;CRAMAchieve_s8JW6x1haZ6OZ2B1"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_bhzOTP2BDYMZNIfF"/>
+        <knowrob:previousAction rdf:resource="&log;CRAMAchieve_vFIQMl6kjA779QtS"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_cIYR5FHrKdLzpP"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_BQfznSya6iP5NVN0">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_61.721"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_77.962"/>
+        <knowrob:subAction rdf:resource="&log;CRAMAchieve_vFIQMl6kjA779QtS"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_uW0bLM16YnaS8TRX"/>
+        <knowrob:previousAction rdf:resource="&log;CRAMAchieve_k4E6Ecd7tdD79y8z"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_B6ly82w7S9dzZI"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_r9qcAL6qEc1oqTb9">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_61.338"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_77.968"/>
+        <knowrob:subAction rdf:resource="&log;CRAMAchieve_k4E6Ecd7tdD79y8z"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_BQfznSya6iP5NVN0"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_Cduho7JeHRcmY7"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMAchieve_Ggx6tyt9fk6Zfede">
+        <rdf:type rdf:resource="&knowrob;CRAMAchieve"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">GOAL-ACHIEVE</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_61.310"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_77.974"/>
+        <knowrob:goalContext rdf:datatype="&xsd;string">(OBJECTS-INFORMED)</knowrob:goalContext>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_r9qcAL6qEc1oqTb9"/>
+        <knowrob:designator rdf:resource="&log;action_FGHtIrXSQadLFw"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_Nw7pPoP97XbQufGv">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_61.299"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_77.974"/>
+        <knowrob:subAction rdf:resource="&log;CRAMAchieve_Ggx6tyt9fk6Zfede"/>
+        <knowrob:previousAction rdf:resource="&log;CRAMAchieve_eONhl3K6diRlmoFC"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_ZzF2OhmANJ5Ra0"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_EiBsLFkJotGR63tK">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_0.000"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_77.981"/>
+        <knowrob:subAction rdf:resource="&log;CRAMAchieve_eONhl3K6diRlmoFC"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_Nw7pPoP97XbQufGv"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_Nz2s7naArU2c3l"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_5C2NTSrzxwC8zlyb">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_0.000"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_77.986"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_EiBsLFkJotGR63tK"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_Je3ND3ShtJzX7p"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_XQfUPXy2st1WSz67">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_0.000"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_78.003"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_5C2NTSrzxwC8zlyb"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_Yd0vHp67tBIcce"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMAction_CM8sFMdWZIjX0q54">
+        <rdf:type rdf:resource="&knowrob;CRAMAction"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">ANONYMOUS-TOP-LEVEL</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_0.000"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_78.033"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_XQfUPXy2st1WSz67"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMAction_OUcgpgjVNm6nlmbd">
+        <rdf:type rdf:resource="&knowrob;CRAMAction"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">REPLACEABLE-FUNCTION-TASK1</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_0.000"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_78.033"/>
+        <knowrob:subAction rdf:resource="&log;CRAMAction_CM8sFMdWZIjX0q54"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;WithFailureHandling_6CBKc313yK6VreTm">
+        <rdf:type rdf:resource="&knowrob;WithFailureHandling"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">WITH-FAILURE-HANDLING</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_0.000"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_78.033"/>
+        <knowrob:subAction rdf:resource="&log;CRAMAction_OUcgpgjVNm6nlmbd"/>
+        <knowrob:failureHandlingClauses rdf:resource="&log;action_vZ5vItEmE1fHOM"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;CRAMAction_55QFWHK7IOWZb9k1">
+        <rdf:type rdf:resource="&knowrob;CRAMAction"/>
+        <knowrob:taskContext rdf:datatype="&xsd;string">TASK1</knowrob:taskContext>
+        <knowrob:taskSuccess rdf:datatype="&xsd;boolean">true</knowrob:taskSuccess>
+        <knowrob:startTime rdf:resource="&log;timepoint_0.000"/>
+        <knowrob:endTime rdf:resource="&log;timepoint_78.049"/>
+        <knowrob:subAction rdf:resource="&log;WithFailureHandling_6CBKc313yK6VreTm"/>
+    </owl:NamedIndividual>
+    
+    <!-- Object Individuals -->
+
+    <!-- Image Individuals -->
+
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_rzaf5IUpTAN9JI7k_image_0">
+        <rdf:type rdf:resource="&knowrob;CameraImage"/>
+        <knowrob:linkToImageFile rdf:datatype="&xsd;string">_euroc_interface_node_cameras_tcp_rgb_cam.jpg</knowrob:linkToImageFile>
+        <knowrob:rosTopic rdf:datatype="&xsd;string">/euroc_interface_node/cameras/tcp_rgb_cam</knowrob:rosTopic>
+        <knowrob:captureTime rdf:resource="&log;timepoint_18.826"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_7M8LEn3VAhSkxfRc_image_0">
+        <rdf:type rdf:resource="&knowrob;CameraImage"/>
+        <knowrob:linkToImageFile rdf:datatype="&xsd;string">0__euroc_interface_node_cameras_tcp_rgb_cam.jpg</knowrob:linkToImageFile>
+        <knowrob:rosTopic rdf:datatype="&xsd;string">/euroc_interface_node/cameras/tcp_rgb_cam</knowrob:rosTopic>
+        <knowrob:captureTime rdf:resource="&log;timepoint_23.763"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_7hKbYOk1HJ4jqoMl_image_0">
+        <rdf:type rdf:resource="&knowrob;CameraImage"/>
+        <knowrob:linkToImageFile rdf:datatype="&xsd;string">1__euroc_interface_node_cameras_tcp_rgb_cam.jpg</knowrob:linkToImageFile>
+        <knowrob:rosTopic rdf:datatype="&xsd;string">/euroc_interface_node/cameras/tcp_rgb_cam</knowrob:rosTopic>
+        <knowrob:captureTime rdf:resource="&log;timepoint_28.659"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_WxF4lTiowYUZKwRc_image_0">
+        <rdf:type rdf:resource="&knowrob;CameraImage"/>
+        <knowrob:linkToImageFile rdf:datatype="&xsd;string">2__euroc_interface_node_cameras_tcp_rgb_cam.jpg</knowrob:linkToImageFile>
+        <knowrob:rosTopic rdf:datatype="&xsd;string">/euroc_interface_node/cameras/tcp_rgb_cam</knowrob:rosTopic>
+        <knowrob:captureTime rdf:resource="&log;timepoint_33.648"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_AFzMRSemUEYECWVt_image_0">
+        <rdf:type rdf:resource="&knowrob;CameraImage"/>
+        <knowrob:linkToImageFile rdf:datatype="&xsd;string">3__euroc_interface_node_cameras_tcp_rgb_cam.jpg</knowrob:linkToImageFile>
+        <knowrob:rosTopic rdf:datatype="&xsd;string">/euroc_interface_node/cameras/tcp_rgb_cam</knowrob:rosTopic>
+        <knowrob:captureTime rdf:resource="&log;timepoint_38.552"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_H1tKzFgNY6ILaK9d_image_0">
+        <rdf:type rdf:resource="&knowrob;CameraImage"/>
+        <knowrob:linkToImageFile rdf:datatype="&xsd;string">4__euroc_interface_node_cameras_tcp_rgb_cam.jpg</knowrob:linkToImageFile>
+        <knowrob:rosTopic rdf:datatype="&xsd;string">/euroc_interface_node/cameras/tcp_rgb_cam</knowrob:rosTopic>
+        <knowrob:captureTime rdf:resource="&log;timepoint_51.489"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;PerformOnProcessModule_7kcUYDtNLBrK6UE4_image_0">
+        <rdf:type rdf:resource="&knowrob;CameraImage"/>
+        <knowrob:linkToImageFile rdf:datatype="&xsd;string">5__euroc_interface_node_cameras_tcp_rgb_cam.jpg</knowrob:linkToImageFile>
+        <knowrob:rosTopic rdf:datatype="&xsd;string">/euroc_interface_node/cameras/tcp_rgb_cam</knowrob:rosTopic>
+        <knowrob:captureTime rdf:resource="&log;timepoint_58.381"/>
+    </owl:NamedIndividual>
+    
+    <!-- Designator Individuals -->
+
+    <owl:NamedIndividual rdf:about="&log;action_vZ5vItEmE1fHOM">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+        <knowrob:creationTime rdf:resource="&log;timepoint_0.000"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_Yd0vHp67tBIcce">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+        <knowrob:creationTime rdf:resource="&log;timepoint_0.000"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_Je3ND3ShtJzX7p">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+        <knowrob:creationTime rdf:resource="&log;timepoint_0.000"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_Nz2s7naArU2c3l">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+        <knowrob:creationTime rdf:resource="&log;timepoint_0.000"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_MywTmDcVB9uJ4a">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_3SsM696hf698mb">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_fbe3NiWEF6p3zg">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_WSBdz06imcuOlD">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_hstInqAADF6W2R">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_mlJsEL39SHYFiX">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_14uCBksP4lPqAQ">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_q2WN9MYRNgPzTz">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_ZNd1wU1DXV1TwG">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_yLXXlRXCWRbNer">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_WathEXFiThEGCn">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_vidKw9cx8Qr0Cx">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_P8pZnHMjtKMqaC">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_IDsEDJUb3FaSRL">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_ynLObKs5q2HDli">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_VtVrCwLZWyoZcT">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_iF1sWRHLd4FI09">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_iWe9PrjLzPAsdJ">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_NTkUDcGJGxdJ63">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_GZBbygPNf7eweR">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_cJQdjqNXxjsGNe">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_PXL1zukpyXflcT">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_2DGwUOzQHD9N42">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_18uvX9MrKY590s">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_dlKzKdrJU8ZRmI">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_TEQh4OjqV54bnQ">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_3lRAHCxsqCGQL5">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_IWVOWmyKlfyGKz">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_Dwem5tZyUsLhBN">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_Re7PEfjSp2HIhp">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_reHEZFO0b1EabF">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_EiqEtJViXUuSYp">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_hNEdZWdzhuFsiT">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_6bvAdVIhfmgJxb">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_N6xDQ0eIdLK3LU">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_aNMuFavNBz3wOD">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_tbhVNCmj7RpMJz">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_qTH4GPdU87r2dR">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_yOHUYr5kWVNxV2">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_tFuDh6MB9mkAie">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_oHALOUctDLxLbB">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_e7VZa3DV9s5fsq">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_lTDApADiJbkqYf">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_aurREUIaW55cq5">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_ZyUlxcrun8O62o">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_F2e4SWPemDwcS6">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_95iCClhtl2XFyK">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_mVZWkQmYjhzDVE">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_L1kwT0Lh5MpwOs">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_2u8xYCvikxnPiF">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_of4cFy9JltlxVY">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_lMSM12rEhKDOXc">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_iLGP1ATACg6SzY">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_liRyi7m8toi7mF">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_70Y56QoXFPbbWc">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_3GNNfeNFP7xjWX">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_LoI9YYB01J8DI8">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_kyXldzb12OdEl0">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_CNFDivt9CdLqrc">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_7uBY1nmqMVRajf">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_Y0I9b3V0j1MIoN">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_APllwonXqstsWL">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_4P6utP9zWo8Xa1">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_fFvJmPJ0vb3hZg">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_bM6maXK0e0WxgP">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_Hl1Bqt0fS5P5n0">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_U2XFSTluZ3W73g">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_sqIyAaN0iUPPFJ">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_fl0ST9A0NTcGuG">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_CuiKYIYIPubGgv">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_Hg2iubVq9jSLnC">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_ZzF2OhmANJ5Ra0">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+        <knowrob:creationTime rdf:resource="&log;timepoint_61.306"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_FGHtIrXSQadLFw">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+        <knowrob:creationTime rdf:resource="&log;timepoint_61.335"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_Cduho7JeHRcmY7">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+        <knowrob:creationTime rdf:resource="&log;timepoint_61.339"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_Yoka0hrfGqvT0p">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_weqlDMZFceOQMa">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_3lQP3dOWC9ixGt">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_8JkePiGwhjsvJa">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_l88Qsx6NInJlzv">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_B6ly82w7S9dzZI">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+        <knowrob:creationTime rdf:resource="&log;timepoint_61.724"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_cNbhzlissD6sGS">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_f61TxLBAHH7ab9">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_GxPTmq0LQHkGXt">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_J9Ar4BPVtOrGG2">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_CeZ6f4HRFYrtDn">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_WW8z2oyoatbWQm">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_h9W5S5fQkdU6Ke">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_jnXsVDN6UUCOR7">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_GnbEdginvf0606">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_cIYR5FHrKdLzpP">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+        <knowrob:creationTime rdf:resource="&log;timepoint_74.498"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_XRF4bMLB2Vk9nv">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_vuIOcXkOUgRb36">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_vpJ9088WmcHx0q">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_8FMy3ZhZrGeiaJ">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_JgLaTEs237uXnf">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_4aCn3ttXIFVzlm">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+        <knowrob:creationTime rdf:resource="&log;timepoint_77.872"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_gk0m4yb81KqQM7">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+        <knowrob:creationTime rdf:resource="&log;timepoint_77.923"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;action_udE2dr5qCrYAxm">
+        <rdf:type rdf:resource="&knowrob;CRAMDesignator"/>
+        <knowrob:creationTime rdf:resource="&log;timepoint_77.940"/>
+    </owl:NamedIndividual>
+    
+    <!-- Failure Individuals -->
+
+    <!-- Timepoint Individuals -->
+
+    <owl:NamedIndividual rdf:about="&log;timepoint_0.000">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_18.289">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.872">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.724">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.339">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.335">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.306">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_74.498">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.923">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.940">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_18.299">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_18.305">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_18.310">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_18.396">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_21.783">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_18.826">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_18.389">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_21.788">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_18.382">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_21.790">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_18.320">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_21.793">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_18.313">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_21.811">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_21.816">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_21.820">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_21.930">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_22.848">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_21.923">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_21.911">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_21.855">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_22.940">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_27.092">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_23.763">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_22.936">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_27.096">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_22.923">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_27.099">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_22.865">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_27.102">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_27.105">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_21.843">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_27.111">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_21.823">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_27.114">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_27.217">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_28.338">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_27.207">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_28.342">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_27.193">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_28.345">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_27.140">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_28.348">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_28.436">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_31.965">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_28.659">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_28.428">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_31.968">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_28.421">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_31.970">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_28.364">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_31.977">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_28.351">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_31.981">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_27.131">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_31.985">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_27.119">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_31.988">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_32.097">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_33.225">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_32.091">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_33.229">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_32.075">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_33.233">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_32.017">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_33.236">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_33.287">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_37.000">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_33.648">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_33.278">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_37.002">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_33.270">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_37.005">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_33.250">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_37.012">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_33.239">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_37.013">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_32.010">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_37.015">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_31.989">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_37.025">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_37.105">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_38.070">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_37.088">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_38.072">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_37.081">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_38.075">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_37.061">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_38.078">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_38.134">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_41.854">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_38.552">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_38.124">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_41.867">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_38.119">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_41.870">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_38.088">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_41.873">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_38.081">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_41.882">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_37.046">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_41.884">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_37.028">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_41.889">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_41.914">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_42.024">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_50.391">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_42.017">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_50.392">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_42.006">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_50.396">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_41.946">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_50.400">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_50.442">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_54.318">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_51.489">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_50.438">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_54.321">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_50.437">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_54.324">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_50.411">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_54.328">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_50.403">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_54.333">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_41.937">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_54.338">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_41.921">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_54.350">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_54.399">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_57.959">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_54.398">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_57.961">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_57.964">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_54.380">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_57.973">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_58.059">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.262">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_58.381">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_58.051">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.269">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_58.042">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.271">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_57.994">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.274">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_57.983">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.277">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_54.372">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.286">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_54.357">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.288">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_41.917">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.291">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.297">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.440">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.662">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.434">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.667">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.423">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.695">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.348">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.698">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.341">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.702">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_63.036">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_73.217">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_63.029">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_73.219">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_63.021">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_73.225">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_62.945">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_73.237">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_73.318">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_74.475">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_73.301">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_74.477">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_73.295">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_74.478">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_73.251">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_74.487">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.727">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_74.490">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_74.630">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.837">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_74.621">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.845">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_74.609">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.848">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_74.524">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.855">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_74.514">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.861">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.925">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.950">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.878">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.955">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.865">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.957">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_74.493">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.959">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.721">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.962">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.338">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.968">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.310">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.974">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_61.299">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.981">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_77.986">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_78.003">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_78.033">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="&log;timepoint_78.049">
+        <rdf:type rdf:resource="&knowrob;TimePoint"/>
+    </owl:NamedIndividual>
+    
+    <!-- Meta Data Individual -->
+
+    <owl:NamedIndividual rdf:about="&log;RobotExperiment_sw1xFVdNwdk2rfX9">
+        <rdf:type rdf:resource="&knowrob;RobotExperiment"/>
+        <knowrob:subAction rdf:resource="&log;CRAMAction_55QFWHK7IOWZb9k1"/>
+        <knowrob:experimentName rdf:datatype="&xsd;string">exp-2015-03-24_13-51-34</knowrob:experimentName>
+        <knowrob:owlExporterVersion rdf:datatype="&xsd;string">0.93</knowrob:owlExporterVersion>
+        <knowrob:endTime rdf:resource="&log;timepoint_78.049"/>
+        <knowrob:startTime rdf:resource="&log;timepoint_0.000"/>
+    </owl:NamedIndividual>
+    
+    <!-- Parameter Annotation Information Individual -->
+
+    <owl:NamedIndividual rdf:about="&log;AnnotationInformation_qB16Gzn0JCrEyoVU">
+        <rdf:type rdf:resource="&knowrob;AnnotationInformation"/>
+    </owl:NamedIndividual>
+    
+</rdf:RDF>
