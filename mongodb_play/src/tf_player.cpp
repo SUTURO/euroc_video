@@ -2,15 +2,29 @@
 #include <mongo/client/dbclient.h>
 #include <sstream>
 #include <string>
-#include <actionlib/server/action_server.h>
-#include <suturo_video_msgs/PlayAction.h>
-#include "mongodb_play/mongodb_play.h"
-#include "mongodb_play/db_player.h"
+#include "mongodb_play/tf_player.h"
 
-class TFPlayer: public DBPlayer
+using namespace mongo;
+
+TFPlayer::TFPlayer(std::string db_address, std::string database, std::string collection, std::string topic):
+  DBPlayer(db_address, database, collection, topic)
 {
-public:
-  
 
+};
 
-}
+void TFPlayer::play(ros::Time start_time, ros::Time end_time)
+{
+  auto_ptr<DBClientCursor> cursor = conn.query(db_coll, BSONObj());
+    while (cursor->more())
+    cout << cursor->next().toString() << endl;
+};
+
+void TFPlayer::pause()
+{
+  auto_ptr<DBClientCursor> cursor = conn.query(db_coll, BSONObj());
+    while (cursor->more())
+    cout << cursor->next().toString() << endl;
+};
+
+void TFPlayer::stop()
+{};

@@ -2,22 +2,19 @@
 #include <mongo/client/dbclient.h>
 #include <suturo_video_msgs/PlayAction.h>
 #include "mongodb_play/mongodb_play.h"
-#include "mongodb_play/db_player.h"
 
 using namespace mongo;
 
-MongoPlayer::MongoPlayer(const ros::NodeHandle &node, std::string db_address, std::string database, std::string collection, std::string topic):
+MongoPlayer::MongoPlayer(const ros::NodeHandle &node, std::string db_address):
   nh_(node),
   action_server_(nh_, "play_action",
     boost::bind(&MongoPlayer::goalCallback, this, _1),
     boost::bind(&MongoPlayer::cancelCallback, this, _1),
     false)
 {
+  db_address_ = db_address;
   action_server_.start();
-
-  DBPlayer dbpl(db_address, database, collection, topic);
-  dbpl.pause();
-  cout << "End" << endl;
+  ROS_INFO("Started action server");
 };
 
 MongoPlayer::~MongoPlayer()
@@ -25,12 +22,32 @@ MongoPlayer::~MongoPlayer()
 
 void MongoPlayer::goalCallback(actionlib::ActionServer<suturo_video_msgs::PlayAction>::GoalHandle gh)
 {
+  ROS_INFO("Goal received: %s", gh.getGoalID().id.c_str());
 
+  // Create db_player
+  boost::shared_ptr<DBPlayer> dbpl_ptr( new TFPlayer(db_address_, gh.getGoal()->database, gh.getGoal()->collection, gh.getGoal()->output_topic) );
+  db_players_[gh.getGoalID().id] = dbpl_ptr;
+  dbpl_ptr->play(gh.getGoal()->start_time, gh.getGoal()->end_time);
+
+  // Accept goal
+  goal_handles_[gh.getGoalID().id] = gh;
+  gh.setAccepted();
+  ROS_INFO("Goal accepted: %s", gh.getGoalID().id.c_str());
 };
 
 void MongoPlayer::cancelCallback(actionlib::ActionServer<suturo_video_msgs::PlayAction>::GoalHandle gh)
 {
+  ROS_INFO("Goal cancel requested: %s", gh.getGoalID().id.c_str());
 
+  // Check if the goal is there
+  if(goal_handles_.find(gh.getGoalID().id) != goal_handles_.end())
+  {
+    goal_handles_.erase(gh.getGoalID().id);
+    db_players_[gh.getGoalID().id]->stop();
+    db_players_.erase(gh.getGoalID().id);
+    gh.setCanceled();
+    ROS_INFO("Goal canceled: %s", gh.getGoalID().id.c_str());
+  }
 };
 
 int main(int argc, char** argv)
@@ -38,6 +55,7 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "mongodb_play_node", ros::init_options::AnonymousName);
   ros::NodeHandle node;
 
-  MongoPlayer mongoPlayer(node, "localhost", "mydb", "JointStates", "topic");
+  MongoPlayer mongoPlayer(node, "localhost");
+  ros::spin();
   return 0;
 }
