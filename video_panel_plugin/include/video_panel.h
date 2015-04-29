@@ -6,6 +6,8 @@
 # include <rviz/panel.h>
 #include <QLabel>
 #include <QPushButton>
+#include <QListWidget>
+#include <QCheckBox>
 #endif
 
 namespace video_panel_plugin
@@ -21,17 +23,14 @@ public:
 	// ~VideoPanel();
 
 private Q_SLOTS:
-    void handle_button1();
-    void handle_button2();
-    void handle_button3();
+    void handlePullButton();
+    void handleFailedRunsCheckBox(int state);
+    void loadRun();
 	
 private:
-    QLabel *label1;
-    QLabel *label2;
-    QLabel *label3;
-    QPushButton *button1;
-    QPushButton *button2;
-    QPushButton *button3;
+    QPushButton *pullRunsButton;
+    QListWidget *availableRunsList;
+    QCheckBox *failedRuns;
 };
 }
 #endif // VIDEO_PANEL_H
