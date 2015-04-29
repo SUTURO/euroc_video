@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(mongodb_play)
 
-find_package(catkin REQUIRED roslib rostopic tf sensor_msgs)
+find_package(catkin REQUIRED roslib rostopic tf std_msgs sensor_msgs suturo_video_msgs)
 
 find_package(Boost REQUIRED COMPONENTS system thread filesystem)
 
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES db_player tf_player
-  CATKIN_DEPENDS roscpp
+  CATKIN_DEPENDS roscpp std_msgs
 )
 
 include_directories(

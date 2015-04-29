@@ -25,7 +25,7 @@ void MongoPlayer::goalCallback(actionlib::ActionServer<suturo_video_msgs::PlayAc
   ROS_INFO("Goal received: %s", gh.getGoalID().id.c_str());
 
   // Create db_player
-  boost::shared_ptr<DBPlayer> dbpl_ptr( new TFPlayer(db_address_, gh.getGoal()->database, gh.getGoal()->collection, gh.getGoal()->output_topic) );
+  boost::shared_ptr<DBPlayer> dbpl_ptr( new TFPlayer(nh_, gh.getGoal()->output_topic,db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
   db_players_[gh.getGoalID().id] = dbpl_ptr;
   dbpl_ptr->play(gh.getGoal()->start_time, gh.getGoal()->end_time);
 
