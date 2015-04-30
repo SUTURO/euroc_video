@@ -11,6 +11,8 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
 )
 
+find_package(Boost REQUIRED COMPONENTS thread filesystem)
+
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -91,11 +93,15 @@ catkin_package(
 ## Build ##
 ###########
 
+set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
+
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
+#  include
   ${catkin_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
 )
 
 ## Declare a cpp library
@@ -104,16 +110,24 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-# add_executable(robot_description_mongo_logger_node src/robot_description_mongo_logger_node.cpp)
+add_executable(robot_description_mongo_logger_node src/robot_description_mongo_logger_node.cpp)
+
+target_link_libraries(robot_description_mongo_logger_node
+  ${catkin_LIBRARIES}
+  ssl
+  crypto
+  mongoclient
+  ${Boost_LIBRARIES}
+)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(robot_description_mongo_logger_node robot_description_mongo_logger_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(robot_description_mongo_logger_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(robot_description_mongo_logger_node
+  ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##
