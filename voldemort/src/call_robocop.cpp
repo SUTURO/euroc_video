@@ -112,8 +112,6 @@ int main(int argc, char **argv) {
 		curl_easy_setopt(curl, CURLOPT_HTTPGET, 1L);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
 
-		// TODO Check for debug-level
-
 		if (verbose) {
 			curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 		}
