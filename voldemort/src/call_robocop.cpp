@@ -57,8 +57,8 @@ size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata) {
 		curl_easy_cleanup(curl);
 		exit(-1);
 	} else {
-			mongodb_conn->insert(collection, doc);
-			delete mongodb_conn;
+		mongodb_conn->insert(collection, doc);
+		delete mongodb_conn;
 	}
 
 	return size*nmemb;
