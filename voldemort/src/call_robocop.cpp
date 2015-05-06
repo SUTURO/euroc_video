@@ -12,10 +12,12 @@
 #include <mongo/client/dbclient.h>
 #include <mongo/db/json.h>
 
-mongo::DBClientConnection *mongodb_conn;
+using namespace mongo;
+
+DBClientConnection *mongodb_conn;
 CURL *curl;
 CURLcode res;
-std::string url = "";
+std::string request = "";
 std::string agent = "";
 std::string collection = "";
 std::string mongodb = "localhost";
@@ -28,18 +30,28 @@ size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata) {
 		json_message.push_back(ptr[c]);
 	}
 
-//	json_message.erase(remove_if(json_message.begin(), json_message.end(), ::isspace), json_message.end());
-
-	json_message = "[{'wurst' : [ {'name':'TESTNAME1'}, {'name':'TESTNAME2'}, {'name':'TESTNAME3'}  ] }]";
+	std::string requestString = "request";
+	std::string dataString = "data";
+	json_message = "{ '" + requestString + "':'" + request + "','" + dataString + "':" + json_message + "}";
 
 	if (verbose) {
-		fprintf(stdout, "Parsing %s.\n", json_message.c_str());
+		fprintf(stdout, "Parsing:\n############\n%s\n###########\n", json_message.c_str());
 	}
 
-	mongo::BSONObj doc = mongo::fromjson(json_message);
+	BSONObj doc;
+
+	try {
+		doc = fromjson(json_message);
+	} catch (MsgAssertionException &e) {
+		fprintf(stderr, "Failed parsing.\n");
+		if (verbose) {
+			fprintf(stderr, "Exception: %s\n", e.what());
+		}
+		exit(-1);
+	}
 
 	std::string errmsg;
-	mongodb_conn = new mongo::DBClientConnection(true);
+	mongodb_conn = new DBClientConnection(true);
 	if (!mongodb_conn->connect(mongodb, errmsg)) {
 		fprintf(stderr, "Can't connect to mongodb!\n");
 		curl_easy_cleanup(curl);
@@ -55,10 +67,10 @@ size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata) {
 int main(int argc, char **argv) {
 
 	int c;
-	while ((c = getopt(argc, argv, "u:a:c:m:v")) != -1) {
+	while ((c = getopt(argc, argv, "r:a:c:m:v")) != -1) {
 		switch (c) {
-		case 'u':
-			url = optarg;
+		case 'r':
+			request = optarg;
 			break;
 		case 'a':
 			 agent = optarg;
@@ -73,13 +85,13 @@ int main(int argc, char **argv) {
 			verbose = true;
 			break;
 		default:
-			printf("Usage: %s -u URL -c Collection [-m mongoDB] [-a agent] [-v (verbose)] \n", argv[0]);
+			printf("Usage: %s -r Request -c Collection [-m mongoDB] [-a agent] [-v (verbose)] \n", argv[0]);
 			exit(-1);
 		}
 	}
 
-	if (url.empty()) {
-		fprintf(stderr, "No URL given.\n");
+	if (request.empty()) {
+		fprintf(stderr, "No request given.\n");
 		exit(-1);
 	}
 
@@ -90,7 +102,7 @@ int main(int argc, char **argv) {
 
 	curl = curl_easy_init();
 	if(curl) {
-		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+		curl_easy_setopt(curl, CURLOPT_URL, request.c_str());
 		curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
 
 		if (!agent.empty()) {
