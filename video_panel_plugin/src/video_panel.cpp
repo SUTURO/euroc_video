@@ -39,7 +39,7 @@ namespace video_panel_plugin
         // create list for available runs
         availableRunsList = new QListWidget();
         overviewLayout->addWidget(availableRunsList);
-        connect(availableRunsList, SIGNAL (itemDoubleClicked(QListWidgetItem*)), this, SLOT (loadRun()));
+        connect(availableRunsList, SIGNAL (itemDoubleClicked(QListWidgetItem*)), this, SLOT (loadRun(QListWidgetItem*)));
 
         // create button to pull available runs
         pullRunsButton = new QPushButton("Pull available runs", this);
@@ -51,8 +51,29 @@ namespace video_panel_plugin
         overviewLayout->addWidget(failedRuns);
         connect(failedRuns, SIGNAL (stateChanged(int)), this, SLOT (handleFailedRunsCheckBox(int)));
 
-        // add Widget to QTabWidget
+        // add overviewWidget to QTabWidget
         tab->addTab(overviewWidget, "Overview");
+
+        // create widget for player
+        QWidget* playerWidget = new QWidget();
+        QVBoxLayout* playerLayout = new QVBoxLayout();
+        playerWidget->setLayout(playerLayout);
+
+        // create labels for player tab
+        QLabel* runLabel = new QLabel("Selected simulation run:");
+        playerLayout->addWidget(runLabel);
+        selectedRunLabel = new QLabel("<b>No run selected!</b>");
+        playerLayout->addWidget(selectedRunLabel);
+        QLabel* testListLabel = new QLabel("Performed Tests:");
+        playerLayout->addWidget(testListLabel);
+
+        // create list for performed Tests
+        performedTestsList = new QListWidget();
+        playerLayout->addWidget(performedTestsList);
+        connect(performedTestsList, SIGNAL (itemDoubleClicked(QListWidgetItem*)), this, SLOT (handleSelectedTest()));
+
+        // add playerWidget to QTabWidget
+        tab->addTab(playerWidget, "Player");
 
         // set tabLayout as layout for parent
         setLayout(tabLayout);
@@ -83,8 +104,10 @@ namespace video_panel_plugin
         */
 	}
 
+
     void VideoPanel::handlePullButton()
     {
+        // TODO: Implement real Pulling
         QListWidgetItem* item = new QListWidgetItem("New item", availableRunsList);
     }
 
@@ -94,9 +117,25 @@ namespace video_panel_plugin
         QListWidgetItem* item = new QListWidgetItem(QString::number(state), availableRunsList);
     }
 
-    void VideoPanel::loadRun()
+    void VideoPanel::loadRun(QListWidgetItem* item)
     {
-        // TODO
+        // change Label in playerWidget
+        selectedRunLabel->setText(setBoldText(item->text()));
+        // TODO: Implement real losaing of run
+    }
+
+    void VideoPanel::handleSelectedTest()
+    {
+        // TODO: Whatever should be done when a test is double clicked
+    }
+
+    QString VideoPanel::setBoldText(QString text)
+    {
+        QString* s = new QString();
+        s->append("<b>");
+        s->append(text);
+        s->append("</b>");
+        return *s;
     }
 }
 

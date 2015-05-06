@@ -25,12 +25,23 @@ public:
 private Q_SLOTS:
     void handlePullButton();
     void handleFailedRunsCheckBox(int state);
-    void loadRun();
+    void loadRun(QListWidgetItem* item);
+    void handleSelectedTest();
 	
 private:
     QPushButton *pullRunsButton;
     QListWidget *availableRunsList;
     QCheckBox *failedRuns;
+    QListWidget *performedTestsList;
+    QLabel *selectedRunLabel;
+
+    /**
+      creates a QString with surround html tags
+
+      @param text text that should be bold
+      @return the formatted QString
+    */
+    QString setBoldText(QString text);
 };
 }
 #endif // VIDEO_PANEL_H
