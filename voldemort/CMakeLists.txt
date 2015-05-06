@@ -12,8 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 ##  System dependencies are found with CMake's conventions
-find_package(Boost REQUIRED COMPONENTS system)
-
+find_package(Boost REQUIRED COMPONENTS system thread filesystem)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -90,6 +89,8 @@ catkin_package(
 ## Build ##
 ###########
 
+set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
+
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
@@ -110,7 +111,13 @@ add_executable(call_robocop src/call_robocop.cpp)
 target_link_libraries(call_robocop
   ${catkin_LIBRARIES}
   ${Boost_LIBRARIES}
+  mongoclient
   curl
+  jsoncpp
+  boost_thread-mt
+  boost_system 
+  boost_regex
+  boost_filesystem
 )
 
 ## Add cmake target dependencies of the executable/library
