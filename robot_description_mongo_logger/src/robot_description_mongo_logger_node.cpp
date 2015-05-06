@@ -28,9 +28,6 @@ int main(int argc, char **argv) {
 	std::string parametersString = "/robot_description,/robot_description_semantic";
 	std::vector<std::string> parameters;
 
-	bool normal = false;
-	bool lowres = false;
-	bool semantic = false;
 	int c;
 	while ((c = getopt(argc, argv, "p:m:t:c:")) != -1) {
 		switch (c) {
