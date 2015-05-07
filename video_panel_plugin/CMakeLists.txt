@@ -19,12 +19,14 @@ add_definitions(-DQT_NO_KEYWORDS)
 ## Qt's meta-object compiler.
 qt4_wrap_cpp(MOC_FILES
   include/video_panel.h
+  include/ROSConnector.h
 )
 
 ## Here we specify the list of source files, including the output of
 ## the previous command which is stored in ``${MOC_FILES}``.
 set(SOURCE_FILES
   src/video_panel.cpp
+  src/ROSConnector.cpp
   ${MOC_FILES}
 )
 

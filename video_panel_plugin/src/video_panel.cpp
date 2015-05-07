@@ -78,6 +78,9 @@ namespace video_panel_plugin
         // set tabLayout as layout for parent
         setLayout(tabLayout);
 
+        // create ROSConnector
+        connector = new ROSConnector();
+
         // Old testing stuff below
         /*
         QVBoxLayout* vertical_layout = new QVBoxLayout;
@@ -109,6 +112,7 @@ namespace video_panel_plugin
     {
         // TODO: Implement real Pulling
         QListWidgetItem* item = new QListWidgetItem("New item", availableRunsList);
+        connector->getSimulationRuns();
     }
 
     void VideoPanel::handleFailedRunsCheckBox(int state)

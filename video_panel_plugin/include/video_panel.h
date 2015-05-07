@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QListWidget>
 #include <QCheckBox>
+#include <ROSConnector.h>
 #endif
 
 namespace video_panel_plugin
@@ -29,6 +30,7 @@ private Q_SLOTS:
     void handleSelectedTest();
 	
 private:
+    ROSConnector *connector;
     QPushButton *pullRunsButton;
     QListWidget *availableRunsList;
     QCheckBox *failedRuns;
