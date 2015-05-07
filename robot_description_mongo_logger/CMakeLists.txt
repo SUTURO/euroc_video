@@ -1,18 +1,21 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(voldemort)
+project(robot_description_mongo_logger)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  roslisp
   rospy
   std_msgs
-  message_generation
 )
 
-##  System dependencies are found with CMake's conventions
-find_package(Boost REQUIRED COMPONENTS system thread filesystem)
+find_package(Boost REQUIRED COMPONENTS thread filesystem)
+
+## System dependencies are found with CMake's conventions
+# find_package(Boost REQUIRED COMPONENTS system)
+
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -44,16 +47,17 @@ find_package(Boost REQUIRED COMPONENTS system thread filesystem)
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
- add_message_files(
-   FILES
-   callRobocop.msg
- )
+# add_message_files(
+#   FILES
+#   Message1.msg
+#   Message2.msg
+# )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
 #   FILES
-#   GetSimulationRuns.srv
-#   GetTestResults.srv
+#   Service1.srv
+#   Service2.srv
 # )
 
 ## Generate actions in the 'action' folder
@@ -64,10 +68,10 @@ find_package(Boost REQUIRED COMPONENTS system thread filesystem)
 # )
 
 ## Generate added messages and services with any dependencies listed here
- generate_messages(
-   DEPENDENCIES
-   std_msgs  # Or other packages containing msgs
- )
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs
+# )
 
 ###################################
 ## catkin specific configuration ##
@@ -80,8 +84,8 @@ find_package(Boost REQUIRED COMPONENTS system thread filesystem)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES voldemort
-  CATKIN_DEPENDS roscpp rospy message_runtime std_msgs
+#  LIBRARIES robot_description_mongo_logger
+#  CATKIN_DEPENDS roscpp roslisp rospy std_msgs
 #  DEPENDS system_lib
 )
 
@@ -95,39 +99,30 @@ set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
+#  include
   ${catkin_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
 )
 
 ## Declare a cpp library
-# add_library(voldemort
-#   src/${PROJECT_NAME}/voldemort.cpp
+# add_library(robot_description_mongo_logger
+#   src/${PROJECT_NAME}/robot_description_mongo_logger.cpp
 # )
 
 ## Declare a cpp executable
-# add_executable(voldemort_node src/voldemort_node.cpp)
+add_executable(robot_description_mongo_logger_node src/robot_description_mongo_logger_node.cpp)
 
-add_executable(call_robocop src/call_robocop.cpp)
-target_link_libraries(call_robocop
+target_link_libraries(robot_description_mongo_logger_node
   ${catkin_LIBRARIES}
-  ${Boost_LIBRARIES}
+  ssl
+  crypto
   mongoclient
-  curl
-  jsoncpp
-  boost_thread-mt
-  boost_system 
-  boost_regex
-  boost_filesystem
+  ${Boost_LIBRARIES}
 )
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(voldemort_node voldemort_generate_messages_cpp)
-
-## Specify libraries to link a library or executable target against
-# target_link_libraries(voldemort_node
-#   ${catkin_LIBRARIES}
-# )
+# add_dependencies(robot_description_mongo_logger_node robot_description_mongo_logger_generate_messages_cpp)
 
 #############
 ## Install ##
@@ -144,7 +139,7 @@ target_link_libraries(call_robocop
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS voldemort voldemort_node
+# install(TARGETS robot_description_mongo_logger robot_description_mongo_logger_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -169,7 +164,7 @@ target_link_libraries(call_robocop
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_voldemort.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_robot_description_mongo_logger.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

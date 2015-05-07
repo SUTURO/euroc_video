@@ -1,0 +1,3 @@
+<launch>
+  <node name="robocop" pkg="robocop" type="robocop_server" cwd="node" output="screen" />
+</launch>

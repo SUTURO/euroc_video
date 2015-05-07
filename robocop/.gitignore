@@ -1,0 +1,5 @@
+bin/
+robocop/build/
+.gradle/
+.project
+*.classpath
