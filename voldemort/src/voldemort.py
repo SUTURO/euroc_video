@@ -51,7 +51,8 @@ class Voldemort(object):
     #TODO: fix Url
     def start_tests(self, database_name):
         url = "localhost"
-        collection = database_name
+        collection = self.TESTDB_NAME+'.'+database_name
+        print collection
         robocop_caller_execute_cmd = 'rosrun voldemort call_robocop -u '+url+' -c'+collection
         robocop_caller = subprocess.Popen(robocop_caller_execute_cmd, stdout=subprocess.PIPE,
                                               shell=True)
@@ -65,7 +66,7 @@ class Voldemort(object):
 
     #TODO: adjust when test data is available
     def dump_test_results_to_json(self, test_results):
-        if test_results['_id'] is not None:
+        if test_results is not None and test_results['_id'] is not None:
             del test_results['_id']
         return json.dumps(test_results)
 
