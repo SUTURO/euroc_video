@@ -2,14 +2,27 @@
 
 ROSConnector::ROSConnector(void)
 {
+    n = ros::NodeHandle();
     simulationRunsClient = n.serviceClient<suturo_video_msgs::GetSimulationRuns>("/voldemort/get_simulation_runs");
     testResultsClient = n.serviceClient<suturo_video_msgs::GetTestResults>("/voldemort/get_test_results");
 }
 
 std::vector<std::string> ROSConnector::getSimulationRuns()
 {
-    suturo_video_msgs::GetSimulationRuns srv;
-    simulationRunsClient.call(srv);
+    try
+    {
+        suturo_video_msgs::GetSimulationRuns srv;
+        simulationRunsClient.call(srv);
+        std::cout << "FICK JA!" << std::endl;
+        std::vector<std::string> blub;
+        blub.push_back("BLUB");
+        return blub;
+    }
+    catch (const std::exception &exc)
+    {
+        std::cerr << "NOPE NOPE NOPE" << std::endl;
+        std::cerr << exc.what();
+    }
 }
 //int main(int argc, char **argv)
 //{

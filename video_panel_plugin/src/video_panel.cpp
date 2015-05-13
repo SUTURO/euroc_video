@@ -79,7 +79,7 @@ namespace video_panel_plugin
         setLayout(tabLayout);
 
         // create ROSConnector
-        connector = new ROSConnector();
+        connector = ROSConnector();
 
         // Old testing stuff below
         /*
@@ -112,7 +112,8 @@ namespace video_panel_plugin
     {
         // TODO: Implement real Pulling
         QListWidgetItem* item = new QListWidgetItem("New item", availableRunsList);
-        connector->getSimulationRuns();
+        std::vector<std::string> runs = connector.getSimulationRuns();
+        std::cout << runs.data() << std::endl;
     }
 
     void VideoPanel::handleFailedRunsCheckBox(int state)

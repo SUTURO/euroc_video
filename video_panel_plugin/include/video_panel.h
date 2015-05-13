@@ -30,7 +30,7 @@ private Q_SLOTS:
     void handleSelectedTest();
 	
 private:
-    ROSConnector *connector;
+    ROSConnector connector;
     QPushButton *pullRunsButton;
     QListWidget *availableRunsList;
     QCheckBox *failedRuns;
