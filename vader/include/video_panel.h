@@ -8,6 +8,8 @@
 #include <QPushButton>
 #include <QListWidget>
 #include <QCheckBox>
+#include <QTableWidget>
+#include <QWidget>
 #include <ROSConnector.h>
 #endif
 
@@ -36,6 +38,8 @@ private:
     QCheckBox *failedRuns;
     QListWidget *performedTestsList;
     QLabel *selectedRunLabel;
+    QTabWidget *tab;
+    QWidget *playerWidget;
 
     /**
       creates a QString with surround html tags

@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QWidget>
-#include <QTabWidget>
 #include <QListWidgetItem>
 
 namespace patch
@@ -23,7 +21,7 @@ namespace video_panel_plugin
     {
         // create the QTabWidget
         QVBoxLayout* tabLayout = new QVBoxLayout();
-        QTabWidget* tab = new QTabWidget();
+        tab = new QTabWidget();
         tab->setMinimumSize(300, 300);
         tabLayout->addWidget(tab);
 
@@ -47,15 +45,15 @@ namespace video_panel_plugin
         connect(pullRunsButton, SIGNAL (clicked()), this, SLOT (handlePullButton()));
 
         // add checkbox to filter for failed runs
-        failedRuns = new QCheckBox("Show only failed runs");
-        overviewLayout->addWidget(failedRuns);
-        connect(failedRuns, SIGNAL (stateChanged(int)), this, SLOT (handleFailedRunsCheckBox(int)));
+//        failedRuns = new QCheckBox("Show only failed runs");
+//        overviewLayout->addWidget(failedRuns);
+//        connect(failedRuns, SIGNAL (stateChanged(int)), this, SLOT (handleFailedRunsCheckBox(int)));
 
         // add overviewWidget to QTabWidget
         tab->addTab(overviewWidget, "Overview");
 
         // create widget for player
-        QWidget* playerWidget = new QWidget();
+        playerWidget = new QWidget();
         QVBoxLayout* playerLayout = new QVBoxLayout();
         playerWidget->setLayout(playerLayout);
 
@@ -111,31 +109,50 @@ namespace video_panel_plugin
     void VideoPanel::handlePullButton()
     {
         availableRunsList->clear();
-        // TODO: Check for exceptions
         try
         {
             std::vector<std::string> runs = connector.getSimulationRuns();
+            if(runs.size() == 0)
+            {
+                availableRunsList->setEnabled(false);
+                QListWidgetItem* item = new QListWidgetItem("No runs available", availableRunsList);
+                return;
+            }
+            availableRunsList->setEnabled(true);
             for (std::vector<std::string>::iterator it = runs.begin() ; it != runs.end(); ++it)
             {
                 QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(*it), availableRunsList);
             }
         }
-        catch(...)
+        catch(ServiceUnavailableException &exc)
         {
-
+            availableRunsList->setEnabled(false);
+            ROS_ERROR_STREAM(exc.what());
+            QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(exc.what()), availableRunsList);
         }
     }
 
     void VideoPanel::handleFailedRunsCheckBox(int state)
     {
         // TODO: Sort list. values are 0 / 2
-        QListWidgetItem* item = new QListWidgetItem(QString::number(state), availableRunsList);
     }
 
     void VideoPanel::loadRun(QListWidgetItem* item)
     {
-        // change Label in playerWidget
-        selectedRunLabel->setText(setBoldText(item->text()));
+        tab->setCurrentWidget(playerWidget);
+        performedTestsList->clear();
+        try
+        {
+            std::string results = connector.getTestResults(item->text().toStdString());
+            selectedRunLabel->setText(setBoldText(item->text()));
+            QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(results), performedTestsList);
+        }
+        catch(ServiceUnavailableException &exc)
+        {
+            performedTestsList->setEnabled(false);
+            ROS_ERROR_STREAM(exc.what());
+            QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(exc.what()), performedTestsList);
+        }
         // TODO: Implement real losaing of run
     }
 
