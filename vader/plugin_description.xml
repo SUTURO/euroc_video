@@ -1,5 +1,5 @@
-<library path="lib/libvideo_panel_plugin">
-  <class name="video_panel_plugin/VideoPanel"
+<library path="lib/libvader">
+  <class name="vader/VideoPanel"
    type="video_panel_plugin::VideoPanel"
    base_class_type="rviz::Panel">
    <description>

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(video_panel_plugin)
+project(vader)
 find_package(catkin REQUIRED COMPONENTS rviz)
 catkin_package()
 include_directories(${catkin_INCLUDE_DIRS})
