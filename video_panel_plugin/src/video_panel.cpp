@@ -110,10 +110,20 @@ namespace video_panel_plugin
 
     void VideoPanel::handlePullButton()
     {
-        // TODO: Implement real Pulling
-        QListWidgetItem* item = new QListWidgetItem("New item", availableRunsList);
-        std::vector<std::string> runs = connector.getSimulationRuns();
-        std::cout << runs.data() << std::endl;
+        availableRunsList->clear();
+        // TODO: Check for exceptions
+        try
+        {
+            std::vector<std::string> runs = connector.getSimulationRuns();
+            for (std::vector<std::string>::iterator it = runs.begin() ; it != runs.end(); ++it)
+            {
+                QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(*it), availableRunsList);
+            }
+        }
+        catch(...)
+        {
+
+        }
     }
 
     void VideoPanel::handleFailedRunsCheckBox(int state)

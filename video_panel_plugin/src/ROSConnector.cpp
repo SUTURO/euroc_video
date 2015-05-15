@@ -1,5 +1,5 @@
 #include <ROSConnector.h>
-
+#include <exception>
 ROSConnector::ROSConnector(void)
 {
     n = ros::NodeHandle();
@@ -12,11 +12,18 @@ std::vector<std::string> ROSConnector::getSimulationRuns()
     try
     {
         suturo_video_msgs::GetSimulationRuns srv;
-        simulationRunsClient.call(srv);
-        std::cout << "FICK JA!" << std::endl;
-        std::vector<std::string> blub;
-        blub.push_back("BLUB");
-        return blub;
+        if(simulationRunsClient.call(srv))
+        {
+            // TODO: check size and throw exception if size()==0
+            std::cout << "srv responded:" << std::endl;
+            std::cout << srv.response.database_names.size() << std::endl;
+            return srv.response.database_names;
+        }
+        else
+        {
+            ROS_ERROR("Failed to call service /voldemort/get_simulation_runs");
+            //throw ServiceUnavailableException;
+        }
     }
     catch (const std::exception &exc)
     {
@@ -24,6 +31,11 @@ std::vector<std::string> ROSConnector::getSimulationRuns()
         std::cerr << exc.what();
     }
 }
+
+class ServiceUnavailableException
+{
+};
+
 //int main(int argc, char **argv)
 //{
 //  ros::init(argc, argv, "vader_client");
