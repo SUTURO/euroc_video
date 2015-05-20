@@ -76,7 +76,7 @@ class Voldemort(object):
 
     ## only for testing purposes
     def write_test_test_data(self):
-        tests = [{'name':'TESTNAME1'}, {'name': 'TESTNAME2'}]
+        tests = [{'name':'TESTNAME1', 'result': 'true'}, {'name': 'TESTNAME2', 'result':'false'}]
         test_data = {'tests': tests}
 
         db = self.client[self.TESTDB_NAME]
