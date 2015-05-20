@@ -144,6 +144,7 @@ namespace video_panel_plugin
         try
         {
             std::string results = connector.getTestResults(item->text().toStdString());
+            std::cout << results << std::endl;
             selectedRunLabel->setText(setBoldText(item->text()));
             QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(results), performedTestsList);
         }
