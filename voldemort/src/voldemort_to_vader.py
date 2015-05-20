@@ -70,8 +70,12 @@ class Voldemort(object):
             del test_results['_id']
         return json.dumps(test_results)
 
-    ## only for testing purposes
     def write_test_data(self):
+        self.write_test_test_data()
+        self.write_test_sim_db()
+
+    ## only for testing purposes
+    def write_test_test_data(self):
         tests = [{'name':'TESTNAME1'}, {'name': 'TESTNAME2'}]
         test_data = {'tests': tests}
 
@@ -79,9 +83,16 @@ class Voldemort(object):
         db.drop_collection('07-05-2015-02-50-20')
         db['07-05-2015-02-50-20'].insert_one(test_data)
 
+    def write_test_sim_db(self):
+        db = self.client['07-05-2015-02-50-20']
+        collection = db['test']
+        test_data = {'sim': 'blubb'}
+        db['test'].insert_one(test_data)
+        
+
 if __name__ == '__main__':
     voldemort = Voldemort()
     #TODO:delete this line when not testing
     voldemort.write_test_data()
-
+    
     voldemort.start_services()
