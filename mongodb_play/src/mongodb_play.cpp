@@ -1,7 +1,8 @@
 #include <ros/ros.h>
 #include <mongo/client/dbclient.h>
 #include <suturo_video_msgs/PlayAction.h>
-#include "mongodb_play/mongodb_play.h"
+//#include <mongodb_play/string_player.h>
+#include <mongodb_play/mongodb_play.h>
 
 using namespace mongo;
 
@@ -25,15 +26,19 @@ void MongoPlayer::goalCallback(actionlib::ActionServer<suturo_video_msgs::PlayAc
   ROS_INFO("Goal received: %s", gh.getGoalID().id.c_str());
 
   // Create db_player
-  boost::shared_ptr<DBPlayer> dbpl_ptr( new TFPlayer(nh_, gh.getGoal()->output_topic,db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
+  boost::shared_ptr<DBPlayer> dbpl_ptr( new StringPlayer(nh_, gh.getGoal()->output_topic,db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
   db_players_[gh.getGoalID().id] = dbpl_ptr;
 
   // Accept goal
   goal_handles_[gh.getGoalID().id] = gh;
   gh.setAccepted();
   ROS_INFO("Goal accepted: %s", gh.getGoalID().id.c_str());
-  cout << "Start: " << ros::Time::now().nsec;
+  cout << "Start: " << ros::Time::now().nsec << endl;
   dbpl_ptr->play(gh.getGoal()->start_time, gh.getGoal()->end_time);
+  ros::Duration(5).sleep();
+  dbpl_ptr->pause();
+  ros::Duration(5).sleep();
+  dbpl_ptr->unpause();
   cout << "Finished: " << ros::Time::now().nsec << endl;
 };
 
