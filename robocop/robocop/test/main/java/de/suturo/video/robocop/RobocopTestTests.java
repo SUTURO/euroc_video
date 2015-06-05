@@ -38,15 +38,24 @@ public class RobocopTestTests {
         String test = "[" //
                 + "{" //
                 + "        \"name\": \"TESTNAME1\","
-                + "        \"description\": \"Tests if three objects were placed\","
+                + "        \"description\": \"Dummy execution\","
                 + "        \"query\": \"member(A, [b]).\"," //
                 + "        \"expected\": {" //
                 + "                \"A\": \"b\"" //
+                + "        }" //
+                + "}," //
+                + "{" //
+                + "        \"name\": \"TESTNAME2\","
+                + "        \"description\": \"Yet another dummy execution, should fail\","
+                + "        \"query\": \"member(A, [nota]).\"," //
+                + "        \"expected\": {" //
+                + "                \"A\": \"a\"" //
                 + "        }" //
                 + "}" //
                 + "]";
         assertThat("result of test upload", instance.uploadTest(test), is(RobocopServer.RESULT_OK));
         JSONArray result = JSONArray.fromObject(instance.executeTest(null, null));
         assertThat("result of test execution", ((JSONObject) result.get(0)).getBoolean("result"), is(true));
+        assertThat("result of test execution", ((JSONObject) result.get(1)).getBoolean("result"), is(false));
     }
 }
