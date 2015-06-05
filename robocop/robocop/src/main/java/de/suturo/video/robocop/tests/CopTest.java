@@ -16,7 +16,7 @@ public class CopTest {
 
     private final String name;
     private final String query;
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("Y-m-d_h:m:s");
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("Y-MM-dd_h:m:s");
     private final JSONObject expected;
 
     /**
