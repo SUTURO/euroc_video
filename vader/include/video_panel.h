@@ -29,7 +29,7 @@ private Q_SLOTS:
     void handlePullButton();
     void handleFailedRunsCheckBox(int state);
     void loadRun(QListWidgetItem* item);
-    void handleSelectedTest();
+    void handleSelectedTest(QListWidgetItem* testcase);
 	
 private:
     ROSConnector connector;
@@ -40,6 +40,8 @@ private:
     QLabel *selectedRunLabel;
     QTabWidget *tab;
     QWidget *playerWidget;
+    QWidget *testResultsWidget;
+    QLabel *testLabel;
 
     /**
       creates a QString with surround html tags
@@ -48,6 +50,8 @@ private:
       @return the formatted QString
     */
     QString setBoldText(QString text);
+
+    void setTestLabel(QString text);
 };
 }
 #endif // VIDEO_PANEL_H

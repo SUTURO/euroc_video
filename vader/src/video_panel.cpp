@@ -19,12 +19,14 @@ namespace video_panel_plugin
 	VideoPanel::VideoPanel( QWidget* parent)
 	: rviz::Panel(parent)
     {
+        //QTABWIDGET
         // create the QTabWidget
         QVBoxLayout* tabLayout = new QVBoxLayout();
         tab = new QTabWidget();
         tab->setMinimumSize(300, 300);
         tabLayout->addWidget(tab);
 
+        //OVERVIEW
         // create widget for overview tab
         QWidget* overviewWidget = new QWidget();
         QVBoxLayout* overviewLayout = new QVBoxLayout();
@@ -52,6 +54,7 @@ namespace video_panel_plugin
         // add overviewWidget to QTabWidget
         tab->addTab(overviewWidget, "Overview");
 
+        // PLAYER
         // create widget for player
         playerWidget = new QWidget();
         QVBoxLayout* playerLayout = new QVBoxLayout();
@@ -68,7 +71,17 @@ namespace video_panel_plugin
         // create list for performed Tests
         performedTestsList = new QListWidget();
         playerLayout->addWidget(performedTestsList);
-        connect(performedTestsList, SIGNAL (itemDoubleClicked(QListWidgetItem*)), this, SLOT (handleSelectedTest()));
+        connect(performedTestsList, SIGNAL (itemDoubleClicked(QListWidgetItem*)), this, SLOT (handleSelectedTest(QListWidgetItem*)));
+
+        // create widget to display testresults and additional data
+        testResultsWidget = new QWidget();
+        QVBoxLayout* testResultsLayout = new QVBoxLayout();
+        testResultsWidget->setLayout(testResultsLayout);
+        playerLayout->addWidget(testResultsWidget);
+
+        // create label with testname
+        testLabel = new QLabel("Please select a testcase from above");
+        testResultsLayout->addWidget(testLabel);
 
         // add playerWidget to QTabWidget
         tab->addTab(playerWidget, "Player");
@@ -157,9 +170,9 @@ namespace video_panel_plugin
         // TODO: Implement real losaing of run
     }
 
-    void VideoPanel::handleSelectedTest()
+    void VideoPanel::handleSelectedTest(QListWidgetItem *testcase)
     {
-        // TODO: Whatever should be done when a test is double clicked
+        VideoPanel::setTestLabel(testcase->text());
     }
 
     QString VideoPanel::setBoldText(QString text)
@@ -169,6 +182,13 @@ namespace video_panel_plugin
         s->append(text);
         s->append("</b>");
         return *s;
+    }
+
+    void VideoPanel::setTestLabel(QString text)
+    {
+        QString* label = new QString("Testcase: ");
+        label->append(text);
+        testLabel->setText(*label);
     }
 }
 
