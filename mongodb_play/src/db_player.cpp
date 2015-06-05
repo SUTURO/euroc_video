@@ -46,6 +46,11 @@ void DBPlayer::stop()
   cout << "stopped" << endl;
 };
 
+void DBPlayer::finish()
+{
+  cout << "Finished goal" << endl;
+};
+
 void DBPlayer::play_thread(ros::Time start_time, ros::Time end_time)
 {
   ros::Time time_zero = ros::Time::now();
@@ -53,21 +58,21 @@ void DBPlayer::play_thread(ros::Time start_time, ros::Time end_time)
   bool offset_is_set = false;
   auto_ptr<DBClientCursor> cursor = conn_.query(db_coll_, BSONObj());
   BSONObj p;
-  Date_t date_db;
+  double date_db;
   ros::Time t;
   while (cursor->more())
   {
     p = cursor->next();
-    date_db = p.getField("__recorded").Date();
-    t = ros::Time().fromNSec(date_db.millis);
+    date_db = p.getField("__recorded").Double();
+    t = ros::Time().fromSec(date_db);
 
     if (!offset_is_set)
     {
       time_offset = time_zero - t;
       offset_is_set = true;
-      cout << "db time in nsecs: " << t.nsec << endl;
-      cout << "ros time in nsecs: " << time_zero.nsec << endl;
-      cout << "offset : " << time_offset.nsec << endl;
+      cout << "db time in nsecs: " << t.sec << endl;
+      cout << "ros time in nsecs: " << time_zero.sec << endl;
+      cout << "offset : " << time_offset.sec << endl;
     }
 
     ros::Time::sleepUntil(t + time_offset);
@@ -75,7 +80,7 @@ void DBPlayer::play_thread(ros::Time start_time, ros::Time end_time)
     pub_msg(p);
   }
 
-  stop();
+  finish();
 };
 
 void DBPlayer::set_paused(bool value)

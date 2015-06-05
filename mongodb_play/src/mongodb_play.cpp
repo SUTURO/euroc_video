@@ -35,11 +35,6 @@ void MongoPlayer::goalCallback(actionlib::ActionServer<suturo_video_msgs::PlayAc
   ROS_INFO("Goal accepted: %s", gh.getGoalID().id.c_str());
   cout << "Start: " << ros::Time::now().nsec << endl;
   dbpl_ptr->play(gh.getGoal()->start_time, gh.getGoal()->end_time);
-  ros::Duration(5).sleep();
-  dbpl_ptr->pause();
-  ros::Duration(5).sleep();
-  dbpl_ptr->unpause();
-  cout << "Finished: " << ros::Time::now().nsec << endl;
 };
 
 void MongoPlayer::cancelCallback(actionlib::ActionServer<suturo_video_msgs::PlayAction>::GoalHandle gh)

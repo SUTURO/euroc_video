@@ -20,6 +20,7 @@ protected:
   ros::Publisher pub_;
 
 private:
+  void finish();
   void play_thread(ros::Time start_time, ros::Time end_time);
   void set_paused(bool value);
   void block_while_paused();
