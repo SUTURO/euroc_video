@@ -27,4 +27,11 @@ private:
   boost::mutex m_pause_mutex_;
   boost::condition_variable m_pause_changed_;
   bool m_pause_;
+  void block_until(ros::Time t);
+  void wait_for_timer();
+  boost::mutex m_timer_mutex_;
+  boost::condition_variable m_pulse_timer_;
+  bool m_blocked_;
+  boost::mutex m_stop_mutex_;
+  bool m_stopped_;
 };

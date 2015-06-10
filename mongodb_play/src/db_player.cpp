@@ -17,6 +17,7 @@ DBPlayer::DBPlayer(ros::NodeHandle nh, std::string topic, std::string db_address
   std::stringstream ss;
   ss <<  database << "." << collection;
   db_coll_ = ss.str();
+  m_stopped_ = false;
 };
 
 DBPlayer::~DBPlayer()
@@ -43,7 +44,16 @@ void DBPlayer::unpause()
 
 void DBPlayer::stop()
 {
-  cout << "stopped" << endl;
+  {
+      boost::unique_lock<boost::mutex> lock(m_stop_mutex_);
+      m_stopped_ = true;
+  }
+  {
+      boost::unique_lock<boost::mutex> lock(m_timer_mutex_);
+      m_blocked_ = false;
+  }
+  m_pulse_timer_.notify_all();
+  cout << "Stopped" << endl;
 };
 
 void DBPlayer::finish()
@@ -60,6 +70,7 @@ void DBPlayer::play_thread(ros::Time start_time, ros::Time end_time)
   BSONObj p;
   double date_db;
   ros::Time t;
+  //boost::thread timer;
   while (cursor->more())
   {
     p = cursor->next();
@@ -75,7 +86,21 @@ void DBPlayer::play_thread(ros::Time start_time, ros::Time end_time)
       cout << "offset : " << time_offset.sec << endl;
     }
 
-    ros::Time::sleepUntil(t + time_offset);
+    {
+        boost::unique_lock<boost::mutex> lock(m_timer_mutex_);
+        m_blocked_ = true;
+    }
+    boost::thread timer(&DBPlayer::block_until, this, t + time_offset);
+    wait_for_timer();
+
+    {
+        boost::unique_lock<boost::mutex> lock(m_stop_mutex_);
+        if (m_stopped_)
+        {
+          cout << "Stopped pub" << std::endl;
+          return;
+        }
+    }
 
     pub_msg(p);
   }
@@ -100,4 +125,27 @@ void DBPlayer::block_while_paused()
     {
         m_pause_changed_.wait(lock);
     }
-}
+};
+
+void DBPlayer::block_until(ros::Time t)
+{
+  {
+      boost::unique_lock<boost::mutex> lock(m_timer_mutex_);
+      m_blocked_ = true;
+  }
+  ros::Time::sleepUntil(t);
+  {
+      boost::unique_lock<boost::mutex> lock(m_timer_mutex_);
+      m_blocked_ = false;
+  }
+  m_pulse_timer_.notify_all();
+};
+
+void DBPlayer::wait_for_timer()
+{
+    boost::unique_lock<boost::mutex> lock(m_timer_mutex_);
+    while(m_blocked_)
+    {
+        m_pulse_timer_.wait(lock);
+    }
+};
