@@ -1,0 +1,20 @@
+[
+{
+"name": "test_name1",
+"executionDate": "2015-05-06_16:26:02",
+"result": true,
+"bindings": {
+"L": [1, 1, 1],
+"NumPlaced": 3
+}
+},
+{
+"name": "test_name2",
+"executionDate": "2011-05-86_26:16:01",
+"result": false,
+"bindings": {
+"L": [1, 1, 1],
+"NumPlaced": 3
+}
+}
+]
