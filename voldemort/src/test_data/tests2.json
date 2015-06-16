@@ -14,5 +14,29 @@
 "expected": {
 "test_expected2": 2
 }
+},
+    {
+"name": "test_name3",
+"description": "test_description3",
+"query": "test_query3",
+"expected": {
+"test_expected3": 3
+}
+    },
+    {
+"name": "test_name4",
+"description": "test_description4",
+"query": "test_query4",
+"expected": {
+"test_expected4": 4
+}
+    },
+        {
+"name": "test_name5",
+"description": "test_description5",
+"query": "test_query5",
+"expected": {
+"test_expected5": 5
+}
 }
 ]

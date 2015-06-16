@@ -7,6 +7,18 @@ from suturo_video_msgs.srv import GetSimulationRunsRequest, GetSimulationRunsRes
 from suturo_video_msgs.msg import Test as RosTest
 
 class VoldemortToVaderTest(unittest.TestCase):
+    def setUp(self):
+        self.vdv = VoldemortToVader()
+        self.simulation_name = 'simulation1'
+        test_results_file = 'test_data/tests2_results.json'
+
+        self.vdv.delete_data(self.simulation_name)
+        self.vdv.write_test_sim_db(self.simulation_name)
+        self.vdv.write_test_results_to_mongo(self.simulation_name, test_results_file)
+
+        self.vdv.test_files.append('test_data/tests2.json')
+        self.vdv.read_all_tests_and_results()
+
     def test_get_all_simulation_runs_from_mongo(self):
         vdv = VoldemortToVader()
 
@@ -36,15 +48,15 @@ class VoldemortToVaderTest(unittest.TestCase):
         simulation_run = vdv.simulation_runs.get_run_by_name(simulation_name)
 
         self.assertTrue(simulation_run)
-        self.assertEqual(len(simulation_run.tests), 2)
+        self.assertEqual(len(simulation_run.tests), 5)
 
         test1 = simulation_run.get_test_by_name('test_name1')
-        test2 = simulation_run.get_test_by_name('test_name2')
+        test4 = simulation_run.get_test_by_name('test_name4')
 
         self.assertEqual(test1.name, 'test_name1')
         self.assertEqual(test1.query, 'test_query1')
         self.assertEqual(test1.description, 'test_description1')
-        self.assertEqual(test2.description, 'test_description2')
+        self.assertEqual(test4.description, 'test_description4')
 
     def test_get_all_test_results_from_mongo(self):
         simulation_name = 'simulation1'
@@ -58,16 +70,21 @@ class VoldemortToVaderTest(unittest.TestCase):
 
         test1 = Test("test_name1")
         test2 = Test("test_name2")
-        actual_simulation_run.add_test(test1)
-        actual_simulation_run.add_test(test2)
+        test3 = Test("test_name3")
+        test4 = Test("test_name4")
+        test5 = Test("test_name5")
+        tests = [test1, test2, test3, test4, test5]
+
+        for test in tests:
+            actual_simulation_run.add_test(test)
         vdv.simulation_runs.add_run(actual_simulation_run)
 
         vdv.get_all_test_results_from_mongo(actual_simulation_run)
 
         self.assertEqual(test1.test_result.result, True)
         self.assertEqual(test1.test_result.execution_date, "2015-05-06_16:26:02")
-        self.assertEqual(test2.test_result.result, False)
-        self.assertEqual(test2.test_result.execution_date, "2011-05-86_26:16:01")
+        self.assertEqual(test4.test_result.result, False)
+        self.assertEqual(test4.test_result.execution_date, "2015-02-36_46:17:03")
 
 
     def test_handle_get_simulation_runs(self):
@@ -88,8 +105,6 @@ class VoldemortToVaderTest(unittest.TestCase):
         vdv = VoldemortToVader()
 
         simulation_name = 'simulation1'
-        test_file = 'test_data/tests2.json'
-        test_results_file = 'test_data/tests2_results.json'
 
         vdv.delete_data(simulation_name)
         vdv.write_test_sim_db(simulation_name)
@@ -103,13 +118,79 @@ class VoldemortToVaderTest(unittest.TestCase):
 
         resp = vdv.handle_get_available_tests(req)
         tests = resp.tests
-        self.assertEqual(len(tests), 2)
+        self.assertEqual(len(tests), 5)
         test1 = tests[0]
-        test2 = tests[1]
+        test4 = tests[3]
         self.assertEqual(test1.name, 'test_name1')
         self.assertEqual(test1.description, 'test_description1')
         self.assertEqual(test1.query, 'test_query1')
 
-        self.assertEqual(test2.name, 'test_name2')
-        self.assertEqual(test2.description, 'test_description2')
-        self.assertEqual(test2.query, 'test_query2')
+        self.assertEqual(test4.name, 'test_name4')
+        self.assertEqual(test4.description, 'test_description4')
+        self.assertEqual(test4.query, 'test_query4')
+
+    def test_handle_get_executed_tests(self):
+        vdv = self.vdv
+
+        simulation_run = vdv.simulation_runs.get_run_by_name(self.simulation_name)
+
+        req = GetTestsRequest()
+        req.simulation_run_name = self.simulation_name
+
+        resp = vdv.handle_get_executed_tests(req)
+        tests = resp.tests
+        self.assertEqual(len(tests), 4)
+        expectedTestNames = ['test_name1', 'test_name2', 'test_name4', 'test_name5']
+        for index, test in enumerate(tests):
+            self.assertTrue(test.name in expectedTestNames)
+
+        self.assertTrue(tests[0].test_result.result)
+        self.assertFalse(tests[1].test_result.result)
+        self.assertFalse(tests[2].test_result.result)
+        self.assertTrue(tests[3].test_result.result)
+
+        self.assertEqual(tests[0].test_result.execution_date, '2015-05-06_16:26:02')
+        self.assertEqual(tests[1].test_result.execution_date, '2011-05-86_26:16:01')
+        self.assertEqual(tests[2].test_result.execution_date, '2015-02-36_46:17:03')
+        self.assertEqual(tests[3].test_result.execution_date, '2012-02-36_46:17:02')
+
+    def test_handle_get_passed_tests(self):
+        vdv = self.vdv
+
+        simulation_run = vdv.simulation_runs.get_run_by_name(self.simulation_name)
+
+        req = GetTestsRequest()
+        req.simulation_run_name = self.simulation_name
+
+        resp = vdv.handle_get_passed_tests(req)
+        tests = resp.tests
+        self.assertEqual(len(tests), 2)
+        expectedTestNames = ['test_name1', 'test_name5']
+        for index, test in enumerate(tests):
+            self.assertTrue(test.name in expectedTestNames)
+            self.assertTrue(test.test_result.result)
+
+        self.assertEqual(tests[0].test_result.execution_date, '2015-05-06_16:26:02')
+        self.assertEqual(tests[1].test_result.execution_date, '2012-02-36_46:17:02')
+
+    def test_handle_get_failed_tests(self):
+        vdv = self.vdv
+
+        simulation_run = vdv.simulation_runs.get_run_by_name(self.simulation_name)
+
+        req = GetTestsRequest()
+        req.simulation_run_name = self.simulation_name
+
+        resp = vdv.handle_get_failed_tests(req)
+        tests = resp.tests
+        self.assertEqual(len(tests), 2)
+        expectedTestNames = ['test_name2', 'test_name4']
+        for index, test in enumerate(tests):
+            self.assertTrue(test.name in expectedTestNames)
+            self.assertFalse(test.test_result.result)
+
+        self.assertEqual(tests[0].test_result.execution_date, '2011-05-86_26:16:01')
+        self.assertEqual(tests[1].test_result.execution_date, '2015-02-36_46:17:03')
+
+
+    #TODO: Test mit Test Results ohne dazugehoerigem Test

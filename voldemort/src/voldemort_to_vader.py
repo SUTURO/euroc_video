@@ -7,6 +7,7 @@ import rospy
 import json
 from suturo_video_msgs.srv import GetSimulationRuns, GetSimulationRunsRequest, GetSimulationRunsResponse, GetTests, GetTestsRequest, GetTestsResponse
 from suturo_video_msgs.msg import Test as RosTest
+from suturo_video_msgs.msg import TestResult as RosTestResult
 from voldemort_to_vader_data import Test, TestResult, SimulationRun, SimulationRunContainer
 
 class VoldemortToVader(object):
@@ -15,6 +16,15 @@ class VoldemortToVader(object):
         self.database_names = []
         self.simulation_runs = SimulationRunContainer()
         self.test_files = []
+
+    def read_all_tests_and_results(self):
+        self.get_all_simulation_runs_from_mongo()
+        self.get_all_tests_for_all_runs()
+        self.get_all_test_results_for_all_runs()
+
+    def get_all_test_results_for_all_runs(self):
+        for name, sim_run in self.simulation_runs.runs.iteritems():
+            self.get_all_test_results_from_mongo(sim_run)
 
     def start_services(self):
         rospy.init_node('voldemort_to_vader')
@@ -30,8 +40,8 @@ class VoldemortToVader(object):
         resp = GetSimulationRunsResponse()
         self.get_all_simulation_runs_from_mongo()
         sim_runs_list = []
-        for run in self.simulation_runs.runs:
-            sim_runs_list.append(run)
+        for run_name in self.simulation_runs.runs:
+            sim_runs_list.append(run_name)
 
         resp.simulation_runs = sim_runs_list
         return resp
@@ -46,8 +56,8 @@ class VoldemortToVader(object):
     def handle_get_available_tests(self, req):
         resp = GetTestsResponse()
         sim_run_name = req.simulation_run_name
-        self.get_all_simulation_runs_from_mongo()
         sim_run = self.simulation_runs.get_run_by_name(sim_run_name)
+        self.get_all_test_results_from_mongo(sim_run)
         tests = []
 
         for name, test in sim_run.tests.iteritems():
@@ -62,13 +72,67 @@ class VoldemortToVader(object):
         return resp
 
     def handle_get_executed_tests(self, req):
-        pass
+        resp = GetTestsResponse()
+        sim_run = self.simulation_runs.get_run_by_name(req.simulation_run_name)
+
+        tests = []
+        for name, test in sim_run.tests.iteritems():
+            if test.test_result is not None:
+                ros_test = RosTest()
+                ros_test.name = name
+                ros_test.description = test.description
+                ros_test.query = test.query
+                ros_test.expected = test.expected
+                test_result = RosTestResult()
+                test_result.result = test.test_result.result
+                test_result.executionDate = test.test_result.execution_date
+                ros_test.test_result = test_result
+                tests.append(ros_test)
+
+        resp.tests = tests
+        return resp
 
     def handle_get_failed_tests(self, req):
-        pass
+        resp = GetTestsResponse()
+        sim_run = self.simulation_runs.get_run_by_name(req.simulation_run_name)
+
+        tests = []
+        for name, test in sim_run.tests.iteritems():
+            if test.test_result is not None and not test.test_result.result:
+                ros_test = RosTest()
+                ros_test.name = name
+                ros_test.description = test.description
+                ros_test.query = test.query
+                ros_test.expected = test.expected
+                test_result = RosTestResult()
+                test_result.result = test.test_result.result
+                test_result.executionDate = test.test_result.execution_date
+                ros_test.test_result = test_result
+                tests.append(ros_test)
+
+        resp.tests = tests
+        return resp
 
     def handle_get_passed_tests(self, req):
-        pass
+        resp = GetTestsResponse()
+        sim_run = self.simulation_runs.get_run_by_name(req.simulation_run_name)
+
+        tests = []
+        for name, test in sim_run.tests.iteritems():
+            if test.test_result is not None and test.test_result.result:
+                ros_test = RosTest()
+                ros_test.name = name
+                ros_test.description = test.description
+                ros_test.query = test.query
+                ros_test.expected = test.expected
+                test_result = RosTestResult()
+                test_result.result = test.test_result.result
+                test_result.executionDate = test.test_result.execution_date
+                ros_test.test_result = test_result
+                tests.append(ros_test)
+
+        resp.tests = tests
+        return resp
 
     def get_all_tests_for_all_runs(self):
         for name, sim_run in self.simulation_runs.runs.iteritems():
@@ -87,7 +151,6 @@ class VoldemortToVader(object):
             test.description = str(test_data['description'])
             test.expected = str(test_data['expected'])
             simulation_run.add_test(test)
-            print('simulation run name='+simulation_run.name+' test name='+test.name)
 
     def get_all_test_results_from_mongo(self, simulation_run):
         db = self.client[simulation_run.name]
@@ -159,10 +222,10 @@ class VoldemortToVader(object):
 
 if __name__ == '__main__':
     vdv = VoldemortToVader()
-    vdv.write_test_data()
-    vdv.test_files.append('test_data/tests2.json')
-    vdv.get_all_simulation_runs_from_mongo()
-    vdv.get_all_tests_for_all_runs()
-    #TODO:delete this line when not testing
 
+    #TODO:delete this line when not testing
+    vdv.write_test_data()
+
+    vdv.test_files.append('test_data/tests2.json')
+    vdv.read_all_tests_and_results()
     vdv.start_services()
