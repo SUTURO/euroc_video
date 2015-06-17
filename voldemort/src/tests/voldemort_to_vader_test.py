@@ -14,7 +14,7 @@ class VoldemortToVaderTest(unittest.TestCase):
 
         self.vdv.delete_data(self.simulation_name)
         self.vdv.write_test_sim_db(self.simulation_name)
-        self.vdv.write_test_results_to_mongo(self.simulation_name, test_results_file)
+        self.vdv.write_test_results_from_file_to_mongo(self.simulation_name, test_results_file)
 
         self.vdv.test_files.append('test_data/tests2.json')
         self.vdv.read_all_tests_and_results()
@@ -66,7 +66,7 @@ class VoldemortToVaderTest(unittest.TestCase):
         actual_simulation_run = SimulationRun(simulation_name)
 
         vdv.delete_data(simulation_name)
-        vdv.write_test_results_to_mongo(simulation_name, test_results_file)
+        vdv.write_test_results_from_file_to_mongo(simulation_name, test_results_file)
 
         test1 = Test("test_name1")
         test2 = Test("test_name2")
@@ -194,3 +194,5 @@ class VoldemortToVaderTest(unittest.TestCase):
 
 
     #TODO: Test mit Test Results ohne dazugehoerigem Test
+    #TODO: Test wenn sich der Test aendert(also zB der Query, aber nicht der Name) sollte wohl das Testergebnis geloescht werden
+    # oder zwischen den Tests unterschieden werden
