@@ -1,8 +1,10 @@
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 #include <mongo/client/dbclient.h>
+#include <mongo/util/time_support.h>
 #include <iostream>
 #include <boost/thread.hpp>
+#include "boost/date_time/posix_time/posix_time.hpp"
 #include <mongodb_play/db_player.h>
 
 using namespace mongo;
@@ -63,34 +65,38 @@ void DBPlayer::finish()
 
 void DBPlayer::play_thread(ros::Time start_time, ros::Time end_time)
 {
+  cout << "Started play" << endl;
   ros::Time time_zero = ros::Time::now();
   ros::Duration time_offset;
   bool offset_is_set = false;
   auto_ptr<DBClientCursor> cursor = conn_.query(db_coll_, BSONObj());
   BSONObj p;
-  double date_db;
   ros::Time t;
-  //boost::thread timer;
+  uint32_t secs;
+  uint32_t nsecs;
+  BSONElement date;
   while (cursor->more())
   {
-
-    // TODO
-
     p = cursor->next();
-    if (p.getField("__recorded").type() == NumberDouble)
-      date_db = p.getField("__recorded").Double();
-    else if (p.getField("__recorded").type() == Date)
-    date_db = p.getField("__recorded").Date()
-    std::cout << "postrecorded" << std::endl;
-    t = ros::Time().fromSec(date_db);
+    date = p.getField("__recorded");
+    if (date.type() == NumberDouble)
+    {
+      t = ros::Time().fromSec(date.Double());
+    }
+    else if (date.type() == Date)
+    {
+      secs = date.Date().millis / 1000;
+      nsecs = (date.Date().millis % 1000) * 1000000;
+      t = ros::Time(secs, nsecs);
+    }
 
     if (!offset_is_set)
     {
       time_offset = time_zero - t;
       offset_is_set = true;
-      cout << "db time in nsecs: " << t.sec << endl;
-      cout << "ros time in nsecs: " << time_zero.sec << endl;
-      cout << "offset : " << time_offset.sec << endl;
+      cout << "db time in secs: " << t.sec << "." << t.nsec << endl;
+      cout << "ros time in secs: " << time_zero.sec << "." << time_zero.nsec <<endl;
+      cout << "offset : " << time_offset.sec << "." << time_offset.nsec << endl;
     }
 
     {
