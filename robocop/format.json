@@ -1,41 +1,63 @@
 Testformat:
 [
-	{
-		"name": "TESTNAME1",
-		"description": "Tests if three objects were placed",
-		"query": "findall(1, (task(T), task_goal(T, '(OBJECT-PLACED-AT ?OBJ ?LOC)')), L), length(L, NumPlaced).",
-		"expected": {
-			"NumPlaced": 3
-		}
-	},
-	{
-
-		"name": "TESTNAME2",
-		"description": "Inspect the perceived object actions",
-		"query": "findall(E, (task_goal(T,'GOAL-PERCEIVE-OBJECT'), task_end(T, E)), Es).",
-		"expected": {
-			...
-		}
+    {
+	"name": "TESTNAME1",
+	"description": "Tests if three objects were placed",
+	"query": "findall(1, (task(T), task_goal(T, '(OBJECT-PLACED-AT ?OBJ ?LOC)')), L), length(L, NumPlaced).",
+	"expected": {
+	    "NumPlaced": 3
 	}
+    },
+    {
+
+	"name": "TESTNAME2",
+	"description": "Inspect the perceived object actions",
+	"query": "findall(E, (task_goal(T,'GOAL-PERCEIVE-OBJECT'), task_end(T, E)), Es).",
+	"expected": {
+		...
+	}
+    }
 ]
 
 Rückgabeformat:
 [
-	{
-		"name": "TESTNAME1",
-		"executionDate": "2015-05-06_16:26:02",
-		"result": true,
-		"bindings": {
-			"L": [1, 1, 1],
-			"NumPlaced": 3
-		}
+    {
+	"name": "TESTNAME1",
+	"executionDate": "2015-05-06_16:26:02",
+	"result": true,
+	"bindings": {
+	    "L": [1, 1, 1],
+	    "NumPlaced": 3
 	},
-	{
-		"name": "TESTNAME2",
-		"executionDate": "2015-05-06_16:26:02",
-		"result": false,
-		"bindings": {
-			...
-		}
-	}
+	"notableTimePoints":
+	[
+	    {"time": {
+		"sec": 475,
+		"nsec": 123
+	    }},
+	    {"time": {
+		"sec": 987,
+		"nsec": 846
+	    }}
+	]
+    },
+    {
+	"name": "TESTNAME2",
+	"executionDate": "2015-05-06_16:26:02",
+	"result": false,
+	"bindings": {
+		...
+	},
+	"notableTimePoints":
+	[
+	    {"time": {
+		"sec": 475,
+		"nsec": 123
+	    }},
+	    {"time": {
+		"sec": 987,
+		"nsec": 846
+	    }}
+	]
+    }
 ]

@@ -41,7 +41,7 @@ class VoldemortToVader(object):
         get_passed_tests = rospy.Service('/voldemort/get_passed_tests', GetTests, self.handle_get_passed_tests)
         execute_tests = rospy.Service('/voldemort/execute_tests', ExecuteTests, self.handle_execute_tests)
         add_tests = rospy.Service('/voldemort/add_tests', AddTests, self.handle_add_tests)
-
+        print "[Voldemort_to_vader] Successfully started Services"
         rospy.spin()
 
     def handle_execute_tests(self, req):
@@ -129,6 +129,8 @@ class VoldemortToVader(object):
                 test_result = RosTestResult()
                 test_result.result = test.test_result.result
                 test_result.executionDate = test.test_result.execution_date
+                print ('asdads'+str(test.test_result.notable_time_points))
+                test_result.notableTimePoints = test.test_result.notable_time_points
                 ros_test.test_result = test_result
                 tests.append(ros_test)
 
@@ -150,6 +152,7 @@ class VoldemortToVader(object):
                 test_result = RosTestResult()
                 test_result.result = test.test_result.result
                 test_result.executionDate = test.test_result.execution_date
+                test_result.notable_time_points = test.test_result.notable_time_points
                 ros_test.test_result = test_result
                 tests.append(ros_test)
 
@@ -171,6 +174,7 @@ class VoldemortToVader(object):
                 test_result = RosTestResult()
                 test_result.result = test.test_result.result
                 test_result.executionDate = test.test_result.execution_date
+                test_result.notable_time_points = test.test_result.notable_time_points
                 ros_test.test_result = test_result
                 tests.append(ros_test)
 
@@ -221,7 +225,10 @@ class VoldemortToVader(object):
     def create_test_result_from_mongo_document(self, test_result_doc):
         result = test_result_doc['result']
         execution_date = test_result_doc['executionDate']
+        notable_time_points = test_result_doc['notableTimePoints']
         test_result = TestResult(result=result, execution_date=execution_date)
+        for ntp_dict in notable_time_points:
+            test_result.add_notable_time_point(ntp_dict)
         return test_result
 
     def handle_get_test_results(self, req):
@@ -294,9 +301,9 @@ class VoldemortToVader(object):
     def execute_tests(self, simulation_run_name):
         params = {'owl': simulation_run_name, 'db': simulation_run_name}
         r = requests.get('http://localhost:8080/robocop/executeTest', params=params)
-
+        print(r.url)
         print(r)
-        self.write_test_results_from_json_string_to_mongo(simulation_run_name, r)
+        #self.write_test_results_from_json_string_to_mongo(simulation_run_name, r)
 
 if __name__ == '__main__':
     vdv = VoldemortToVader()
@@ -306,7 +313,9 @@ if __name__ == '__main__':
 
     vdv.test_files.append('test_data/tests2.json')
     vdv.read_all_tests_and_results()
+    #vdv.execute_tests('simulation1')
     vdv.start_services()
 
 
 #TODO: tests nicht zu einer Simulation hinzufuegen, sondern global machen
+#TODO: tests nicht aus json lesen sondern auch in die mongodb schreiben, damit tests und ergebnisse zusammen sind

@@ -1,3 +1,5 @@
+import rospy
+
 class SimulationRun(object):
     def __init__(self, name, tests={}):
         self.name = name
@@ -47,7 +49,7 @@ class TestContainer(object):
 
 
 class Test(object):
-    def __init__(self, name, description=None, test_result=None, query=None, expected=None):
+    def __init__(self, name, description=None, test_result=None, query=None, expected=None,):
         self.name = name
         self.description = description
         self.query = query
@@ -61,6 +63,12 @@ class Test(object):
 
 
 class TestResult(object):
-    def __init__(self, result = None, execution_date=None):
+    def __init__(self, result = None, execution_date=None, notable_time_points=None):
         self.result = result
         self.execution_date = execution_date
+        self.notable_time_points = []
+
+    def add_notable_time_point(self, ntp_dict):
+        ntp_data = ntp_dict['time']
+        ntp = rospy.Time(ntp_data['sec'], ntp_data['nsec'])
+        self.notable_time_points.append(ntp)
