@@ -3,7 +3,7 @@
 
 #include "ros/ros.h"
 #include "suturo_video_msgs/GetSimulationRuns.h"
-#include "suturo_video_msgs/GetTestResults.h"
+#include "suturo_video_msgs/GetTests.h"
 
 class ROSConnector
 {
