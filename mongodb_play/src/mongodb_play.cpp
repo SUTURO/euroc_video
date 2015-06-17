@@ -2,6 +2,7 @@
 #include <mongo/client/dbclient.h>
 #include <suturo_video_msgs/PlayAction.h>
 //#include <mongodb_play/string_player.h>
+//#include <mongodb_play/tf_player.h>
 #include <mongodb_play/mongodb_play.h>
 
 using namespace mongo;
@@ -26,7 +27,24 @@ void MongoPlayer::goalCallback(actionlib::ActionServer<suturo_video_msgs::PlayAc
   ROS_INFO("Goal received: %s", gh.getGoalID().id.c_str());
 
   // Create db_player
-  boost::shared_ptr<DBPlayer> dbpl_ptr( new StringPlayer(nh_, gh.getGoal()->output_topic,db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
+  boost::shared_ptr<DBPlayer>  dbpl_ptr;
+  if (gh.getGoal()->msg_type == "std_msgs/String")
+  {
+    ROS_INFO("Using StringPlayer");
+    dbpl_ptr.reset( new StringPlayer(nh_, gh.getGoal()->output_topic,db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
+  }
+  else if (gh.getGoal()->msg_type == "tf2_msgs/TFMessage")
+  {
+    ROS_INFO("Using TFPlayer");
+    dbpl_ptr.reset( new TFPlayer(nh_, gh.getGoal()->output_topic,db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
+  }
+  else
+  {
+    ROS_INFO("No player for type %s", gh.getGoal()->msg_type.c_str());
+    gh.setRejected();
+    return;
+  }
+
   db_players_[gh.getGoalID().id] = dbpl_ptr;
 
   // Accept goal

@@ -1,3 +1,6 @@
+#ifndef DBPLAYER_H
+#define DBPLAYER_H
+
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 #include <boost/thread.hpp>
@@ -35,3 +38,5 @@ private:
   boost::mutex m_stop_mutex_;
   bool m_stopped_;
 };
+
+#endif

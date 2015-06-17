@@ -73,8 +73,15 @@ void DBPlayer::play_thread(ros::Time start_time, ros::Time end_time)
   //boost::thread timer;
   while (cursor->more())
   {
+
+    // TODO
+
     p = cursor->next();
-    date_db = p.getField("__recorded").Double();
+    if (p.getField("__recorded").type() == NumberDouble)
+      date_db = p.getField("__recorded").Double();
+    else if (p.getField("__recorded").type() == Date)
+    date_db = p.getField("__recorded").Date()
+    std::cout << "postrecorded" << std::endl;
     t = ros::Time().fromSec(date_db);
 
     if (!offset_is_set)

@@ -3,7 +3,7 @@
 #include <actionlib/server/action_server.h>
 #include <suturo_video_msgs/PlayAction.h>
 #include <mongodb_play/string_player.h>
-//#include <mongodb_play/tf_player.h>
+#include <mongodb_play/tf_player.h>
 
 class MongoPlayer
 {
