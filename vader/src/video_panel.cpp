@@ -71,7 +71,7 @@ namespace video_panel_plugin
         // create list for performed Tests
         performedTestsList = new QListWidget();
         playerLayout->addWidget(performedTestsList);
-        connect(performedTestsList, SIGNAL (itemDoubleClicked(QListWidgetItem*)), this, SLOT (handleSelectedTest(QListWidgetItem*)));
+        connect(performedTestsList, SIGNAL (itemSelectionChanged()), this, SLOT (handleSelectedTest()));
 
         // create widget to display testresults and additional data
         testResultsWidget = new QWidget();
@@ -82,6 +82,12 @@ namespace video_panel_plugin
         // create label with testname
         testLabel = new QLabel("Please select a testcase from above");
         testResultsLayout->addWidget(testLabel);
+
+        // create label for result
+        testResultLabel = new QLabel("Result:");
+        testResultsLayout->addWidget(testResultLabel);
+
+
 
         // add playerWidget to QTabWidget
         tab->addTab(playerWidget, "Player");
@@ -156,10 +162,14 @@ namespace video_panel_plugin
         performedTestsList->clear();
         try
         {
-            std::string results = connector.getTestResults(item->text().toStdString());
-            std::cout << results << std::endl;
+            returnedTests = connector.getExecutedTests(item->text().toStdString());
             selectedRunLabel->setText(setBoldText(item->text()));
-            QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(results), performedTestsList);
+            for(std::vector<suturo_video_msgs::Test>::iterator it = returnedTests.begin(); it != returnedTests.end(); ++it){
+                std::string name = (*it).name;
+                QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(name), performedTestsList);
+            }
+//            int height = 5 * performedTestsList->visualItemRect(performedTestsList->item(0)).height();
+//            performedTestsList->setFixedHeight(height);
         }
         catch(ServiceUnavailableException &exc)
         {
@@ -170,9 +180,18 @@ namespace video_panel_plugin
         // TODO: Implement real losaing of run
     }
 
-    void VideoPanel::handleSelectedTest(QListWidgetItem *testcase)
+    void VideoPanel::handleSelectedTest()
     {
-        VideoPanel::setTestLabel(testcase->text());
+        QListWidgetItem *selectedItem = performedTestsList->currentItem();
+        VideoPanel::setTestLabel(selectedItem->text());
+        suturo_video_msgs::Test testCase = VideoPanel::getTestFromList(selectedItem->text());
+        if(testCase.test_result.result){
+            testResultLabel->setText(VideoPanel::setBoldText(QString("Testresult: success")));
+        }
+        else
+        {
+            testResultLabel->setText(VideoPanel::setBoldText(QString("Testresult: failure")));
+        }
     }
 
     QString VideoPanel::setBoldText(QString text)
@@ -189,6 +208,14 @@ namespace video_panel_plugin
         QString* label = new QString("Testcase: ");
         label->append(text);
         testLabel->setText(*label);
+    }
+
+    suturo_video_msgs::Test VideoPanel::getTestFromList(QString name){
+        for(std::vector<suturo_video_msgs::Test>::iterator it = returnedTests.begin(); it != returnedTests.end(); ++it){
+            if (name.toStdString().compare((*it).name) == 0){
+                return *it;
+            }
+        }
     }
 }
 
