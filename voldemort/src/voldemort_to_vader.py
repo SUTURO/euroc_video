@@ -12,7 +12,7 @@ from suturo_video_msgs.srv import GetSimulationRuns, GetSimulationRunsRequest, G
     AddTestsRequest, AddTestsResponse
 from suturo_video_msgs.msg import Test as RosTest
 from suturo_video_msgs.msg import TestResult as RosTestResult
-from voldemort_to_vader_data import Test, TestResult, SimulationRun, SimulationRunContainer
+from voldemort_to_vader_data import Test, TestResult, SimulationRun, SimulationRunContainer, TestContainer
 
 class VoldemortToVader(object):
     def __init__(self):
@@ -20,10 +20,12 @@ class VoldemortToVader(object):
         self.database_names = []
         self.simulation_runs = SimulationRunContainer()
         self.test_files = []
+        self.tests = TestContainer()
 
     def read_all_tests_and_results(self):
         self.get_all_simulation_runs_from_mongo()
         self.get_all_tests_for_all_runs()
+        self.get_all_tests_global()
         self.get_all_test_results_for_all_runs()
 
     def get_all_test_results_for_all_runs(self):
@@ -62,8 +64,12 @@ class VoldemortToVader(object):
         if os.path.isfile(tests_file_path):
             self.test_files.append(tests_file_path)
             self.read_all_tests_and_results()
-            with open(tests_file_path) as test_data:
-                tests = test_data.readlines()
+            #with open(tests_file_path) as test_data:
+             #   tests = test_data.readlines()
+            tests = []
+            for test_name in self.tests.tests:
+                test = self.tests.get_test_by_name(test_name)
+                tests.append(test.to_json_dict())
             self.upload_tests(tests)
         else:
             resp.result = False
@@ -93,6 +99,7 @@ class VoldemortToVader(object):
         self.get_all_test_results_from_mongo(sim_run)
         tests = []
 
+
         for name, test in sim_run.tests.iteritems():
             ros_test = RosTest()
             ros_test.name = name
@@ -100,6 +107,8 @@ class VoldemortToVader(object):
             ros_test.query = test.query
             ros_test.expected = test.expected
             tests.append(ros_test)
+
+        print "get_available_tests:"+str(sim_run.tests)
 
         resp.tests = tests
         return resp
@@ -110,6 +119,7 @@ class VoldemortToVader(object):
 
         tests = []
         for name, test in sim_run.tests.iteritems():
+            print(test.test_result)
             if test.test_result is not None:
                 ros_test = RosTest()
                 ros_test.name = name
@@ -175,16 +185,29 @@ class VoldemortToVader(object):
         for test_file in self.test_files:
             self.get_all_tests_from_json(simulation_run, test_file)
 
+    def get_all_tests_global(self):
+        for test_file in self.test_files:
+            self.get_all_tests_from_json_global(test_file)
+
     def get_all_tests_from_json(self, simulation_run, json_file):
         with open(json_file) as test_data:
             tests = json.load(test_data)
         for test_data in tests:
-            print(test_data)
             test = Test(str(test_data['name']))
             test.query = str(test_data['query'])
             test.description = str(test_data['description'])
             test.expected = str(test_data['expected'])
             simulation_run.add_test(test)
+
+    def get_all_tests_from_json_global(self, json_file):
+        with open(json_file) as test_data:
+            tests = json.load(test_data)
+        for test_data in tests:
+            test = Test(str(test_data['name']))
+            test.query = str(test_data['query'])
+            test.description = str(test_data['description'])
+            test.expected = str(test_data['expected'])
+            self.tests.add_test(test)
 
     def get_all_test_results_from_mongo(self, simulation_run):
         db = self.client[simulation_run.name]
@@ -257,17 +280,22 @@ class VoldemortToVader(object):
             vdv.delete_data(sim_name)
             vdv.write_test_sim_db(sim_name)
 
-        #test_file = 'test_data/tests2.json'
-        #test_results_file = 'test_data/tests2_results.json'
-        #vdv.write_test_results_from_file_to_mongo(simulation_names[0], test_results_file)
+        test_file = 'test_data/tests2.json'
+        test_results_file = 'test_data/tests2_results.json'
+        vdv.write_test_results_from_file_to_mongo(simulation_names[0], test_results_file)
 
-    def upload_tests(self, tests_json_string):
-        params = {'test': str(tests_json_string)}
+    def upload_tests(self, json_tests):
+        params = {'test': json_tests}
+        tmp_params = {'test': 'asd'}
         r = requests.put('http://localhost:8080/robocop/uploadTest', params=params)
+        print("")
+        print(r.url)
 
     def execute_tests(self, simulation_run_name):
         params = {'owl': simulation_run_name, 'db': simulation_run_name}
         r = requests.get('http://localhost:8080/robocop/executeTest', params=params)
+
+        print(r)
         self.write_test_results_from_json_string_to_mongo(simulation_run_name, r)
 
 if __name__ == '__main__':
@@ -276,6 +304,9 @@ if __name__ == '__main__':
     #TODO:delete this line when not testing
     vdv.write_test_data()
 
-    #vdv.test_files.append('test_data/tests2.json')
+    vdv.test_files.append('test_data/tests2.json')
     vdv.read_all_tests_and_results()
     vdv.start_services()
+
+
+#TODO: tests nicht zu einer Simulation hinzufuegen, sondern global machen
