@@ -11,6 +11,8 @@
 #include <QTableWidget>
 #include <QWidget>
 #include <ROSConnector.h>
+#include "suturo_video_msgs/Test.h"
+#include "suturo_video_msgs/TestResult.h"
 #endif
 
 namespace video_panel_plugin
@@ -29,7 +31,7 @@ private Q_SLOTS:
     void handlePullButton();
     void handleFailedRunsCheckBox(int state);
     void loadRun(QListWidgetItem* item);
-    void handleSelectedTest(QListWidgetItem* testcase);
+    void handleSelectedTest();
 	
 private:
     ROSConnector connector;
@@ -42,6 +44,10 @@ private:
     QWidget *playerWidget;
     QWidget *testResultsWidget;
     QLabel *testLabel;
+    QLabel *testResultLabel;
+
+    std::vector<suturo_video_msgs::Test> returnedTests;
+    suturo_video_msgs::Test getTestFromList(QString name);
 
     /**
       creates a QString with surround html tags
