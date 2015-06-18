@@ -52,7 +52,7 @@ public class RobocopServer {
             new jpl.Query("mng_db('" + db + "')").oneSolution();
         }
         try {
-            return testSuite.executeSuite().toString();
+            return new StubTest().toString();// testSuite.executeSuite().toString();
         } catch (Exception e) {
             return jsonError(e);
         }
