@@ -57,6 +57,7 @@ public class CopTest {
             for (Object object : ntp) {
                 times.add(Time.getTimepoint((String) object));
             }
+            bindings.remove("NTP");
         }
         return times;
     }
