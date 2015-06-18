@@ -10,6 +10,7 @@
 #include <QCheckBox>
 #include <QTableWidget>
 #include <QWidget>
+#include <QComboBox>
 #include <ROSConnector.h>
 #include "suturo_video_msgs/Test.h"
 #include "suturo_video_msgs/TestResult.h"
@@ -45,6 +46,9 @@ private:
     QWidget *testResultsWidget;
     QLabel *testLabel;
     QLabel *testResultLabel;
+    QLabel *timePointsLabel;
+    QComboBox *timePointsBox;
+    int timePointsNumber;
 
     std::vector<suturo_video_msgs::Test> returnedTests;
     suturo_video_msgs::Test getTestFromList(QString name);

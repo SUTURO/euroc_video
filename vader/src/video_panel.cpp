@@ -3,6 +3,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QListWidgetItem>
+#include <boost/lexical_cast.hpp>
 
 namespace patch
 {
@@ -19,6 +20,8 @@ namespace video_panel_plugin
 	VideoPanel::VideoPanel( QWidget* parent)
 	: rviz::Panel(parent)
     {
+        timePointsNumber = 0;
+
         //QTABWIDGET
         // create the QTabWidget
         QVBoxLayout* tabLayout = new QVBoxLayout();
@@ -87,41 +90,24 @@ namespace video_panel_plugin
         testResultLabel = new QLabel("Result:");
         testResultsLayout->addWidget(testResultLabel);
 
-
+        // create label for number of timepoints
+        timePointsLabel = new QLabel("Number of timepoints:");
+        testResultsLayout->addWidget(timePointsLabel);
 
         // add playerWidget to QTabWidget
         tab->addTab(playerWidget, "Player");
+
+       // add QComboBox
+        timePointsBox = new QComboBox();
+        timePointsBox->addItem("No timepoints available");
+        testResultsLayout->addWidget(timePointsBox);
+
 
         // set tabLayout as layout for parent
         setLayout(tabLayout);
 
         // create ROSConnector
         connector = ROSConnector();
-
-        // Old testing stuff below
-        /*
-        QVBoxLayout* vertical_layout = new QVBoxLayout;
-
-        QHBoxLayout* label_layout = new QHBoxLayout;
-        vertical_layout->addLayout(label_layout);
-        label1 = new QLabel("Blub1");
-        label2 = new QLabel("Blub2");
-        label3 = new QLabel("Blub3");
-        label_layout->addWidget(label1);
-        label_layout->addWidget(label2);
-        label_layout->addWidget(label3);
-
-        QHBoxLayout* button_layout = new QHBoxLayout;
-        vertical_layout->addLayout(button_layout);
-
-        button2 = new QPushButton("Blub2", this);
-        button3 = new QPushButton("Blub3", this);
-        button_layout->addWidget(pullRunsButton);
-        button_layout->addWidget(button2);
-        button_layout->addWidget(button3);
-
-        setLayout(vertical_layout);
-        */
 	}
 
 
@@ -183,8 +169,11 @@ namespace video_panel_plugin
     void VideoPanel::handleSelectedTest()
     {
         QListWidgetItem *selectedItem = performedTestsList->currentItem();
+        // set label for current Test
         VideoPanel::setTestLabel(selectedItem->text());
+        // get Testobject
         suturo_video_msgs::Test testCase = VideoPanel::getTestFromList(selectedItem->text());
+        // set testresult label
         if(testCase.test_result.result){
             testResultLabel->setText(VideoPanel::setBoldText(QString("Testresult: success")));
         }
@@ -192,6 +181,33 @@ namespace video_panel_plugin
         {
             testResultLabel->setText(VideoPanel::setBoldText(QString("Testresult: failure")));
         }
+        // get number of timepoints and set label
+        timePointsNumber = testCase.test_result.notableTimePoints.capacity();
+        std::string string = "Number of timepoints: ";
+        string.append(boost::lexical_cast<std::string>(timePointsNumber));
+        timePointsLabel->setText(string.c_str());
+        // insert timepoints if exist
+        timePointsBox->clear();
+        if(timePointsNumber == 0)
+        {
+            timePointsBox->addItem("No timepoints available");
+        }
+        else
+        {
+            for(std::vector<ros::Time>::iterator it = testCase.test_result.notableTimePoints.begin(); it != testCase.test_result.notableTimePoints.end(); ++it)
+            {
+                std::ostringstream os;
+                os << *it;
+                std::string s = os.str();
+                timePointsBox->addItem(s.c_str());
+            }
+        }
+//        std::cout << testcase.description << std::endl;
+//        std::cout << testcase.expected << std::endl;
+//        std::cout << testcase.query << std::endl;
+//        std::cout << testcase.test_result.executionDate << std::endl;
+//        std::cout << testCase.test_result.notableTimePoints.capacity() << std::endl;
+//        std::cout << testcase.test_result.bindings.capacity() << std::endl;
     }
 
     QString VideoPanel::setBoldText(QString text)
