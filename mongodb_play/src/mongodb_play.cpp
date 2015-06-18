@@ -41,6 +41,11 @@ void MongoPlayer::goalCallback(actionlib::ActionServer<suturo_video_msgs::PlayAc
     ROS_INFO("Using ImagePlayer");
     dbpl_ptr.reset( new ImagePlayer(nh_, gh.getGoal()->output_topic,db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
   }
+  else if (gh.getGoal()->msg_type == "sensor_msgs/JointState")
+  {
+    ROS_INFO("Using JointStatePlayer");
+    dbpl_ptr.reset( new JointStatePlayer(nh_, gh.getGoal()->output_topic,db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
+  }
   else
   {
     ROS_INFO("No player for type %s", gh.getGoal()->msg_type.c_str());

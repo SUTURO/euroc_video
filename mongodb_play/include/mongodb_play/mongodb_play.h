@@ -5,6 +5,7 @@
 #include <mongodb_play/string_player.h>
 #include <mongodb_play/tf_player.h>
 #include <mongodb_play/image_player.h>
+#include <mongodb_play/jointstate_player.h>
 
 class MongoPlayer
 {
