@@ -3,8 +3,10 @@ package de.suturo.video.robocop.tests;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import de.suturo.video.robocop.query.JSONQuery;
+import de.suturo.video.robocop.types.Time;
 
 /**
  * Representation of a single robocop test
@@ -44,7 +46,19 @@ public class CopTest {
         test.put("executionDate", sdf.format(new Date()));
         test.put("result", Boolean.valueOf(result));
         test.put("bindings", bindings);
+        test.put("notableTimePoints", notableTimes(bindings));
         return test;
+    }
+
+    private static JSONArray notableTimes(JSONObject bindings) {
+        JSONArray times = new JSONArray();
+        if (bindings.containsKey("NTP") && bindings.get("NTP") instanceof JSONArray) {
+            JSONArray ntp = (JSONArray) bindings.get("NTP");
+            for (Object object : ntp) {
+                times.add(Time.getTimepoint((String) object));
+            }
+        }
+        return times;
     }
 
     private boolean checkExpected(JSONObject bindings) {
