@@ -15,6 +15,7 @@ from suturo_video_msgs.msg import TestResult as RosTestResult
 from voldemort_to_vader_data import Test, TestResult, SimulationRun, SimulationRunContainer, TestContainer
 
 class VoldemortToVader(object):
+    OWL_PATH = '/home/suturo/sr_experimental_data/'
     def __init__(self):
         self.client = MongoClient()
         self.database_names = []
@@ -54,12 +55,14 @@ class VoldemortToVader(object):
 
         if simulation_run_name:
             resp.result = self.execute_tests(simulation_run_name)
+            resp.result = True
         else:
             resp.result = False
         return resp
 
     def handle_add_tests(self, req):
         resp = AddTestsResponse()
+        resp.result = True
         tests_file_path = req.tests_file_path
         if os.path.isfile(tests_file_path):
             self.test_files.append(tests_file_path)
@@ -73,6 +76,7 @@ class VoldemortToVader(object):
             self.upload_tests(tests)
         else:
             resp.result = False
+        return resp
 
 
     def handle_get_simulation_runs(self, req):
@@ -292,30 +296,24 @@ class VoldemortToVader(object):
         vdv.write_test_results_from_file_to_mongo(simulation_names[0], test_results_file)
 
     def upload_tests(self, json_tests):
-        params = {'test': json_tests}
-        tmp_params = {'test': 'asd'}
-        r = requests.put('http://localhost:8080/robocop/uploadTest', params=params)
-        print("")
-        print(r.url)
+        params = {'test': str(json_tests)}
+        r = requests.put('http://localhost:8080/robocop/uploadTest', data=params)
 
     def execute_tests(self, simulation_run_name):
-        params = {'owl': simulation_run_name, 'db': simulation_run_name}
+        params = {'owl': str(self.OWL_PATH+simulation_run_name+'.owl'), 'db': simulation_run_name}
         r = requests.get('http://localhost:8080/robocop/executeTest', params=params)
-        print(r.url)
-        print(r)
-        #self.write_test_results_from_json_string_to_mongo(simulation_run_name, r)
 
 if __name__ == '__main__':
     vdv = VoldemortToVader()
 
-    #TODO:delete this line when not testing
+    #TODO:delete this lines when not testing
     vdv.write_test_data()
+    #vdv.test_files.append('test_data/tests2.json')
 
-    vdv.test_files.append('test_data/tests2.json')
     vdv.read_all_tests_and_results()
-    #vdv.execute_tests('simulation1')
     vdv.start_services()
 
 
 #TODO: tests nicht zu einer Simulation hinzufuegen, sondern global machen
 #TODO: tests nicht aus json lesen sondern auch in die mongodb schreiben, damit tests und ergebnisse zusammen sind
+#TODO: error handling for add_tests and execute_tests
