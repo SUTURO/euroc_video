@@ -18,12 +18,13 @@ TFPlayer::TFPlayer(ros::NodeHandle nh, std::string topic, std::string db_address
 void TFPlayer::pub_msg(BSONObj b)
 {
   tf2_msgs::TFMessage msg;
+  BSONObj db_header;
   vector<BSONElement> db_transforms = b["transforms"].Array();
 
   for (vector<BSONElement>::iterator it = db_transforms.begin(); it != db_transforms.end(); ++it)
   {
     geometry_msgs::TransformStamped transformStamped;
-    BSONObj db_header = it->Obj().getField("header").Obj();
+    db_header = it->Obj().getField("header").Obj();
     transformStamped.header.seq = db_header.getField("seq").Int();
     transformStamped.header.frame_id = db_header.getField("frame_id").String();
     transformStamped.header.stamp = ros::Time::now();

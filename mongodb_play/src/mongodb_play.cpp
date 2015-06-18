@@ -1,8 +1,6 @@
 #include <ros/ros.h>
 #include <mongo/client/dbclient.h>
 #include <suturo_video_msgs/PlayAction.h>
-//#include <mongodb_play/string_player.h>
-//#include <mongodb_play/tf_player.h>
 #include <mongodb_play/mongodb_play.h>
 
 using namespace mongo;
@@ -37,6 +35,11 @@ void MongoPlayer::goalCallback(actionlib::ActionServer<suturo_video_msgs::PlayAc
   {
     ROS_INFO("Using TFPlayer");
     dbpl_ptr.reset( new TFPlayer(nh_, gh.getGoal()->output_topic,db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
+  }
+  else if (gh.getGoal()->msg_type == "sensor_msgs/Image")
+  {
+    ROS_INFO("Using ImagePlayer");
+    dbpl_ptr.reset( new ImagePlayer(nh_, gh.getGoal()->output_topic,db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
   }
   else
   {
