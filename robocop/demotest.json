@@ -1,0 +1,10 @@
+[
+    {
+	"name": "Three-Objects",
+	"description": "Tests if three objects were found",
+	"query": "findall(Bundle, (owl_has(A,rdf:type,knowrob:'CRAMPerceive'),owl_has(A,knowrob:designator,DesID),owl_has(A,knowrob:endTime,Time),rdf_split_url(_, E, DesID),mang_des_perc_name(E, Name),Bundle=[Name, Time]),_AllObjects), filter_names(_AllObjects,_Objects), get_objects(_Objects, ObjectsFound), get_ntp(_Objects, NTP).",
+	"expected": {
+	    "ObjectsFound": ["blue_handle", "green_cylinder", "red_cube"]
+		}
+    }
+]
