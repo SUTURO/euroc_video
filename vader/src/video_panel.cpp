@@ -68,7 +68,7 @@ namespace video_panel_plugin
         playerLayout->addWidget(runLabel);
         selectedRunLabel = new QLabel("<b>No run selected!</b>");
         playerLayout->addWidget(selectedRunLabel);
-        QLabel* testListLabel = new QLabel("Performed Tests:");
+        testListLabel = new PrefixLabel("Performed Tests: ");
         playerLayout->addWidget(testListLabel);
 
         // create list for performed Tests
@@ -87,11 +87,11 @@ namespace video_panel_plugin
         testResultsLayout->addWidget(testLabel);
 
         // create label for result
-        testResultLabel = new QLabel("Result:");
+        testResultLabel = new PrefixLabel("Result: ");
         testResultsLayout->addWidget(testResultLabel);
 
         // create label for number of timepoints
-        timePointsLabel = new QLabel("Number of timepoints:");
+        timePointsLabel = new PrefixLabel("Number of timepoints: ");
         testResultsLayout->addWidget(timePointsLabel);
 
         // add playerWidget to QTabWidget
@@ -144,7 +144,10 @@ namespace video_panel_plugin
 
     void VideoPanel::loadRun(QListWidgetItem* item)
     {
+        // change active tab
         tab->setCurrentWidget(playerWidget);
+
+        // fill listwidget
         performedTestsList->clear();
         try
         {
@@ -154,6 +157,20 @@ namespace video_panel_plugin
                 std::string name = (*it).name;
                 QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(name), performedTestsList);
             }
+
+            // create label for performed tests
+            int availableTests = connector.getAvailableTests(item->text().toStdString()).capacity();
+            std::ostringstream os;
+            os << returnedTests.capacity() << " out of " << availableTests;
+            std::string s = os.str();
+            testListLabel->updateSuffix(s.c_str());
+
+            // reset restResult and timePoints
+            testResultLabel->updateSuffix("");
+            timePointsLabel->updateSuffix("");
+            timePointsBox->clear();
+            testLabel->setText("Please select a testcase from above");
+
 //            int height = 5 * performedTestsList->visualItemRect(performedTestsList->item(0)).height();
 //            performedTestsList->setFixedHeight(height);
         }
@@ -181,11 +198,11 @@ namespace video_panel_plugin
         {
             testResultLabel->setText(VideoPanel::setBoldText(QString("Testresult: failure")));
         }
+
         // get number of timepoints and set label
         timePointsNumber = testCase.test_result.notableTimePoints.capacity();
-        std::string string = "Number of timepoints: ";
-        string.append(boost::lexical_cast<std::string>(timePointsNumber));
-        timePointsLabel->setText(string.c_str());
+        timePointsLabel->updateSuffix(boost::lexical_cast<std::string>(timePointsNumber));
+
         // insert timepoints if exist
         timePointsBox->clear();
         if(timePointsNumber == 0)
@@ -232,6 +249,24 @@ namespace video_panel_plugin
                 return *it;
             }
         }
+    }
+
+    PrefixLabel::PrefixLabel(std::string prefix):QLabel()
+    {
+        this->prefix = prefix;
+        this->setText(QString(this->prefix.c_str()));
+    }
+
+    PrefixLabel::PrefixLabel(std::string prefix, std::string suffix):QLabel()
+    {
+        this->prefix = prefix;
+        PrefixLabel::updateSuffix(suffix);
+    }
+
+    void PrefixLabel::updateSuffix(std::string suffix)
+    {
+        this->suffix = suffix;
+        this->setText(QString(this->prefix.c_str()).append(QString(this->suffix.c_str())));
     }
 }
 
