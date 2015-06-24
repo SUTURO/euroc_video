@@ -75,9 +75,13 @@ void DBPlayer::play_thread(ros::Time start_time, ros::Time end_time)
   uint32_t secs;
   uint32_t nsecs;
   BSONElement date;
+
+  // iterate through the messages
   while (cursor->more())
   {
     p = cursor->next();
+
+    // get time of message
     date = p.getField("__recorded");
     if (date.type() == NumberDouble)
     {
@@ -90,6 +94,15 @@ void DBPlayer::play_thread(ros::Time start_time, ros::Time end_time)
       t = ros::Time(secs, nsecs);
     }
 
+    // check if time is after start time
+    if (t < start_time)
+      continue;
+
+    // check if time is after end time
+    if (end_time.isValid() && t > end_time)
+      break;
+
+    // set offset
     if (!offset_is_set)
     {
       time_offset = time_zero - t;
@@ -99,6 +112,7 @@ void DBPlayer::play_thread(ros::Time start_time, ros::Time end_time)
       cout << "offset : " << time_offset.sec << "." << time_offset.nsec << endl;
     }
 
+    // wait until time of message
     {
         boost::unique_lock<boost::mutex> lock(m_timer_mutex_);
         m_blocked_ = true;
@@ -106,12 +120,13 @@ void DBPlayer::play_thread(ros::Time start_time, ros::Time end_time)
     boost::thread timer(&DBPlayer::block_until, this, t + time_offset);
     wait_for_timer();
 
+    // stop if stop signal was sent
     {
         boost::unique_lock<boost::mutex> lock(m_stop_mutex_);
         if (m_stopped_)
         {
           cout << "Stopped pub" << std::endl;
-          return;
+          break;
         }
     }
 
