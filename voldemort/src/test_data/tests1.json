@@ -1,0 +1,19 @@
+[
+{
+"name": "TESTNAME1",
+"description": "Tests if three objects were placed",
+"query": "findall(1, (task(T), task_goal(T, '(OBJECT-PLACED-AT ?OBJ ?LOC)')), L), length(L, NumPlaced).",
+"expected": {
+"NumPlaced": 3
+}
+},
+{
+
+"name": "TESTNAME2",
+"description": "Inspect the perceived object actions",
+"query": "findall(E, (task_goal(T,'GOAL-PERCEIVE-OBJECT'), task_end(T, E)), Es).",
+"expected": {
+"Blubb": "boing"
+}
+}
+]

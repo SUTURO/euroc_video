@@ -8,23 +8,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
-import de.suturo.video.robocop.query.JSONQuery;
-import de.suturo.video.robocop.query.ThreadedQuery;
-import de.suturo.video.robocop.solutions.PrologAllSolutions;
-import de.suturo.video.robocop.solutions.PrologSolutions;
+import de.suturo.video.robocop.tests.CopTestSuite;
+import de.suturo.video.robocop.tests.ParseException;
 
 /**
  * Robocop server based on json_prolog by Lorenz Moesenlechner and Moritz Tenorth
@@ -34,8 +33,10 @@ import de.suturo.video.robocop.solutions.PrologSolutions;
 
 @Path("/robocop")
 public class RobocopServer {
-
+    /** default ok result */
+    static final String RESULT_OK = "{result: \"ok\"}";
     private static final String BASE_URL = "http://localhost:8080";
+    private CopTestSuite testSuite;
 
     /**
      * Executes the given tests
@@ -43,37 +44,40 @@ public class RobocopServer {
     @GET
     @Path("/executeTest")
     @Produces(MediaType.APPLICATION_JSON)
-    public String executeTest() {
-        try (ThreadedQuery query = new ThreadedQuery("expand_goal((member(A, [a,b,c])),_Q), call(_Q)")) {
-            Thread t = new Thread(query);
-            t.start();
-            while (!query.isStarted()) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    // Don't interrupt my sleep
-                }
-            }
-            PrologSolutions s = new PrologAllSolutions(query);
-            JSONArray result = new JSONArray();
-            while (s.hasMoreSolutions()) {
-                result.add(JSONQuery.encodeResult(s.nextSolution()));
-            }
-            return result.toString();
+    public String executeTest(@QueryParam("owl") String owl, @QueryParam("db") String db) {
+        if (owl != null && !"".equals(owl)) {
+            new jpl.Query("load_experiment('" + owl + "')").oneSolution();
+        }
+        if (db != null && !"".equals(db)) {
+            new jpl.Query("mng_db('" + db + "')").oneSolution();
+        }
+        try {
+            return testSuite.executeSuite().toString();
         } catch (Exception e) {
-            return "error: " + e;
+            return jsonError(e);
         }
     }
 
     /**
-     * Executes the given tests
+     * Upload method for robocop tests.
      */
-    @POST
-    @Path("/setOWL")
+    @PUT
+    @Path("/uploadTest")
     @Produces(MediaType.APPLICATION_JSON)
-    public String setOWL(@QueryParam("owl") String owl) {
-        new jpl.Query("load_experiment('" + owl + "')").oneSolution();
-        return "ok";
+    public String uploadTest(@FormParam("test") String test) {
+        try {
+            this.testSuite = new CopTestSuite(test);
+            return RESULT_OK;
+        } catch (ParseException e) {
+            return jsonError(e);
+        }
+    }
+
+    private static String jsonError(Exception e) {
+        JSONObject err = new JSONObject();
+        err.put("result", "error");
+        err.put("error", e.getMessage());
+        return err.toString();
     }
 
     /**
@@ -85,6 +89,9 @@ public class RobocopServer {
         final ResourceConfig rc = new ResourceConfig().packages("de.suturo.video.robocop");
         final HttpServer copserver = GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URL), rc);
         initProlog();
+        if (!Arrays.asList(args).contains("--no-ros")) {
+            initROS();
+        }
         while (true) {
             try {
                 Thread.sleep(1000);
@@ -97,18 +104,21 @@ public class RobocopServer {
 
     /**
      * Initialize the SWI Prolog engine
-     *
-     * @throws IOException
-     * @throws InterruptedException
-     * @throws RospackError
      */
-    private static void initProlog() throws IOException, InterruptedException, RospackError {
+    static void initProlog() {
         List<String> pl_args = new ArrayList<>(Arrays.asList(jpl.JPL.getDefaultInitArgs()));
         pl_args.set(0, "/usr/bin/swipl");
         pl_args.add("-G256M");
         pl_args.add("-nosignals");
         jpl.JPL.setDefaultInitArgs(pl_args.toArray(new String[0]));
         jpl.JPL.init();
+    }
+
+    /**
+     * Initialize rosprolog
+     *
+     */
+    static void initROS() throws IOException, InterruptedException, RospackError {
         new jpl.Query("ensure_loaded('" + findRosPackage("rosprolog") + "/prolog/init.pl')," //
                 + "ensure_loaded('" + findRosPackage("robocop") + "/prolog/init.pl')").oneSolution();
     }
@@ -124,7 +134,6 @@ public class RobocopServer {
      * @throws RospackError
      */
     private static String findRosPackage(String name) throws IOException, InterruptedException, RospackError {
-
         Process rospack = Runtime.getRuntime().exec("rospack find " + name);
         if (rospack.waitFor() != 0)
             throw new RospackError();

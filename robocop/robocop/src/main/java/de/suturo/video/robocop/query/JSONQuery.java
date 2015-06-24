@@ -54,16 +54,6 @@ public class JSONQuery {
         private static final long serialVersionUID = 1L;
     }
 
-    static public ThreadedQuery makeQuery(String json) throws InvalidJSONQuery {
-        try {
-            JSONArray json_query = JSONArray.fromObject(json);
-
-            return new ThreadedQuery(makeCompoundTerm(json_query));
-        } catch (Exception e) {
-            throw new InvalidJSONQuery("Unable to parse JSON query: " + json + ", Exception: " + e.toString());
-        }
-    }
-
     static public JSONObject encodeResult(Hashtable<String, Term> bindings) {
         JSONObject result = new JSONObject();
 
