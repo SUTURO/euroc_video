@@ -99,9 +99,11 @@ void DBPlayer::play_thread(ros::Time start_time, ros::Time end_time)
       continue;
 
     // check if time is after end time
-    if (end_time.isValid() && t > end_time)
+    if ((end_time.sec > 1) && (end_time.nsec > 1) && (t > end_time))
+    {
+      cout << "Reached end time: " << end_time << std::endl;
       break;
-
+    }
     // set offset
     if (!offset_is_set)
     {
