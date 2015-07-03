@@ -706,7 +706,7 @@ mang_desig_matches(Designator, QueryPattern) :-
   jpl_array_to_list(DesigJavaArr, DesigJavaList),
   
   member(DesigJava, DesigJavaList),
-  jpl_call(DesigJava, 'get', ['_id'], DesigID),
+  jpl_call(DesigJava, 'get', ['_ID'], DesigID),
   rdf_split_url('http://knowrob.org/kb/cram_log.owl#', DesigID, Designator).
 
 
@@ -768,7 +768,4 @@ desig_list_to_query([Key, Val], Prefix, QueryStringList) :-
 lispify_desig('object_acted_on', 'OBJ').
 
 % default: do not modify value
-lispify_desig(A, CapA) :-
-  upcase_atom(A, CapA).
-
-
+lispify_desig(A, A).
