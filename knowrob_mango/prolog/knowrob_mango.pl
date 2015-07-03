@@ -18,9 +18,35 @@
 :- module(knowrob_mango,
     [
       mang_db/1,
-      mang_designator_props/3,
+      
+      mang_latest_designator_before_time/3,
+      mang_latest_designator/3,
+      mang_designator_type/2,
       mang_designator_perc/2,
-      mang_designator_props_j/3
+      mang_designator_props/3,
+      mang_designator_props/4,
+      mang_designator_props_j/3,
+      mang_desig_matches/2,
+      mang_obj_pose_by_desig/2,
+      mang_designator/2,
+      mang_designator_distinct_values/2,
+      mang_designator_location/2,
+
+      mang_lookup_transform/4,
+      mang_lookup_position/4,
+      mang_transform_pose/5,
+
+      mang_timestamp/2,
+
+      mang_robot_pose/2,
+      mang_robot_pose/3,
+      mang_robot_pose_at_time/4,
+      mang_comp_pose/2,
+      mang_comp_pose/3,
+      mang_comp_pose_at_time/4,
+
+      obj_blocked_by_in_camera/4,
+      obj_visible_in_camera/3
     ]).
 
 :- use_module(library('semweb/rdfs')).
@@ -56,8 +82,10 @@
 
     mang_desig_matches(r, +),
     mang_obj_pose_by_desig(r,r),
+    mang_designator_perc(r,?),
     mang_designator_props(r,?),
-    mang_designator_props_j(r,?),
+    mang_designator_props(r,+,+,?),
+    mang_designator_props_j(+,+,?),
     mang_designator_type(r,?),
 
     obj_blocked_by_in_camera(r, r, r, r),
@@ -252,6 +280,7 @@ mang_designator_perc(Designator, Out) :-
 % 
 % Read the properties of a logged designator.
 % 
+% @param Designator   Instance of a designator, having its ID as local part of the IRI
 % @param DesigJava    JAVA instance of the designator
 % @param PropertyPath Sequence of property keys for nested designators
 % @param Value        Value slot of the designator
@@ -482,8 +511,8 @@ mang_comp_pose_at_time(RobotPart, TargetFrame, TimePoint, Pose) :-
   ( robot_part_tf_prefix(RobotPart, TfPrefix) ->
     ( atom_prefix(TfPrefix,'/') ->
       ( TfPrefix == '/' ->
-	TfResolved = ''
-	;TfResolved = TfPrefix      
+  TfResolved = ''
+  ;TfResolved = TfPrefix      
       )
       ; atom_concat('/',TfPrefix, TfResolved) 
     ),
