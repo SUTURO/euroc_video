@@ -119,9 +119,9 @@ public class Designator {
                     BasicDBList dim = ((BasicDBList) val);
 
                     valAccepted = new Vector3d();
-                    ((Vector3d) valAccepted).x = Double.valueOf(dim.get(0).toString());
-                    ((Vector3d) valAccepted).y = Double.valueOf(dim.get(1).toString());
-                    ((Vector3d) valAccepted).z = Double.valueOf(dim.get(2).toString());
+                    ((Vector3d) valAccepted).x = Double.parseDouble(dim.get(0).toString());
+                    ((Vector3d) valAccepted).y = Double.parseDouble(dim.get(1).toString());
+                    ((Vector3d) valAccepted).z = Double.parseDouble(dim.get(2).toString());
                 }
 
             } else if (key.equalsIgnoreCase("dimensions-3d")) {
@@ -130,9 +130,9 @@ public class Designator {
                     BasicDBObject dimRow = (BasicDBObject) val;
                     valAccepted = new Vector3d();
 
-                    ((Vector3d) valAccepted).x = Double.valueOf(dimRow.get("DEPTH").toString());
-                    ((Vector3d) valAccepted).y = Double.valueOf(dimRow.get("WIDTH").toString());
-                    ((Vector3d) valAccepted).z = Double.valueOf(dimRow.get("HEIGHT").toString());
+                    ((Vector3d) valAccepted).x = Double.parseDouble(dimRow.get("DEPTH").toString());
+                    ((Vector3d) valAccepted).y = Double.parseDouble(dimRow.get("WIDTH").toString());
+                    ((Vector3d) valAccepted).z = Double.parseDouble(dimRow.get("HEIGHT").toString());
                 }
 
                 // Color properties
@@ -140,9 +140,9 @@ public class Designator {
                 if (val instanceof BasicDBObject) {
                     BasicDBObject colRow = (BasicDBObject) val;
                     valAccepted = new Vector3d();
-                    ((Vector3d) valAccepted).x = Double.valueOf(colRow.get("RED").toString());
-                    ((Vector3d) valAccepted).y = Double.valueOf(colRow.get("GREEN").toString());
-                    ((Vector3d) valAccepted).z = Double.valueOf(colRow.get("BLUE").toString());
+                    ((Vector3d) valAccepted).x = Double.parseDouble(colRow.get("RED").toString());
+                    ((Vector3d) valAccepted).y = Double.parseDouble(colRow.get("GREEN").toString());
+                    ((Vector3d) valAccepted).z = Double.parseDouble(colRow.get("BLUE").toString());
                 } else {
                     String colorString = row.getString(key);
                     if ("RED".equals(colorString)) {

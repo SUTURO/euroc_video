@@ -276,7 +276,7 @@ mang_designator_perc(Designator, Out) :-
   mongo_interface(DB),
   jpl_call(DB, 'getPerceivedObjectFromDesig', [DesigID], Out).
 
-%% mang_designator_props_j(+DesigJava, +PropertyPath, ?Value) is nondet.
+%% mang_designator_props(+Designator, +DesigJava, +PropertyPath, ?Value) is nondet.
 % 
 % Read the properties of a logged designator.
 % 
@@ -285,7 +285,31 @@ mang_designator_perc(Designator, Out) :-
 % @param PropertyPath Sequence of property keys for nested designators
 % @param Value        Value slot of the designator
 % 
+mang_designator_props(_, DesigJava, PropertyPath, Value) :-
+  atom(PropertyPath),
+  atomic_list_concat(PropertyPathList,'.',PropertyPath),
+  mang_designator_props_j(DesigJava, PropertyPathList, Value).
 
+mang_designator_props(_, DesigJava, [Prop|Tail], Value) :-
+  jpl_call(DesigJava, 'keySet', [], PropsSet),
+  jpl_set_element(PropsSet, Prop),
+  jpl_call(DesigJava, 'get', [Prop], ChildDesigJava),
+  jpl_ref_to_type(ChildDesigJava,  class([org,knowrob,interfaces,mongo,types],['Designator'])),
+  mng_designator_props_j(ChildDesigJava, Tail, Value).
+  
+mang_designator_props(_, DesigJava, [Prop], Value) :-
+  mang_designator_props_value(DesigJava, Prop, Value).
+
+
+
+%% mang_designator_props_j(+DesigJava, +PropertyPath, ?Value) is nondet.
+% 
+% Read the properties of a logged designator.
+% 
+% @param DesigJava    JAVA instance of the designator
+% @param PropertyPath Sequence of property keys for nested designators
+% @param Value        Value slot of the designator
+% 
 mang_designator_props_j(DesigJava, PropertyPath, Value) :-
   atom(PropertyPath),
   atomic_list_concat(PropertyPathList,'.',PropertyPath),
