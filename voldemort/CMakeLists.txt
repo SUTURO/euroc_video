@@ -9,6 +9,9 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   message_generation
+  genmsg 
+  actionlib_msgs 
+  actionlib
 )
 
 ##  System dependencies are found with CMake's conventions
@@ -81,7 +84,7 @@ find_package(Boost REQUIRED COMPONENTS system thread filesystem)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES voldemort
-  CATKIN_DEPENDS roscpp rospy message_runtime std_msgs
+  CATKIN_DEPENDS roscpp rospy message_runtime std_msgs suturo_video_msgs 
 #  DEPENDS system_lib
 )
 
@@ -106,6 +109,12 @@ include_directories(
 
 ## Declare a cpp executable
 # add_executable(voldemort_node src/voldemort_node.cpp)
+
+add_executable(play_logs src/play_logs.cpp)
+target_link_libraries(play_logs
+  ${catkin_LIBRARIES}
+  ${Boost_LIBRARIES}
+)
 
 add_executable(call_robocop src/call_robocop.cpp)
 target_link_libraries(call_robocop
