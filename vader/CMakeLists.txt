@@ -20,6 +20,7 @@ add_definitions(-DQT_NO_KEYWORDS)
 qt4_wrap_cpp(MOC_FILES
   include/video_panel.h
   include/ROSConnector.h
+  include/PlayLogs.h
 )
 
 ## Here we specify the list of source files, including the output of
@@ -27,6 +28,7 @@ qt4_wrap_cpp(MOC_FILES
 set(SOURCE_FILES
   src/video_panel.cpp
   src/ROSConnector.cpp
+  src/PlayLogs.cpp
   ${MOC_FILES}
 )
 
