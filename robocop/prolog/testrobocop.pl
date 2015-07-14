@@ -1,9 +1,9 @@
 :- module(testrobocop,
     [numberFound/1,
-    objectsFound/1]).
+    objectsFound/1,
+    getInfoToDesig/3]).
 
 
-:- ensure_loaded('/home/suturo/catkin_ws/src/euroc_video/robocop/prolog/init.pl').
 :- load_experiment('/home/suturo/sr_experimental_data/current-experiment/cram_log.owl').
 
 numberFound(Count):-
@@ -11,10 +11,26 @@ numberFound(Count):-
 	, List),
 	length(List, Count).
 
-objectsFound(RESULT):-
-	owl_has(A,rdf:type,knowrob:'CRAMDesignator'),
-        owl_has(A,knowrob:equatedDesignator,_),
-        owl_has(A,knowrob:successorDesignator,_),
+allObjectsFound(List):-
+        findall(RESULT,(
+	owl_has(_,knowrob:successorDesignator,A),
         rdf_split_url(_, E, A), 
         atom_concat('http://knowrob.org/kb/knowrob.owl#',E,Des),
-        mng_designator_props(Des,'TYPE',RESULT).
+        mang_designator_props(Des,'TYPE',RESULT)),
+	List).
+
+objectsFound(Result):-
+	allObjectsFound(List),
+	list_to_set(List, Set),
+	member(Result,Set).
+
+
+getInfoToDesig(Desig, Attr, RESULT):-
+	rdf_split_url(_, E, Desig),
+        atom_concat('http://knowrob.org/kb/knowrob.owl#',E,Des),
+        mang_designator_props(Des, Attr, RESULT).
+
+getParkActions(D):-
+	rdf_has(A, knowrob:taskSuccess, C),
+	rdf_has(A,knowrob:designator,D), 
+	getInfoToDesig(D,'TO', 'PARK').
