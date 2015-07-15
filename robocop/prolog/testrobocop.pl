@@ -6,7 +6,7 @@
 
 :- load_experiment('/home/suturo/sr_experimental_data/current-experiment/cram_log.owl').
 
-numberFound(Count):-
+numberOfObjects(Count):-
 	findall(RESULT,objectsFound(RESULT)
 	, List),
 	length(List, Count).
@@ -31,6 +31,10 @@ getInfoToDesig(Desig, Attr, RESULT):-
         mang_designator_props(Des, Attr, RESULT).
 
 getParkActions(D):-
-	rdf_has(A, knowrob:taskSuccess, C),
+	rdf_has(A, knowrob:taskSuccess, _),
 	rdf_has(A,knowrob:designator,D), 
 	getInfoToDesig(D,'TO', 'PARK').
+
+getParkedObjects(Objects):-
+	getParkActions(Actions),
+	getInfoToDesig(Actions,'OBJ.TYPE', Objects).
