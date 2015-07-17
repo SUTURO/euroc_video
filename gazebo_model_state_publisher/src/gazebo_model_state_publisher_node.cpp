@@ -65,7 +65,7 @@ void callback(ConstPosesStampedPtr &_msg)
     pub.publish(ros_named_pose_stamped);
 
     last_updated[gz_pose.name()] = current_time;
-    
+
   }
 }
 
