@@ -10,6 +10,7 @@
 #include <QCheckBox>
 #include <QTableWidget>
 #include <QWidget>
+#include <QComboBox>
 #include <ROSConnector.h>
 #include "suturo_video_msgs/Test.h"
 #include "suturo_video_msgs/TestResult.h"
@@ -17,6 +18,18 @@
 
 namespace video_panel_plugin
 {
+class PrefixLabel : public QLabel
+{
+public:
+    PrefixLabel(std::string prefix);
+    PrefixLabel(std::string prefix, std::string suffix);
+    void updateSuffix(std::string suffix);
+
+private:
+    QLabel label;
+    std::string prefix;
+    std::string suffix;
+};
 
 class VideoPanel: public rviz::Panel
 {
@@ -44,7 +57,12 @@ private:
     QWidget *playerWidget;
     QWidget *testResultsWidget;
     QLabel *testLabel;
-    QLabel *testResultLabel;
+    PrefixLabel *testResultLabel;
+    PrefixLabel *timePointsLabel;
+    PrefixLabel *testListLabel;
+    QComboBox *timePointsBox;
+
+    int timePointsNumber;
 
     std::vector<suturo_video_msgs::Test> returnedTests;
     suturo_video_msgs::Test getTestFromList(QString name);
@@ -59,5 +77,6 @@ private:
 
     void setTestLabel(QString text);
 };
+
 }
 #endif // VIDEO_PANEL_H

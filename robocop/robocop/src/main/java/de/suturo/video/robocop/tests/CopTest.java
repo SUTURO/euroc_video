@@ -57,13 +57,19 @@ public class CopTest {
             for (Object object : ntp) {
                 times.add(Time.getTimepoint((String) object));
             }
+            bindings.remove("NTP");
         }
         return times;
     }
 
     private boolean checkExpected(JSONObject bindings) {
         for (Object key : bindings.keySet()) {
-            if (!expected.containsKey(key) || !expected.get(key).equals(bindings.get(key))) {
+            if (expected.containsKey(key) && !expected.get(key).equals(bindings.get(key))) {
+                return false;
+            }
+        }
+        for (Object key : expected.keySet()) {
+            if (!bindings.containsKey(key)) {
                 return false;
             }
         }

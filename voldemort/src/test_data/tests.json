@@ -1,0 +1,50 @@
+[
+{
+"name": "test_name1",
+"description": "test_description1",
+"query": "test_query1",
+    "expected": {
+	"NumPicked": 1,
+	"NumPlaced": 4
+}
+},
+{
+"name": "test_name2",
+"description": "test_description2",
+"query": "test_query2",
+"expected": {
+	"NumPicked": 2,
+	"NumPlaced": 2
+
+}
+},
+    {
+"name": "test_name3",
+"description": "test_description3",
+"query": "test_query3",
+"expected": {
+	"NumPicked": 1,
+	"NumPlaced": 4
+
+}
+    },
+    {
+"name": "test_name4",
+"description": "test_description4",
+"query": "test_query4",
+"expected": {
+	"NumPicked": 7,
+	"NumPlaced": 6
+
+}
+    },
+        {
+"name": "test_name5",
+"description": "test_description5",
+"query": "test_query5",
+"expected": {
+	"NumPicked": 7,
+	"NumPlaced": 8
+}
+}
+]

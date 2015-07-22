@@ -1,0 +1,42 @@
+[
+    {
+	"name": "test_name1",
+	"executionDate": "2014-03-06_11:29:12",
+	"result": false,
+	"bindings": {
+	    "NumPicked": 2,
+	    "NumPlaced": 4
+	},
+	"notableTimePoints":
+	[
+	    {"time": {
+		"sec": 392,
+		"nsec": 182
+	    }},
+	    {"time": {
+		"sec": 765,
+		"nsec": 871
+	    }}
+	]
+    },
+    {
+	"name": "test_name5",
+	"executionDate": "2013-07-19_01:12:11",
+	"result": false,
+	"bindings": {
+	    "NumPicked": 8,
+	    "NumPlaced": 1
+	},
+	"notableTimePoints":
+	[
+	    {"time": {
+		"sec": 123,
+		"nsec": 123
+	    }},
+	    {"time": {
+		"sec": 982,
+		"nsec": 826
+	    }}
+	]
+    }
+]

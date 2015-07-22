@@ -1,0 +1,5 @@
+bin/
+knowrob_mango/build/
+.gradle/
+.project
+*.classpath
