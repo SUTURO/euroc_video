@@ -45,8 +45,8 @@
       mang_comp_pose/3,
       mang_comp_pose_at_time/4,
 
-      obj_blocked_by_in_camera/4,
-      obj_visible_in_camera/3
+      abj_blocked_by_in_camera/4,
+      abj_visible_in_camera/3
     ]).
 
 :- use_module(library('semweb/rdfs')).
@@ -88,8 +88,8 @@
     mang_designator_props_j(+,+,?),
     mang_designator_type(r,?),
 
-    obj_blocked_by_in_camera(r, r, r, r),
-    obj_visible_in_camera(r, r, r).
+    abj_blocked_by_in_camera(r, r, r, r),
+    abj_visible_in_camera(r, r, r).
 
 
 :- rdf_db:rdf_register_ns(rdf, 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', [keep(true)]).
@@ -594,7 +594,7 @@ mang_obj_pose_at_time(Obj, SourceFrame, TargetFrame, TimePoint, Pose) :-
 % Higher-level reasoning methods
 %
 
-%% obj_visible_in_camera(+Obj, ?Camera, +TimePoint) is nondet.
+%% abj_visible_in_camera(+Obj, ?Camera, +TimePoint) is nondet.
 %
 % Check if Obj is visible by Camera at time TimePoint by reading the camera
 % properties from the robot's SRDL description and computing whether the
@@ -604,7 +604,7 @@ mang_obj_pose_at_time(Obj, SourceFrame, TargetFrame, TimePoint, Pose) :-
 % @param Camera     Instance of an srdl2comp:Camera
 % @param TimePoint  Instance of a knowrob:TimePoint at which the scene is to be evaluated
 % 
-obj_visible_in_camera(Obj, Camera, TimePoint) :-
+abj_visible_in_camera(Obj, Camera, TimePoint) :-
 
   findall(Camera, owl_individual_of(Camera, srdl2comp:'Camera'), Cameras),
   member(Camera, Cameras),
@@ -641,7 +641,7 @@ obj_visible_in_camera(Obj, Camera, TimePoint) :-
 
 
 
-%% obj_blocked_by_in_camera(?Obj, ?Blocker, ?Camera, +TimePoint) is nondet.
+%% abj_blocked_by_in_camera(?Obj, ?Blocker, ?Camera, +TimePoint) is nondet.
 % 
 % Check if the view on Obj from Camera at time TimePoint is blocked by object
 % Blocker by reading the camera properties from the robot's SRDL description
@@ -653,7 +653,7 @@ obj_visible_in_camera(Obj, Camera, TimePoint) :-
 % @param Camera     Instance of an srdl2comp:Camera
 % @param TimePoint  Instance of a knowrob:TimePoint at which the scene is to be evaluated
 % 
-obj_blocked_by_in_camera(Obj, Blocker, Camera, TimePoint) :-
+abj_blocked_by_in_camera(Obj, Blocker, Camera, TimePoint) :-
 
   findall(Camera, owl_individual_of(Camera, srdl2comp:'Camera'), Cameras),
   member(Camera, Cameras),
