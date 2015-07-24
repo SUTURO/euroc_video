@@ -24,12 +24,13 @@ class ServiceManager(object):
 
     def handle_execute_tests(self, req):
         resp = ExecuteTestsResponse()
-        if req.simulation_run_name is not None:
-            simulation_run_name = req.simulation_run_name
-            resp.result = HttpTools.execute_tests(simulation_run_name)
+        if req.database_name is not None and req.owl_file is not None:
+            database_name = req.database_name
+            owl_file = req.owl_file
+            resp.result = HttpTools.execute_tests(database_name, owl_file)
             resp.result = True # Workaround
         if resp.result == True:
-            sim_run = self.test_manager.get_simulation_run_by_name(simulation_run_name)
+            sim_run = self.test_manager.get_simulation_run_by_name(database_name)
             # call a method from test_manager that turns the data from resp into a test_result (maybe from dict)
             self.test_manager.add_all_tests_to_simulation_run(sim_run)
         return resp
@@ -41,10 +42,12 @@ class ServiceManager(object):
         if os.path.isfile(tests_file_path):
             test_names = self.test_manager.read_tests_from_file(tests_file_path)
             tests = []
+            print "TestNames="+str(test_names)
             for test_name in test_names:
+
                 test = self.test_manager.tests.get_test_by_name(test_name)
                 tests.append(test.to_json_dict())
-            self.upload_tests(tests)
+            HttpTools.upload_tests(tests)
         else:
             resp.result = False
         return resp
