@@ -61,7 +61,7 @@ class TestContainer(object):
         try:
             test = self.tests[name]
         except KeyError:
-            print("Test "+name+ "not found")
+            print("Test "+str(name)+ "not found")
         return test
 
     def get_all_tests(self):
