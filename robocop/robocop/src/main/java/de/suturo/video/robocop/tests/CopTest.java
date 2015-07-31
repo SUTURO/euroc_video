@@ -1,7 +1,9 @@
 package de.suturo.video.robocop.tests;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -18,8 +20,8 @@ public class CopTest {
 
     private final String name;
     private final String query;
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("Y-MM-dd_h:m:s");
-    private final JSONObject expected;
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("Y-MM-dd_h:m:s");
+    private final List<JSONObject> expected;
 
     /**
      * Creates a new robocop test from the given JSON object.
@@ -31,7 +33,17 @@ public class CopTest {
         name = singleTest.getString("name");
         // singleTest.getString("description"); not used atm
         query = singleTest.getString("query");
-        expected = singleTest.getJSONObject("expected");
+        Object exp = singleTest.get("expected");
+        expected = new ArrayList<>();
+        if (exp instanceof JSONObject) {
+            expected.add((JSONObject) exp);
+        } else if (exp instanceof JSONArray) {
+            for (Object o : ((JSONArray) exp)) {
+                if (o instanceof JSONObject) {
+                    expected.add((JSONObject) o);
+                }
+            }
+        }
     }
 
     /**
@@ -43,7 +55,7 @@ public class CopTest {
         boolean result = checkExpected(bindings);
         JSONObject test = new JSONObject();
         test.put("name", name);
-        test.put("executionDate", sdf.format(new Date()));
+        test.put("executionDate", SDF.format(new Date()));
         test.put("result", Boolean.valueOf(result));
         test.put("bindings", bindings);
         test.put("notableTimePoints", notableTimes(bindings));
@@ -63,16 +75,19 @@ public class CopTest {
     }
 
     private boolean checkExpected(JSONObject bindings) {
-        for (Object key : bindings.keySet()) {
-            if (expected.containsKey(key) && !expected.get(key).equals(bindings.get(key))) {
-                return false;
+        for (JSONObject bindConfig : expected) {
+            for (Object key : bindings.keySet()) {
+                if (bindConfig.containsKey(key) && !bindConfig.get(key).equals(bindings.get(key))) {
+                    continue;
+                }
             }
-        }
-        for (Object key : expected.keySet()) {
-            if (!bindings.containsKey(key)) {
-                return false;
+            for (Object key : bindConfig.keySet()) {
+                if (!bindings.containsKey(key)) {
+                    continue;
+                }
             }
+            return true;
         }
-        return true;
+        return false;
     }
 }
