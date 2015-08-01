@@ -173,7 +173,7 @@ namespace video_panel_plugin
 
     void VideoPanel::handlePlayButton()
     {
-        playLogs = PlayLogs();
+        //playLogs = PlayLogs();
         // Derzeit geht nur TF
         std::string msg_type = "tf";
         std::string database = selectedDatabase;
