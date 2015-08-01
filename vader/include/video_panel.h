@@ -65,7 +65,7 @@ private:
     QComboBox *timePointsBox;
 
     // PlayLogs funktioniert nur, wenn der dbPlayer von Jannik läuft, ansonsten startet Rviz das Plugin nicht
-    // PlayLogs playLogs;
+    PlayLogs playLogs;
     QWidget *playLogsWidget;
     QComboBox *selectTopicBox;
     QComboBox *selectStartTimeBox;

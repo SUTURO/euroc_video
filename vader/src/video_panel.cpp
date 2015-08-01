@@ -157,7 +157,7 @@ namespace video_panel_plugin
 
     void VideoPanel::handlePlayButton()
     {
-        // playLogs = PlayLogs();
+        playLogs = PlayLogs();
         std::string a = "std_msgs/String";
         std::string b = "strings4";
         std::string c = "strings";
