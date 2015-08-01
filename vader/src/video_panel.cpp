@@ -154,10 +154,6 @@ namespace video_panel_plugin
         playLogsLayout->addWidget(selectEndTimeBox);
         // TODO: End Zeit in einer Variable speichern
 
-        // TODO: output_topic = /suturo/ + alter topicname
-        // TODO: Datenbank global machen
-        // TODO: msg_typ... aus DB oder angeben?
-
         // create button to pull available runs
         startLogButton = new QPushButton("Start", this);
         playLogsLayout->addWidget(startLogButton);
@@ -178,14 +174,19 @@ namespace video_panel_plugin
     void VideoPanel::handlePlayButton()
     {
         playLogs = PlayLogs();
-        std::string a = "std_msgs/String";
-        std::string b = "strings4";
-        std::string c = "strings";
-        std::string d = "output_topic";
-        ros::Time e = ros::Time::now();
-        ros::Time f = ros::Time::now() + ros::Duration(100);
+        // Derzeit geht nur TF
+        std::string msg_type = "tf";
+        std::string database = selectedDatabase;
+        std::string collection = selectTopicBox->currentText().toStdString();
+        std::string output_topic = selectTopicBox->currentText().toStdString();
+        ros::Time start = ros::Time::now();
+//        ros::Time start = selectStartTimeBox->currentText().toStdString();
+        ros::Time end = ros::Time::now() + ros::Duration(100);
+//        ros::Time end = selectEndTimeBox->currentText().toStdString();
 
-        // playLogs.play_logs(a, b, c, d, e, f);
+//        std::string t = selectTopicBox->currentText().toStdString();
+//        std::cout << "Current Topic: " << t << std::endl;
+
         // playLogs.play_logs(msg_type, database, collection, output_topic, start, end);
     }
 
@@ -274,20 +275,22 @@ namespace video_panel_plugin
 
         // Get available Topics to play
         playableTopics = connector.getPlayableTopics(selectedDatabase);
+
         std::cout << selectedDatabase << std::endl;
         std::cout << playableTopics.at(0) << std::endl;
-//        if (playableTopics.size() > 0)
-//        {
-//            for(int i = 0; playableTopics.size(); i++)
-//            {
-//                selectTopicBox->addItem(QString(playableTopics.at(i)));
-//            }
-//        }
-//        else
-//        {
-//            selectTopicBox->addItem("No Playable Topics found!");
-//        }
 
+        if (playableTopics.size() > 0)
+        {
+            for(int i = 0; i < playableTopics.size(); i++)
+            {
+                std::cout << "Add Topic Nr: " << i << std::endl;
+                selectTopicBox->addItem(QString(playableTopics.at(i).c_str()));
+            }
+        }
+        else
+        {
+            selectTopicBox->addItem("No Playable Topics found!");
+        }
 
         // TODO: Implement real losaing of run
     }
