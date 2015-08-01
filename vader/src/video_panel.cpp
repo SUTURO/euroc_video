@@ -180,12 +180,13 @@ namespace video_panel_plugin
         std::string collection = selectTopicBox->currentText().toStdString();
         std::string output_topic = selectTopicBox->currentText().toStdString();
         ros::Time start = ros::Time::now();
-//        ros::Time start = selectStartTimeBox->currentText().toStdString();
         ros::Time end = ros::Time::now() + ros::Duration(100);
-//        ros::Time end = selectEndTimeBox->currentText().toStdString();
 
-//        std::string t = selectTopicBox->currentText().toStdString();
-//        std::cout << "Current Topic: " << t << std::endl;
+        std::string t = selectTopicBox->currentText().toStdString();
+        std::cout << "Current Database: " << selectedDatabase << std::endl;
+        std::cout << "Current Topic: " << t << std::endl;
+        std::cout << "Current Startime: " << start << std::endl;
+        std::cout << "Current Endtime: " << end << std::endl;
 
         // playLogs.play_logs(msg_type, database, collection, output_topic, start, end);
     }
