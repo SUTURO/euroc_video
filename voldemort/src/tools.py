@@ -64,6 +64,7 @@ class HttpTools(object):
     @staticmethod
     def upload_tests(json_tests):
         params = {'test': str(json_tests)}
+        print params
         r = requests.put('http://localhost:8080/robocop/uploadTest', data=params)
         return r
 
@@ -81,15 +82,15 @@ class TestDataTools(object):
         self.test_result_files = ['test_data/tests1_results.json', 'test_data/tests2_results.json', 'test_data/tests3_results.json']
         self.test_file = 'test_data/tests.json'
 
-
     def prepare_test_data(self):
         self.write_test_simulation_dbs()
-        #self.read_tests()
-        #self.read_test_results()
+        self.read_tests()
+        self.read_test_results()
 
     def write_test_simulation_dbs(self):
         for name in self.simulation_names:
             self.mongo_tools.write_test_simulation_data_to_mongo(name)
+            self.test_manager.read_simulation_runs()
 
     def read_tests(self):
         self.test_manager.read_tests_from_file(self.test_file)
