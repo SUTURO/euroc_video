@@ -4,6 +4,7 @@ import json
 import requests
 from pymongo import MongoClient
 
+
 class MongoTools(object):
     def __init__(self):
         self.client = MongoClient()
@@ -27,24 +28,6 @@ class MongoTools(object):
         for test_result in test_results:
             db['test_results'].insert_one(test_result)
 
-    def create_test_result_from_mongo_document(self, test_result_doc):
-        result = test_result_doc['result']
-        execution_date = test_result_doc['executionDate']
-        notable_time_points = test_result_doc['notableTimePoints']
-        test_result = TestResult(result=result, execution_date=execution_date)
-        for ntp_dict in notable_time_points:
-            test_result.add_notable_time_point(ntp_dict)
-        return test_result
-
-    def get_all_test_results_from_mongo(self, simulation_run):
-        db = self.client[simulation_run.name]
-        test_collection = db['test_results']
-        for test_result_doc in test_collection.find():
-            test_name = test_result_doc['name']
-            test = simulation_run.get_test_by_name(test_name)
-            if test is not None:
-                test.test_result = self.create_test_result_from_mongo_document(test_result_doc)
-
     def get_all_simulation_run_names_from_mongo(self):
         database_names = self.client.database_names()
         if 'local' in database_names:
@@ -60,6 +43,7 @@ class MongoTools(object):
                 topic_names.append(collection)
         return topic_names
 
+
 class JsonTools(object):
     @staticmethod
     def parse_from_json_file(file_path):
@@ -74,7 +58,6 @@ class HttpTools(object):
     @staticmethod
     def upload_tests(json_tests):
         params = {'test': str(json_tests)}
-        print params
         r = requests.put('http://localhost:8080/robocop/uploadTest', data=params)
         return r
 
@@ -83,6 +66,7 @@ class HttpTools(object):
         params = {'owl': owl_file, 'db': database_name}
         r = requests.get('http://localhost:8080/robocop/executeTest', params=params)
         return r
+
 
 class TestDataTools(object):
     def __init__(self, mongo_tools, test_manager):
@@ -132,13 +116,3 @@ class TestDataTools(object):
         db.drop_collection('test_results')
         for test_result in test_results:
             db['test_results'].insert_one(test_result)
-
-    def write_test_data(self):
-        simulation_names = ['simulation1', 'simulation2', 'simulation3']
-        for sim_name in simulation_names:
-            vdv.delete_data(sim_name)
-            vdv.write_test_sim_db(sim_name)
-
-        test_file = 'test_data/tests2.json'
-        test_results_file = 'test_data/tests2_results.json'
-        vdv.write_test_results_from_file_to_mongo(simulation_names[0], test_results_file)

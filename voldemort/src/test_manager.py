@@ -1,8 +1,8 @@
+__author__ = 'tobi'
+
 from voldemort_to_vader_data import SimulationRun
 from tools import JsonTools
 from voldemort_to_vader_data import TestContainer, SimulationRunContainer
-
-__author__ = 'tobi'
 
 class TestManager(object):
     def __init__(self, mongo_tools):
@@ -38,7 +38,6 @@ class TestManager(object):
         tests_names = []
 
         for test_data in tests_data:
-            print "TestData="+str(test_data)
             self.tests.add_test_from_dict(test_data)
             tests_names.append(test_data['name'])
         return tests_names
