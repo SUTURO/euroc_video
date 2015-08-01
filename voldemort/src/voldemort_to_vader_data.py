@@ -16,14 +16,15 @@ class SimulationRunContainer(object):
         self.runs = {}
 
     def add_run(self, run):
-        self.runs[run.name] = run
+        if not self.get_run_by_name(run.name):
+            self.runs[run.name] = run
 
     def get_run_by_name(self, name):
         run = None
         try:
             run = self.runs[name]
         except KeyError:
-            print("Run not found, name=" + name)
+            pass
         return run
 
 class TestContainer(object):
