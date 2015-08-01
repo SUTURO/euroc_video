@@ -30,11 +30,13 @@ class TestManager(object):
 
     def read_tests_from_file(self, file_path):
         tests_data = JsonTools.parse_from_json_file(file_path)
+        tests = TestContainer()
         tests_names = []
+
         for test_data in tests_data:
+            print "TestData="+str(test_data)
             self.tests.add_test_from_dict(test_data)
-            name = tests_names.append(test_data['name'])
-            tests_names.append(name)
+            tests_names.append(test_data['name'])
         return tests_names
 
     def read_simulation_runs(self):

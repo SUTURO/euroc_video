@@ -62,15 +62,16 @@ class HttpTools(object):
     OWL_PATH = '/home/suturo/sr_experimental_data/'
 
     @staticmethod
-    def upload_tests(self, json_tests):
+    def upload_tests(json_tests):
         params = {'test': str(json_tests)}
         r = requests.put('http://localhost:8080/robocop/uploadTest', data=params)
+        return r
 
     @staticmethod
-    def execute_tests(self, simulation_run_name):
-        params = {'owl': str(self.OWL_PATH+simulation_run_name+'.owl'), 'db': simulation_run_name}
+    def execute_tests(database_name, owl_file):
+        params = {'owl': owl_file, 'db': database_name}
         r = requests.get('http://localhost:8080/robocop/executeTest', params=params)
-
+        return r
 
 class TestDataTools(object):
     def __init__(self, mongo_tools, test_manager):
@@ -83,8 +84,8 @@ class TestDataTools(object):
 
     def prepare_test_data(self):
         self.write_test_simulation_dbs()
-        self.read_tests()
-        self.read_test_results()
+        #self.read_tests()
+        #self.read_test_results()
 
     def write_test_simulation_dbs(self):
         for name in self.simulation_names:

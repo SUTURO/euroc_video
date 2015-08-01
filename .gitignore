@@ -1,2 +1,9 @@
+bin/
+build/
+.gradle/
+.project
+.classpath
+.settings/
+.idea/
 *.pyc
 *.pyo
