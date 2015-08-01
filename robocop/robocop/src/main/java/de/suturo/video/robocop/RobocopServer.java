@@ -36,7 +36,6 @@ public class RobocopServer {
     /** default ok result */
     static final String RESULT_OK = "{result: \"ok\"}";
     private static final String BASE_URL = "http://localhost:8080";
-    private CopTestSuite testSuite;
 
     /**
      * Executes the given tests
@@ -46,10 +45,10 @@ public class RobocopServer {
     @Produces(MediaType.APPLICATION_JSON)
     public String executeTest(@QueryParam("owl") String owl, @QueryParam("db") String db) {
         if (owl != null && !"".equals(owl)) {
-            new jpl.Query("load_experiment('" + owl + "')").oneSolution();
+            // new jpl.Query("load_experiment('" + owl + "')").oneSolution();
         }
         if (db != null && !"".equals(db)) {
-            new jpl.Query("mng_db('" + db + "')").oneSolution();
+            // new jpl.Query("mang_db('" + db + "')").oneSolution();
         }
         try {
             return new StubTest().toString();// testSuite.executeSuite().toString();
@@ -66,7 +65,8 @@ public class RobocopServer {
     @Produces(MediaType.APPLICATION_JSON)
     public String uploadTest(@FormParam("test") String test) {
         try {
-            this.testSuite = new CopTestSuite(test);
+            /** this.testSuite = */
+            new CopTestSuite(test);
             return RESULT_OK;
         } catch (ParseException e) {
             return jsonError(e);
