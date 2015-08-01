@@ -3,6 +3,7 @@ package de.suturo.video.robocop.tests;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.List;
 
 import net.sf.json.JSONArray;
@@ -50,9 +51,8 @@ public class CopTest {
      * * Executes the test represented by this object. This requires a configured and set up swi-prolog jni environment!
      */
     JSONObject execute() {
-        @SuppressWarnings("unchecked")
-        JSONObject bindings = JSONQuery.encodeResult(jpl.Query.oneSolution(query));
-        boolean result = checkExpected(bindings);
+        List<JSONObject> bindings = allAnswers();
+        boolean result = checkMultiExpected(bindings);
         JSONObject test = new JSONObject();
         test.put("name", name);
         test.put("executionDate", SDF.format(new Date()));
@@ -62,28 +62,55 @@ public class CopTest {
         return test;
     }
 
-    private static JSONArray notableTimes(JSONObject bindings) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    private List<JSONObject> allAnswers() {
+        List<JSONObject> bindings = new ArrayList<>();
+        for (Hashtable binding : jpl.Query.allSolutions(query)) {
+            bindings.add(JSONQuery.encodeResult(binding));
+        }
+        return bindings;
+    }
+
+    private static JSONArray notableTimes(List<JSONObject> bindings) {
         JSONArray times = new JSONArray();
-        if (bindings.containsKey("NTP") && bindings.get("NTP") instanceof JSONArray) {
-            JSONArray ntp = (JSONArray) bindings.get("NTP");
-            for (Object object : ntp) {
-                times.add(Time.getTimepoint((String) object));
+        for (JSONObject binding : bindings) {
+            if (binding.containsKey("NTP") && binding.get("NTP") instanceof JSONArray) {
+                JSONArray ntp = (JSONArray) binding.get("NTP");
+                for (Object object : ntp) {
+                    times.add(Time.getTimepoint((String) object));
+                }
+                binding.remove("NTP");
             }
-            bindings.remove("NTP");
         }
         return times;
     }
 
-    private boolean checkExpected(JSONObject bindings) {
-        for (JSONObject bindConfig : expected) {
-            for (Object key : bindings.keySet()) {
-                if (bindConfig.containsKey(key) && !bindConfig.get(key).equals(bindings.get(key))) {
-                    continue;
+    /**
+     * Returns true if all expected bindings exist exactly in the list of given bindings in any order.
+     */
+    private boolean checkMultiExpected(List<JSONObject> bindings) {
+        List<JSONObject> remainingTests = new ArrayList<>(expected);
+        for (JSONObject test : remainingTests) {
+            if (!checkExpected(test, bindings)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns true if the given expected bindings match any of the given bindings.
+     */
+    private static boolean checkExpected(JSONObject expectedBindings, List<JSONObject> allBindings) {
+        nextBinding: for (JSONObject bindConfig : allBindings) {
+            for (Object key : expectedBindings.keySet()) {
+                if (bindConfig.containsKey(key) && !bindConfig.get(key).equals(expectedBindings.get(key))) {
+                    continue nextBinding;
                 }
             }
             for (Object key : bindConfig.keySet()) {
-                if (!bindings.containsKey(key)) {
-                    continue;
+                if (!expectedBindings.containsKey(key)) {
+                    continue nextBinding;
                 }
             }
             return true;
