@@ -228,6 +228,7 @@ namespace video_panel_plugin
             timePointsLabel->updateSuffix("");
             timePointsBox->clear();
             selectStartTimeBox->clear();
+            selectEndTimeBox->clear();
             testLabel->setText("Please select a testcase from above");
 
 //            int height = 5 * performedTestsList->visualItemRect(performedTestsList->item(0)).height();
@@ -242,6 +243,7 @@ namespace video_panel_plugin
         // TODO: Implement real losaing of run
     }
 
+    // TODO: Testen, wenn wir Tests auswählen können
     void VideoPanel::handleSelectedTest()
     {
         QListWidgetItem *selectedItem = performedTestsList->currentItem();
@@ -265,10 +267,13 @@ namespace video_panel_plugin
         // insert timepoints if exist
         timePointsBox->clear();
         selectStartTimeBox->clear();
+        selectEndTimeBox->clear();
+
         if(timePointsNumber == 0)
         {
             timePointsBox->addItem("No timepoints available");
-            selectStartTimeBox->addItem("No timepoints available2");
+            selectStartTimeBox->addItem("No timepoints available");
+            selectEndTimeBox->addItem("No timepoints available");
         }
         else
         {
@@ -279,7 +284,10 @@ namespace video_panel_plugin
                 std::string s = os.str();
                 timePointsBox->addItem(s.c_str());
                 selectStartTimeBox->addItem(s.c_str());
+                selectEndTimeBox->addItem(s.c_str());
             }
+            std::string tillEnd = "Till end";
+            selectEndTimeBox->addItem(tillEnd.c_str());
         }
 //        std::cout << testcase.description << std::endl;
 //        std::cout << testcase.expected << std::endl;
