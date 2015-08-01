@@ -21,7 +21,7 @@ public class CopTest {
 
     private final String name;
     private final String query;
-    private static final SimpleDateFormat SDF = new SimpleDateFormat("Y-MM-dd_h:m:s");
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("YYYY-MM-dd_HH:mm:ss");
     private final List<JSONObject> expected;
 
     /**

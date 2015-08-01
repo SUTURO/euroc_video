@@ -9,9 +9,6 @@
     objectsGraspedAsList/1,
     placedObjectsAsList/1]).
 
-
-:- load_experiment('/home/suturo/sr_experimental_data/current-experiment/cram_log.owl').
-
 numberOfObjects(Count):-
 	findall(RESULT,objectsFound(RESULT)
 	, List),

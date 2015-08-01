@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.inject.Singleton;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -16,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -32,6 +34,7 @@ import de.suturo.video.robocop.tests.ParseException;
  */
 
 @Path("/robocop")
+@Singleton
 public class RobocopServer {
     /** default ok result */
     static final String RESULT_OK = "{result: \"ok\"}";
@@ -45,13 +48,13 @@ public class RobocopServer {
     @Path("/executeTest")
     @Produces(MediaType.APPLICATION_JSON)
     public String executeTest(@QueryParam("owl") String owl, @QueryParam("db") String db) {
-        if (owl != null && !"".equals(owl)) {
-            new jpl.Query("load_experiment('" + owl + "')").oneSolution();
-        }
-        if (db != null && !"".equals(db)) {
-            new jpl.Query("mng_db('" + db + "')").oneSolution();
-        }
         try {
+            if (owl != null && !"".equals(owl)) {
+                new jpl.Query("load_experiment('" + owl + "')").oneSolution();
+            }
+            if (db != null && !"".equals(db)) {
+                new jpl.Query("mang_db('" + db + "')").oneSolution();
+            }
             return testSuite.executeSuite().toString();
         } catch (Exception e) {
             return jsonError(e);
@@ -68,7 +71,7 @@ public class RobocopServer {
         try {
             this.testSuite = new CopTestSuite(test);
             return RESULT_OK;
-        } catch (ParseException e) {
+        } catch (JSONException | ParseException e) {
             return jsonError(e);
         }
     }

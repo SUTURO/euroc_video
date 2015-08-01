@@ -8,3 +8,4 @@
 % :- register_ros_package(knowrob_motion_constraints).
 
 :- use_module(library(testhelper)).
+:- use_module(library(testrobocop)).
