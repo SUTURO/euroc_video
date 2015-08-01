@@ -94,8 +94,8 @@ class TestDataTools(object):
 
     def prepare_test_data(self):
         self.write_test_simulation_dbs()
-        self.read_tests()
-        self.read_test_results()
+        #self.read_tests()
+        #self.read_test_results()
 
     def write_test_simulation_dbs(self):
         for name in self.simulation_names:
