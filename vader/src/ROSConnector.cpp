@@ -13,6 +13,8 @@ ROSConnector::ROSConnector(void)
     failedTestsServiceName = "/voldemort/get_failed_tests";
     passedTestsServiceName = "/voldemort/get_passed_tests";
     getPlayableTopicsServiceName = "/voldemort/get_playable_topic_names_for_simulation";
+    addTestsServiceName = "/voldemort/add_tests";
+    executeTestsServiceName = "/voldemort/execute_tests";
 
     // create service clients
     simulationRunsClient = n.serviceClient<suturo_video_msgs::GetSimulationRuns>(simulationRunsServiceName);
@@ -21,6 +23,8 @@ ROSConnector::ROSConnector(void)
     failedTestsClient = n.serviceClient<suturo_video_msgs::GetTests>(failedTestsServiceName);
     passedTestsClient = n.serviceClient<suturo_video_msgs::GetTests>(passedTestsServiceName);
     getPlayableTopicsClient = n.serviceClient<suturo_video_msgs::GetTopicNames>(getPlayableTopicsServiceName);
+    addTestsClient = n.serviceClient<suturo_video_msgs::AddTests>(addTestsServiceName);
+    executeTestsClient = n.serviceClient<suturo_video_msgs::ExecuteTests>(executeTestsServiceName);
 }
 
 std::vector<std::string> ROSConnector::getSimulationRuns()
@@ -82,6 +86,21 @@ std::vector<std::string> ROSConnector::getPlayableTopics(std::string run)
     {
         std::ostringstream msg;
         msg << "Service unavailable: " << getPlayableTopicsClient;
+        throw ServiceUnavailableException(msg.str());
+    }
+}
+bool ROSConnector::addTests(std::string filePath)
+{
+    suturo_video_msgs::AddTests srv;
+    srv.request.tests_file_path = filePath;
+    if(addTestsClient.call(srv))
+    {
+        return srv.response.result;
+    }
+    else
+    {
+        std::ostringstream msg;
+        msg << "Service unavailable: " << addTestsServiceName;
         throw ServiceUnavailableException(msg.str());
     }
 }

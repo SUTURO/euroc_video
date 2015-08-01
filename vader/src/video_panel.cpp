@@ -3,6 +3,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QListWidgetItem>
+#include <QFileDialog>
+#include <QDir>
 #include <boost/lexical_cast.hpp>
 
 namespace patch
@@ -48,6 +50,24 @@ namespace video_panel_plugin
         pullRunsButton = new QPushButton("Pull available runs", this);
         overviewLayout->addWidget(pullRunsButton);
         connect(pullRunsButton, SIGNAL (clicked()), this, SLOT (handlePullButton()));
+
+        // line for decoreation
+        QFrame* line = new QFrame();
+        line->setObjectName(QString::fromUtf8("line"));
+        line->setGeometry(QRect(320, 150, 118, 3));
+        line->setFrameShape(QFrame::HLine);
+        line->setFrameShadow(QFrame::Sunken);
+        overviewLayout->addWidget(line);
+
+        // create label for available tests
+        availableTestsLabel = new PrefixLabel("Number of available Test: ", "0");
+        overviewLayout->addWidget(availableTestsLabel);
+
+        // create button to add tests
+        addTestsButton = new QPushButton("Add a test");
+        overviewLayout->addWidget(addTestsButton);
+        connect(addTestsButton, SIGNAL (clicked()), this, SLOT (handleAddTestsButton()));
+
 
         // add checkbox to filter for failed runs
 //        failedRuns = new QCheckBox("Show only failed runs");
@@ -193,6 +213,14 @@ namespace video_panel_plugin
             ROS_ERROR_STREAM(exc.what());
             QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(exc.what()), availableRunsList);
         }
+    }
+
+    void VideoPanel::handleAddTestsButton()
+    {
+        QString blub = QFileDialog::getOpenFileName(this, "Select a json file that contains a testcase", QDir::currentPath(), tr("json file (*.json)"));
+        std::cout << blub.toStdString() << std::endl;
+        bool b = connector.addTests(blub.toStdString());
+        std::cout << b << std::endl;
     }
 
     void VideoPanel::handleFailedRunsCheckBox(int state)
