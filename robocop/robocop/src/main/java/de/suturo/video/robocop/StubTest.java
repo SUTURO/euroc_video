@@ -10,6 +10,6 @@ public class StubTest {
     public String toString() {
         return "[{\"name\": \"Three-Objects\",\"executionDate\": \""
                 + sdf.format(new Date())
-                + "\",\"result\": false,\"bindings\": {\"ObjectsFound\": [\"blue_handle\", \"green_cylinder\"]},\"notableTimePoints\":[{\"time\": {\"sec\": 188,\"nsec\": 009000000}},{\"time\": {\"sec\": 99,\"nsec\": 937000000}}]}]";
+                + "\",\"result\": false,\"bindings\": {\"ObjectsFound\": [\"blue_handle\", \"green_cylinder\"]},\"notableTimePoints\":[{\"time\": {\"sec\": 188,\"nsec\": 9000000}},{\"time\": {\"sec\": 99,\"nsec\": 937000000}}]}]";
     }
 }
