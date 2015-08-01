@@ -102,6 +102,51 @@ namespace video_panel_plugin
         timePointsBox->addItem("No timepoints available");
         testResultsLayout->addWidget(timePointsBox);
 
+        // PLAY LOGS
+        // Play Logs Tab
+        playLogsWidget = new QWidget();
+        QVBoxLayout* playLogsLayout = new QVBoxLayout();
+        playLogsWidget->setLayout(playLogsLayout);
+
+        // create Dropdown Menu for Collection / Topics
+        QLabel* selectTopicLabel = new QLabel("Select topic:");
+        playLogsLayout->addWidget(selectTopicLabel);
+
+        selectTopicBox = new QComboBox();
+        selectTopicBox->addItem("No topics available");
+        playLogsLayout->addWidget(selectTopicBox);
+        // TODO: Topic in einer Variable speichern        
+
+        // create Dropdown Menu for start and end time
+        QLabel* selectStartTimeLabel = new QLabel("Select start time:");
+        playLogsLayout->addWidget(selectStartTimeLabel);
+
+        selectStartTimeBox = new QComboBox();
+        selectStartTimeBox->addItem("No time available");
+        playLogsLayout->addWidget(selectStartTimeBox);
+        // TODO: End Start in einer Variable speichern
+
+        QLabel* selectEndTimeLabel = new QLabel("Select end time:");
+        playLogsLayout->addWidget(selectEndTimeLabel);
+
+        selectEndTimeBox = new QComboBox();
+        selectEndTimeBox->addItem("No time available");
+        playLogsLayout->addWidget(selectEndTimeBox);
+        // TODO: End Zeit in einer Variable speichern
+
+        // TODO: output_topic = /suturo/ + alter topicname
+        // TODO: Datenbank global machen
+        // TODO: msg_typ... aus DB oder angeben?
+
+        // create button to pull available runs
+        startLogButton = new QPushButton("Start", this);
+        playLogsLayout->addWidget(startLogButton);
+        // TODO: Daten an handlePlayButton übergeben
+        connect(startLogButton, SIGNAL (clicked()), this, SLOT (handlePlayButton()));
+
+
+        // add playlogs to QTabWidget
+        tab->addTab(playLogsWidget, "Play Logs");
 
         // set tabLayout as layout for parent
         setLayout(tabLayout);
@@ -110,6 +155,19 @@ namespace video_panel_plugin
         connector = ROSConnector();
 	}
 
+    void VideoPanel::handlePlayButton()
+    {
+        // playLogs = PlayLogs();
+        std::string a = "std_msgs/String";
+        std::string b = "strings4";
+        std::string c = "strings";
+        std::string d = "output_topic";
+        ros::Time e = ros::Time::now();
+        ros::Time f = ros::Time::now() + ros::Duration(100);
+
+        // playLogs.play_logs(a, b, c, d, e, f);
+        // playLogs.play_logs(msg_type, database, collection, output_topic, start, end);
+    }
 
     void VideoPanel::handlePullButton()
     {

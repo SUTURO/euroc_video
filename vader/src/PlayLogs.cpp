@@ -19,7 +19,7 @@ void PlayLogs::play_logs(std::string msg_type, std::string database, std::string
         goal.msg_type = msg_type;
         goal.database = database;
         goal.collection = collection;
-        goal.output_topic = output_topic;
+        goal.output_topic = collection;
         goal.start_time = start;
         goal.end_time = end;
 
