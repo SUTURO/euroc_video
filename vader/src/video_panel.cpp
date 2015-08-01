@@ -227,6 +227,7 @@ namespace video_panel_plugin
             testResultLabel->updateSuffix("");
             timePointsLabel->updateSuffix("");
             timePointsBox->clear();
+            selectStartTimeBox->clear();
             testLabel->setText("Please select a testcase from above");
 
 //            int height = 5 * performedTestsList->visualItemRect(performedTestsList->item(0)).height();
@@ -263,9 +264,11 @@ namespace video_panel_plugin
 
         // insert timepoints if exist
         timePointsBox->clear();
+        selectStartTimeBox->clear();
         if(timePointsNumber == 0)
         {
             timePointsBox->addItem("No timepoints available");
+            selectStartTimeBox->addItem("No timepoints available2");
         }
         else
         {
@@ -275,6 +278,7 @@ namespace video_panel_plugin
                 os << *it;
                 std::string s = os.str();
                 timePointsBox->addItem(s.c_str());
+                selectStartTimeBox->addItem(s.c_str());
             }
         }
 //        std::cout << testcase.description << std::endl;
