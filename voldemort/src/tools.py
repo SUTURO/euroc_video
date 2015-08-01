@@ -7,6 +7,7 @@ from pymongo import MongoClient
 class MongoTools(object):
     def __init__(self):
         self.client = MongoClient()
+        self.not_playable_topics = ['logged_images_out_compressed', 'system.indexes', 'logged_designators']
 
     def write_data_to_mongo_db(self, db_name, collection_name, data):
         db = self.client[db_name]
@@ -49,6 +50,15 @@ class MongoTools(object):
         if 'local' in database_names:
             database_names.remove('local')
         return database_names
+
+    def get_playable_topic_names_for_simulation_from_mongo(self, simulation_name):
+        # simulation_name is also the name of the database
+        simulation_db = self.client[simulation_name]
+        topic_names = []
+        for collection in simulation_db.collection_names():
+            if collection not in self.not_playable_topics:
+                topic_names.append(collection)
+        return topic_names
 
 class JsonTools(object):
     @staticmethod
