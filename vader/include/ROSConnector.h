@@ -6,6 +6,7 @@
 #include "suturo_video_msgs/GetTests.h"
 #include "suturo_video_msgs/Test.h"
 #include "suturo_video_msgs/TestResult.h"
+#include "suturo_video_msgs/GetTopicNames.h"
 
 class ROSConnector
 {
@@ -16,6 +17,7 @@ public:
     std::vector<suturo_video_msgs::Test> getExecutedTests(std::string run);
     std::vector<suturo_video_msgs::Test> getFailedTests(std::string run);
     std::vector<suturo_video_msgs::Test> getPassedTests(std::string run);
+    std::vector<std::string> getPlayableTopics(std::string run);
 
 private:
     ros::NodeHandle n;
@@ -24,11 +26,13 @@ private:
     ros::ServiceClient executedTestsClient;
     ros::ServiceClient failedTestsClient;
     ros::ServiceClient passedTestsClient;
+    ros::ServiceClient getPlayableTopicsClient;
     std::string simulationRunsServiceName;
     std::string availableTestsServiceName;
     std::string executedTestsServiceName;
     std::string failedTestsServiceName;
     std::string passedTestsServiceName;
+    std::string getPlayableTopicsServiceName;
 };
 
 #endif // ROSCONNECTOR_H

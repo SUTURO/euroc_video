@@ -71,10 +71,12 @@ private:
     QComboBox *selectStartTimeBox;
     QComboBox *selectEndTimeBox;
     QPushButton *startLogButton;
+    std::string selectedDatabase;
 
     int timePointsNumber;
 
     std::vector<suturo_video_msgs::Test> returnedTests;
+    std::vector<std::string> playableTopics;
     suturo_video_msgs::Test getTestFromList(QString name);
 
     /**

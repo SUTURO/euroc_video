@@ -12,6 +12,7 @@ ROSConnector::ROSConnector(void)
     executedTestsServiceName = "/voldemort/get_executed_tests";
     failedTestsServiceName = "/voldemort/get_failed_tests";
     passedTestsServiceName = "/voldemort/get_passed_tests";
+    getPlayableTopicsServiceName = "/voldemort/get_playable_topic_names_for_simulation";
 
     // create service clients
     simulationRunsClient = n.serviceClient<suturo_video_msgs::GetSimulationRuns>(simulationRunsServiceName);
@@ -19,6 +20,7 @@ ROSConnector::ROSConnector(void)
     executedTestsClient = n.serviceClient<suturo_video_msgs::GetTests>(executedTestsServiceName);
     failedTestsClient = n.serviceClient<suturo_video_msgs::GetTests>(failedTestsServiceName);
     passedTestsClient = n.serviceClient<suturo_video_msgs::GetTests>(passedTestsServiceName);
+    getPlayableTopicsClient = n.serviceClient<suturo_video_msgs::GetTopicNames>(getPlayableTopicsServiceName);
 }
 
 std::vector<std::string> ROSConnector::getSimulationRuns()
@@ -64,6 +66,22 @@ std::vector<suturo_video_msgs::Test> ROSConnector::getExecutedTests(std::string 
     {
         std::ostringstream msg;
         msg << "Service unavailable: " << executedTestsServiceName;
+        throw ServiceUnavailableException(msg.str());
+    }
+}
+
+std::vector<std::string> ROSConnector::getPlayableTopics(std::string run)
+{
+    suturo_video_msgs::GetTopicNames srv;
+    srv.request.simulation_run_name = run;
+    if(getPlayableTopicsClient.call(srv))
+    {
+        return srv.response.topic_names;
+    }
+    else
+    {
+        std::ostringstream msg;
+        msg << "Service unavailable: " << getPlayableTopicsClient;
         throw ServiceUnavailableException(msg.str());
     }
 }

@@ -211,6 +211,8 @@ namespace video_panel_plugin
         {
             returnedTests = connector.getExecutedTests(item->text().toStdString());
             selectedRunLabel->setText(setBoldText(item->text()));
+            selectedDatabase = item->text().toStdString();
+
             for(std::vector<suturo_video_msgs::Test>::iterator it = returnedTests.begin(); it != returnedTests.end(); ++it){
                 std::string name = (*it).name;
                 QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(name), performedTestsList);
@@ -229,6 +231,7 @@ namespace video_panel_plugin
             timePointsBox->clear();
             selectStartTimeBox->clear();
             selectEndTimeBox->clear();
+            selectTopicBox->clear();
             testLabel->setText("Please select a testcase from above");
 
 //            int height = 5 * performedTestsList->visualItemRect(performedTestsList->item(0)).height();
@@ -240,6 +243,24 @@ namespace video_panel_plugin
             ROS_ERROR_STREAM(exc.what());
             QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(exc.what()), performedTestsList);
         }
+
+        // Get available Topics to play
+        playableTopics = connector.getPlayableTopics(selectedDatabase);
+        std::cout << selectedDatabase << std::endl;
+        std::cout << playableTopics.at(0) << std::endl;
+//        if (playableTopics.size() > 0)
+//        {
+//            for(int i = 0; playableTopics.size(); i++)
+//            {
+//                selectTopicBox->addItem(QString(playableTopics.at(i)));
+//            }
+//        }
+//        else
+//        {
+//            selectTopicBox->addItem("No Playable Topics found!");
+//        }
+
+
         // TODO: Implement real losaing of run
     }
 
