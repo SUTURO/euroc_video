@@ -50,3 +50,7 @@ class TestManager(object):
         for test in tests:
             ros_test.append(test.to_ros_msg())
         return ros_test
+
+    def get_topic_name_for_simulation_run(self, simulation_run_name):
+        topic_names = self.mongo_tools.get_playable_topic_names_for_simulation_from_mongo(simulation_run_name)
+        return topic_names

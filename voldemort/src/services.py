@@ -3,7 +3,7 @@ __author__ = 'tobi'
 import rospy
 from suturo_video_msgs.srv import GetSimulationRuns, GetSimulationRunsRequest, GetSimulationRunsResponse, GetTests,\
     GetTestsRequest, GetTestsResponse, ExecuteTests, ExecuteTestsRequest, ExecuteTestsResponse, AddTests, \
-    AddTestsRequest, AddTestsResponse
+    AddTestsRequest, AddTestsResponse, GetTopicNames, GetTopicNamesRequest, GetTopicNamesResponse
 from voldemort_to_vader_data import Test, TestResult, SimulationRun, SimulationRunContainer, TestContainer
 from tools import HttpTools
 import os
@@ -11,15 +11,17 @@ import os
 class ServiceManager(object):
     def __init__(self, test_manager):
         self.test_manager = test_manager
+        self.services = []
 
     def start_services(self):
-        get_simulation_runs_service = rospy.Service('/voldemort/get_simulation_runs', GetSimulationRuns, self.handle_get_simulation_runs)
-        get_available_tests = rospy.Service('/voldemort/get_available_tests', GetTests, self.handle_get_available_tests)
-        get_executed_tests = rospy.Service('/voldemort/get_executed_tests', GetTests, self.handle_get_executed_tests)
-        get_failed_tests = rospy.Service('/voldemort/get_failed_tests', GetTests, self.handle_get_failed_tests)
-        get_passed_tests = rospy.Service('/voldemort/get_passed_tests', GetTests, self.handle_get_passed_tests)
-        execute_tests = rospy.Service('/voldemort/execute_tests', ExecuteTests, self.handle_execute_tests)
-        add_tests = rospy.Service('/voldemort/add_tests', AddTests, self.handle_add_tests)
+        self.services.append(rospy.Service('/voldemort/get_simulation_runs', GetSimulationRuns, self.handle_get_simulation_runs))
+        self.services.append(rospy.Service('/voldemort/get_available_tests', GetTests, self.handle_get_available_tests))
+        self.services.append(rospy.Service('/voldemort/get_executed_tests', GetTests, self.handle_get_executed_tests))
+        self.services.append(rospy.Service('/voldemort/get_failed_tests', GetTests, self.handle_get_failed_tests))
+        self.services.append(rospy.Service('/voldemort/get_passed_tests', GetTests, self.handle_get_passed_tests))
+        self.services.append(rospy.Service('/voldemort/execute_tests', ExecuteTests, self.handle_execute_tests))
+        self.services.append(rospy.Service('/voldemort/add_tests', AddTests, self.handle_add_tests))
+        self.services.append(rospy.Service('/voldemort/get_playable_topic_names', GetTopicNames, self.handle_get_topic_names))
         print "[Voldemort_to_vader] Successfully started Services"
 
     def handle_execute_tests(self, req):
@@ -98,4 +100,11 @@ class ServiceManager(object):
         simulation_run = self.test_manager.get_simulation_run_by_name(simulation_run_name)
         tests = simulation_run.tests.get_passed_tests()
         resp.tests = self.test_manager.transform_tests_to_ros_tests(tests)
+        return resp
+
+    def handle_get_topic_names(self, req):
+        resp = GetTopicNamesResponse()
+        simulation_name = req.simulation_run_name
+        topic_names = self.test_manager.get_topic_name_for_simulation_run(simulation_name)
+        resp.topic_names = topic_names
         return resp

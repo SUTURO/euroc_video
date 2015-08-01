@@ -12,6 +12,7 @@
 #include <QWidget>
 #include <QComboBox>
 #include <ROSConnector.h>
+#include <PlayLogs.h>
 #include "suturo_video_msgs/Test.h"
 #include "suturo_video_msgs/TestResult.h"
 #endif
@@ -45,6 +46,7 @@ private Q_SLOTS:
     void handleFailedRunsCheckBox(int state);
     void loadRun(QListWidgetItem* item);
     void handleSelectedTest();
+    void handlePlayButton();
 	
 private:
     ROSConnector connector;
@@ -61,6 +63,14 @@ private:
     PrefixLabel *timePointsLabel;
     PrefixLabel *testListLabel;
     QComboBox *timePointsBox;
+
+    // PlayLogs funktioniert nur, wenn der dbPlayer von Jannik läuft, ansonsten startet Rviz das Plugin nicht
+    PlayLogs playLogs;
+    QWidget *playLogsWidget;
+    QComboBox *selectTopicBox;
+    QComboBox *selectStartTimeBox;
+    QComboBox *selectEndTimeBox;
+    QPushButton *startLogButton;
 
     int timePointsNumber;
 
