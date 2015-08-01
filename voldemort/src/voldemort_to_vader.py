@@ -1,17 +1,9 @@
 #!/usr/bin/env python
+__author__ = 'tobi'
 from services import ServiceManager
 from test_manager import TestManager
 from tools import MongoTools, TestDataTools
-
-__author__ = 'tobi'
-
-from pymongo import MongoClient
-import subprocess
 import rospy
-import json
-import requests
-import os
-
 
 class VoldemortToVader(object):
     def __init__(self):
@@ -35,6 +27,7 @@ class VoldemortToVader(object):
 
     def start_node(self):
         rospy.init_node('voldemort_to_vader')
+        print "[Voldemort_to_vader] Initiated Node 'voldemort_to_vader"
         self.service_manager.start_services()
         rospy.spin()
 

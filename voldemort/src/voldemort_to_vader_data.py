@@ -1,9 +1,10 @@
+__author__ = 'tobi'
+
 import rospy
 import copy
 from suturo_video_msgs.msg import Test as RosTest
 from suturo_video_msgs.msg import Binding as RosBinding
 from suturo_video_msgs.msg import TestResult as RosTestResult
-
 
 class SimulationRun(object):
     def __init__(self, name):
@@ -72,9 +73,6 @@ class TestContainer(object):
         for test in self.tests.values():
             if test.test_result is not None:
                 executed_tests.append(test)
-        print "Executed Tests: \n"
-        for test in executed_tests:
-            print test.name, test.test_result.result
         return executed_tests
 
     def get_passed_tests(self):
@@ -83,8 +81,6 @@ class TestContainer(object):
             if test.test_result is not None:
                 if test.test_result.result:
                     passed_tests.append(test)
-        print "Passed Tests: \n"
-        print passed_tests
         return passed_tests
 
     def get_failed_tests(self):
@@ -120,9 +116,6 @@ class Test(object):
             ros_test.expected.append(ros_expected)
         if self.test_result is not None:
             ros_test.test_result = self.test_result.to_ros_msg()
-            print("TEST to_ros_msg:"+str(ros_test.test_result))
-        else:
-            print("TEST to_tor_msg NO TEST_RESULT")
         return ros_test
 
 class TestResult(object):
@@ -147,7 +140,5 @@ class TestResult(object):
             ros_binding.key = str(key)
             ros_binding.value = str(value)
             ros_test_result.bindings.append(ros_binding)
-        print "Notable Time Points:"
-        print self.notable_time_points
         ros_test_result.notableTimePoints = self.notable_time_points
         return ros_test_result
