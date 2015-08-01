@@ -104,7 +104,7 @@ class Test(object):
         self.test_result = test_result
 
     def to_json_dict(self):
-        json_dict = {'name': self.name, 'description': self.description, 'query': self.query, 'expected':self.expected}
+        json_dict = {'name': str(self.name), 'description': str(self.description), 'query': str(self.query), 'expected':str(self.expected)}
         return json_dict
 
     def to_ros_msg(self):
