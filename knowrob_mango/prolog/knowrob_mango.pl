@@ -45,6 +45,8 @@
       mang_comp_pose/3,
       mang_comp_pose_at_time/4,
 
+      mang_get_action_destination/4,
+
       abj_blocked_by_in_camera/4,
       abj_visible_in_camera/3
     ]).
@@ -121,6 +123,16 @@ mongo_interface(DB) :-
 mang_db(DBName) :-
     mongo_interface(Mongo),
     jpl_call(Mongo, setDatabase, [DBName], _).
+
+
+mang_get_action_destination(ActionDesignator, X, Y, Z):-
+  rdf_split_url(_, DesigID, ActionDesignator),
+  atom_concat('http://knowrob.org/kb/knowrob.owl#',DesigID,FullDes),
+  mang_designator_props(FullDes, 'AT.POSE', Stamped4d),
+  jpl_call(Stamped4d, 'getData', [], M4d),
+  jpl_get(M4d,'m03',X),
+  jpl_get(M4d,'m13',Y),
+  jpl_get(M4d,'m23',Z).
 
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %

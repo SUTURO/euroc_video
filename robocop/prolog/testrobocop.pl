@@ -6,7 +6,8 @@
     getTimeForAction/3,
     objectsFoundAsList/1,
     objectsPlacedAsList/1,
-    objectsGraspedAsList/1]).
+    objectsGraspedAsList/1,
+    placedObjectsAsList/1]).
 
 
 :- load_experiment('/home/suturo/sr_experimental_data/current-experiment/cram_log.owl').
@@ -79,3 +80,15 @@ objectsGraspedAsList(Objects):-
 			getObjectActedOn(Action, Object),
 			getTimeForAction(Action, Start, End)),
 		Objects).
+
+placedObjectsAsList(Objects):-
+	findall((Object, Start, End, X, Y, Z),
+	(placedObjectInfos(Object, Start, End, X, Y, Z)),
+	Objects).
+
+placedObjectInfos(Object, S, E, X, Y, Z):-
+	getPutDownActions(Action),
+	getObjectActedOn(Action, Object),
+	getTimeForAction(Action, S, E),
+	mang_get_action_destination(Action, X, Y, Z).
+
