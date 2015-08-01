@@ -179,8 +179,10 @@ namespace video_panel_plugin
         std::string database = selectedDatabase;
         std::string collection = selectTopicBox->currentText().toStdString();
         std::string output_topic = selectTopicBox->currentText().toStdString();
-        ros::Time start = ros::Time::now();
-        ros::Time end = ros::Time::now() + ros::Duration(100);
+//        ros::Time start = ros::Time::now();
+        ros::Time start = timePointList.at(selectStartTimeBox->currentIndex());
+//        ros::Time end = ros::Time::now() + ros::Duration(100);
+        ros::Time end = timePointList.at(selectEndTimeBox->currentIndex());
 
         std::string t = selectTopicBox->currentText().toStdString();
         std::cout << "Current Database: " << selectedDatabase << std::endl;
@@ -188,7 +190,7 @@ namespace video_panel_plugin
         std::cout << "Current Startime: " << start << std::endl;
         std::cout << "Current Endtime: " << end << std::endl;
 
-        // playLogs.play_logs(msg_type, database, collection, output_topic, start, end);
+        playLogs.play_logs(msg_type, database, collection, output_topic, start, end);
     }
 
     void VideoPanel::handlePullButton()
@@ -272,7 +274,7 @@ namespace video_panel_plugin
 
             if (playableTopics.size() > 0)
             {
-                for(int i = 0; i < playableTopics.size(); i++)
+                for(int i = 0; i < playableTopics.size(); ++i)
                 {
                     std::cout << "Add Topic Nr: " << i << std::endl;
                     selectTopicBox->addItem(QString(playableTopics.at(i).c_str()));
@@ -312,6 +314,7 @@ namespace video_panel_plugin
         }
 
         // get number of timepoints and set label
+        timePointList = testCase.test_result.notableTimePoints;
         timePointsNumber = testCase.test_result.notableTimePoints.capacity();
         timePointsLabel->updateSuffix(boost::lexical_cast<std::string>(timePointsNumber));
 

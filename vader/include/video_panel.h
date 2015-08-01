@@ -77,6 +77,7 @@ private:
     std::string selectedDatabase;
 
     int timePointsNumber;
+    std::vector<ros::Time> timePointList;
 
     std::vector<suturo_video_msgs::Test> returnedTests;
     std::vector<std::string> playableTopics;
