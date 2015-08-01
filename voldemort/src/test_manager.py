@@ -13,7 +13,7 @@ class TestManager(object):
         self.mongo_tools = mongo_tools
 
     def start(self):
-        self.read_simulation_runs()
+        pass
 
     def get_simulation_run_by_name(self, name):
         return self.simulation_runs.get_run_by_name(name)

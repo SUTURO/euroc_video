@@ -96,7 +96,7 @@ class TestContainer(object):
         return failed_tests
 
 class Test(object):
-    def __init__(self, name, description=None, test_result=None, query=None, expected=None,):
+    def __init__(self, name, description=None, test_result=None, query=None, expected={}):
         self.name = name
         self.description = description
         self.query = query
@@ -112,7 +112,12 @@ class Test(object):
         ros_test.name = str(self.name)
         ros_test.description = str(self.description)
         ros_test.query = str(self.query)
-        ros_test.expected = str(self.expected)
+        ros_test.expected = []
+        for key, value in self.expected.iteritems():
+            ros_expected = RosBinding()
+            ros_expected.key = str(key)
+            ros_expected.value = str(value)
+            ros_test.expected.append(ros_expected)
         if self.test_result is not None:
             ros_test.test_result = self.test_result.to_ros_msg()
             print("TEST to_ros_msg:"+str(ros_test.test_result))
@@ -121,11 +126,11 @@ class Test(object):
         return ros_test
 
 class TestResult(object):
-    def __init__(self, result = None, execution_date=None, notable_time_points=None):
+    def __init__(self, result = None, execution_date=None, notable_time_points=[], bindings={}):
         self.result = result
         self.execution_date = execution_date
-        self.bindings = {}
-        self.notable_time_points = []
+        self.bindings = bindings
+        self.notable_time_points = notable_time_points
 
     def add_notable_time_point(self, ntp_dict):
         ntp_data = ntp_dict['time']
