@@ -32,13 +32,20 @@ class ServiceManager(object):
             owl_file = req.owl_file
             execute_result = HttpTools.execute_tests(database_name, owl_file)
             print "text"+str(execute_result.text)
+            try:
+                test_results = execute_result.json()
+            except ValueError, e:
+                resp.result = False
+                print e
+
             if execute_result.status_code != 200:
                 resp.result = False
 
-        if resp.result == True:
-            sim_run = self.test_manager.get_simulation_run_by_name(database_name)
-            # call a method from test_manager that turns the data from resp into a test_result (maybe from dict)
-            self.test_manager.add_all_tests_to_simulation_run(sim_run)
+            if resp.result == True:
+                sim_run = self.test_manager.get_simulation_run_by_name(database_name)
+                # call a method from test_manager that turns the data from resp into a test_result (maybe from dict)
+                self.test_manager.add_all_tests_to_simulation_run(sim_run)
+                self.test_manager.add_test_results_to_simulation_run(sim_run, test_results)
         return resp
 
     def handle_add_tests(self, req):

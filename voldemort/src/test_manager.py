@@ -28,6 +28,10 @@ class TestManager(object):
         for test in self.tests.tests.itervalues():
             simulation_run.tests.add_test(test)
 
+    def add_test_results_to_simulation_run(self,simulation_run, test_results):
+        for test_result in test_results:
+            simulation_run.tests.add_test_result_from_dict(test_result)
+                        
     def read_tests_from_file(self, file_path):
         tests_data = JsonTools.parse_from_json_file(file_path)
         tests = TestContainer()
