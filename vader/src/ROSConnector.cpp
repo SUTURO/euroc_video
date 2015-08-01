@@ -12,7 +12,7 @@ ROSConnector::ROSConnector(void)
     executedTestsServiceName = "/voldemort/get_executed_tests";
     failedTestsServiceName = "/voldemort/get_failed_tests";
     passedTestsServiceName = "/voldemort/get_passed_tests";
-    getPlayableTopicsServiceName = "/voldemort/get_playable_topic_names_for_simulation";
+    getPlayableTopicsServiceName = "/voldemort/get_playable_topic_names";
     addTestsServiceName = "/voldemort/add_tests";
     executeTestsServiceName = "/voldemort/execute_tests";
 
@@ -85,7 +85,7 @@ std::vector<std::string> ROSConnector::getPlayableTopics(std::string run)
     else
     {
         std::ostringstream msg;
-        msg << "Service unavailable: " << getPlayableTopicsClient;
+        msg << "Service unavailable: " << getPlayableTopicsServiceName;
         throw ServiceUnavailableException(msg.str());
     }
 }

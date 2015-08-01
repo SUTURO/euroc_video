@@ -263,6 +263,25 @@ namespace video_panel_plugin
             selectTopicBox->clear();
             testLabel->setText("Please select a testcase from above");
 
+            // Get available Topics to play
+            playableTopics = connector.getPlayableTopics(selectedDatabase);
+
+            std::cout << selectedDatabase << std::endl;
+            std::cout << playableTopics.at(0) << std::endl;
+
+            if (playableTopics.size() > 0)
+            {
+                for(int i = 0; i < playableTopics.size(); i++)
+                {
+                    std::cout << "Add Topic Nr: " << i << std::endl;
+                    selectTopicBox->addItem(QString(playableTopics.at(i).c_str()));
+                }
+            }
+            else
+            {
+                selectTopicBox->addItem("No Playable Topics found!");
+            }
+
 //            int height = 5 * performedTestsList->visualItemRect(performedTestsList->item(0)).height();
 //            performedTestsList->setFixedHeight(height);
         }
@@ -272,27 +291,6 @@ namespace video_panel_plugin
             ROS_ERROR_STREAM(exc.what());
             QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(exc.what()), performedTestsList);
         }
-
-        // Get available Topics to play
-        playableTopics = connector.getPlayableTopics(selectedDatabase);
-
-        std::cout << selectedDatabase << std::endl;
-        std::cout << playableTopics.at(0) << std::endl;
-
-        if (playableTopics.size() > 0)
-        {
-            for(int i = 0; i < playableTopics.size(); i++)
-            {
-                std::cout << "Add Topic Nr: " << i << std::endl;
-                selectTopicBox->addItem(QString(playableTopics.at(i).c_str()));
-            }
-        }
-        else
-        {
-            selectTopicBox->addItem("No Playable Topics found!");
-        }
-
-        // TODO: Implement real losaing of run
     }
 
     // TODO: Testen, wenn wir Tests auswählen können
