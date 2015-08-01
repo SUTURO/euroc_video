@@ -43,6 +43,7 @@ public:
 
 private Q_SLOTS:
     void handlePullButton();
+    void handleAddTestsButton();
     void handleFailedRunsCheckBox(int state);
     void loadRun(QListWidgetItem* item);
     void handleSelectedTest();
@@ -51,6 +52,8 @@ private Q_SLOTS:
 private:
     ROSConnector connector;
     QPushButton *pullRunsButton;
+    QLabel *availableTestsLabel;
+    QPushButton *addTestsButton;
     QListWidget *availableRunsList;
     QCheckBox *failedRuns;
     QListWidget *performedTestsList;
