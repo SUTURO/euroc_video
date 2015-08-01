@@ -21,7 +21,7 @@ class ServiceManager(object):
         self.services.append(rospy.Service('/voldemort/get_passed_tests', GetTests, self.handle_get_passed_tests))
         self.services.append(rospy.Service('/voldemort/execute_tests', ExecuteTests, self.handle_execute_tests))
         self.services.append(rospy.Service('/voldemort/add_tests', AddTests, self.handle_add_tests))
-        self.services.append(rospy.Service('/voldemort/get_playable_topic_names_for_simulation', GetTopicNames, self.handle_get_topic_names))
+        self.services.append(rospy.Service('/voldemort/get_playable_topic_names', GetTopicNames, self.handle_get_topic_names))
         print "[Voldemort_to_vader] Successfully started Services"
 
     def handle_execute_tests(self, req):
