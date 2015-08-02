@@ -39,7 +39,15 @@ class TestContainer(object):
         test = Test(name)
         test.description = test_data['description']
         test.query = test_data['query']
-        test.expected = test_data['expected']
+        expected = test_data['expected']
+        if isinstance(expected, dict):
+            new_expected = []
+            for key, value in expected.iteritems():
+                tmp_dict = {}
+                tmp_dict[key] = value
+                new_expected.append(tmp_dict)
+            expected = new_expected
+        test.expected = expected
 
         self.tests[name] = test
         return name
@@ -50,8 +58,16 @@ class TestContainer(object):
 
         test_result.execution_date = test_result_data['executionDate']
         test_result.result = test_result_data['result']
-        test_result.bindings = test_result_data['bindings']
+        bindings = test_result_data['bindings']
+        if isinstance(bindings, dict):
+            new_bindings = []
+            for key, value in bindings.iteritems():
+                tmp_dict = {}
+                tmp_dict[key] = value
+                new_bindings.append(tmp_dict)
+            bindings = new_bindings
 
+        test_result.bindings = bindings
         for time_point in test_result_data['notableTimePoints']:
             test_result.add_notable_time_point(time_point)
 
@@ -101,8 +117,28 @@ class Test(object):
         self.test_result = test_result
 
     def to_json_dict(self):
-        json_dict = {'name': str(self.name), 'description': str(self.description), 'query': str(self.query), 'expected':str(self.expected)}
+        # if isinstance(self.expected, list):
+        #     expected = self._convert_expected(self.expected)
+        # elif isinstance(self.expected, dict):
+        #     expected = self.expected
+        expected = self.expected
+        json_dict = {'name': str(self.name), 'description': str(self.description), 'query': str(self.query), 'expected':str(expected)}
         return json_dict
+
+    def _convert_expected(self, expected):
+        new_expected = []
+        for exp_dict in self.expected:
+            new_dict = {}
+            for key, value in exp_dict.iteritems():
+                new_dict[str(key)] = str(value)
+                print "\nkey value of exp_dict"
+                print key
+                print value
+            print "\nexp="
+            print str(exp_dict)
+            new_expected.append(new_dict)
+        print '\n new expected='+str(new_expected)
+        return new_expected
 
     def to_ros_msg(self):
         ros_test = RosTest()
@@ -110,11 +146,12 @@ class Test(object):
         ros_test.description = str(self.description)
         ros_test.query = str(self.query)
         ros_test.expected = []
-        for key, value in self.expected.iteritems():
-            ros_expected = RosBinding()
-            ros_expected.key = str(key)
-            ros_expected.value = str(value)
-            ros_test.expected.append(ros_expected)
+        for obj in self.expected:
+            for key, value in obj.iteritems():
+                ros_expected = RosBinding()
+                ros_expected.key = str(key)
+                ros_expected.value = str(value)
+                ros_test.expected.append(ros_expected)
         if self.test_result is not None:
             ros_test.test_result = self.test_result.to_ros_msg()
         return ros_test
@@ -136,10 +173,11 @@ class TestResult(object):
         ros_test_result.result = self.result
         ros_test_result.executionDate = str(self.execution_date)
         ros_test_result.bindings = []
-        for key, value in self.bindings.iteritems():
-            ros_binding = RosBinding()
-            ros_binding.key = str(key)
-            ros_binding.value = str(value)
-            ros_test_result.bindings.append(ros_binding)
+        for obj in self.bindings:
+            for key, value in obj.iteritems():
+                ros_binding = RosBinding()
+                ros_binding.key = str(key)
+                ros_binding.value = str(value)
+                ros_test_result.bindings.append(ros_binding)
         ros_test_result.notableTimePoints = self.notable_time_points
         return ros_test_result

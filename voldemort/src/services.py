@@ -24,7 +24,7 @@ class ServiceManager(object):
         print "[Voldemort_to_vader] Successfully started Services"
 
     def handle_execute_tests(self, req):
-        print "[Voldemort_to_vader] Service: /voldemort/get_executed_tests Result:called"
+        print "[Voldemort_to_vader] Service: /voldemort/get_executed_tests called"
         resp = ExecuteTestsResponse()
         resp.result = True
         if req.database_name is not None and req.owl_file is not None:
@@ -33,9 +33,17 @@ class ServiceManager(object):
             execute_result = HttpTools.execute_tests(database_name, owl_file)
             try:
                 test_results = execute_result.json()
+                print "[Voldemort_to_vader] Service: /voldemort/get_executed_tests Test_result="+str(test_results)
+
             except ValueError, e:
                 resp.result = False
                 print e
+
+
+            if isinstance(test_results, dict):
+                if test_results['result'] not in ['True', 'False']:
+                    print "[Voldemort_to_vader] Service: /voldemort/get_executed_tests Prolog Result Error=" +str(test_results)
+                    resp.result = False
 
             if execute_result.status_code != 200:
                 resp.result = False
