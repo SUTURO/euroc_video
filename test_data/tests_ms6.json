@@ -8,16 +8,5 @@
 		{"Object": "green_cylinder" },
 		{"Object": "red_cube" }
 	]
-    },
-
-    {
-	"name": "AllPlacedObjects",
-	"description": "Tests which an where objects have been placed.",
-	"query": "getPlacedObjects(Objects)",
-	"expected": [
-		{"Object": "blue_handle" },
-		{"Object": "green_cylinder" },
-		{"Object": "red_cube" }
-	]
     }
 ]

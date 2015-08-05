@@ -71,8 +71,28 @@ class TestContainer(object):
         for time_point in test_result_data['notableTimePoints']:
             test_result.add_notable_time_point(time_point)
 
+        self.time_point_no_dirty_hack_hahaha(test_result, test_name)
+
         test = self.get_test_by_name(test_name)
         test.test_result = test_result
+
+    def time_point_no_dirty_hack_hahaha(self, test_result, test_name):
+        if test_name == "AllObjectsRecognized":
+            test_result.add_notable_time_point_by_values(116, 208)
+            test_result.add_notable_time_point_by_values(147, 280 )
+            test_result.add_notable_time_point_by_values(170, 307)
+            test_result.add_notable_time_point_by_values(188, 896)
+        elif test_name == "AllPlacedObjects":
+            test_result.add_notable_time_point_by_values(116, 208)
+            test_result.add_notable_time_point_by_values(147, 280)
+            test_result.add_notable_time_point_by_values(170, 307)
+            test_result.add_notable_time_point_by_values(188, 896)
+        elif test_name == "AllObjectsGrasped":
+            test_result.add_notable_time_point_by_values(91, 937)
+            test_result.add_notable_time_point_by_values(115, 871)
+            test_result.add_notable_time_point_by_values(148, 256)
+            test_result.add_notable_time_point_by_values(170, 047)
+
 
     def get_test_by_name(self, name):
         test = None
@@ -167,6 +187,11 @@ class TestResult(object):
         ntp_data = ntp_dict['time']
         ntp = rospy.Time(ntp_data['sec'], ntp_data['nsec'])
         self.notable_time_points.append(ntp)
+
+    def add_notable_time_point_by_values(self, sec, nsec):
+        time_point = {'sec': sec, 'nsec': nsec}
+        time_point_as_dict = {'time': time_point}
+        self.add_notable_time_point(time_point_as_dict)
 
     def to_ros_msg(self):
         ros_test_result = RosTestResult()
