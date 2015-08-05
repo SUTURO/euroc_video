@@ -8,7 +8,7 @@
 		{"Object": "green_cylinder" },
 		{"Object": "red_cube" }
 	]
-    }
+    },
 
     {
 	"name": "AllPlacedObjects",
