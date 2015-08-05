@@ -135,7 +135,6 @@ namespace video_panel_plugin
         selectTopicBox = new QComboBox();
         selectTopicBox->addItem("No topics available");
         playLogsLayout->addWidget(selectTopicBox);
-        // TODO: Topic in einer Variable speichern        
 
         // create Dropdown Menu for start and end time
         QLabel* selectStartTimeLabel = new QLabel("Select start time:");
@@ -144,7 +143,6 @@ namespace video_panel_plugin
         selectStartTimeBox = new QComboBox();
         selectStartTimeBox->addItem("No time available");
         playLogsLayout->addWidget(selectStartTimeBox);
-        // TODO: End Start in einer Variable speichern
 
         QLabel* selectEndTimeLabel = new QLabel("Select end time:");
         playLogsLayout->addWidget(selectEndTimeLabel);
@@ -152,12 +150,10 @@ namespace video_panel_plugin
         selectEndTimeBox = new QComboBox();
         selectEndTimeBox->addItem("No time available");
         playLogsLayout->addWidget(selectEndTimeBox);
-        // TODO: End Zeit in einer Variable speichern
 
         // create button to pull available runs
         startLogButton = new QPushButton("Start", this);
         playLogsLayout->addWidget(startLogButton);
-        // TODO: Daten an handlePlayButton übergeben
         connect(startLogButton, SIGNAL (clicked()), this, SLOT (handlePlayButton()));
 
 
@@ -173,16 +169,22 @@ namespace video_panel_plugin
 
     void VideoPanel::handlePlayButton()
     {
-        //playLogs = PlayLogs();
+        playLogs = PlayLogs();
         // Derzeit geht nur TF
-        std::string msg_type = "tf";
+        // TODO: Mit anderen Msg_types arbeiten
+        std::string msg_type = "tf2_msgs/TFMessage";
         std::string database = selectedDatabase;
         std::string collection = selectTopicBox->currentText().toStdString();
         std::string output_topic = selectTopicBox->currentText().toStdString();
 //        ros::Time start = ros::Time::now();
         ros::Time start = timePointList.at(selectStartTimeBox->currentIndex());
 //        ros::Time end = ros::Time::now() + ros::Duration(100);
-        ros::Time end = timePointList.at(selectEndTimeBox->currentIndex());
+        ros::Time end = ros::Time(0);
+
+        if (selectEndTimeBox->currentText().toStdString().compare("Till end") != 0){
+            end = timePointList.at(selectEndTimeBox->currentIndex());
+        }
+
 
         std::string t = selectTopicBox->currentText().toStdString();
         std::cout << "Current Database: " << selectedDatabase << std::endl;
