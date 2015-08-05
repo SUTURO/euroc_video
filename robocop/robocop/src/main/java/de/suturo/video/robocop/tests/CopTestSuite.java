@@ -24,7 +24,7 @@ public class CopTestSuite {
      * @throws ParseException
      */
     public CopTestSuite(String json) throws ParseException {
-        JSONArray testsObject = JSONArray.fromObject(json);
+        JSONArray testsObject = JSONArray.fromObject(filterPython(json));
         for (Object singleTest : testsObject) {
             if (!(singleTest instanceof JSONObject)) {
                 throw new ParseException("Expected a JSON key/value object, got: " + singleTest);
@@ -42,5 +42,9 @@ public class CopTestSuite {
             results.add(test.execute());
         }
         return results;
+    }
+
+    private static String filterPython(String input) {
+        return input.replace("u'", "'");
     }
 }

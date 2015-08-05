@@ -109,6 +109,32 @@ public class RobocopTestTests {
     }
 
     /**
+     * Tests if multiple bindings of the same value don't trick the test in to passing.
+     */
+    @SuppressWarnings("boxing")
+    @Test
+    public void negativeWithDuplicate() {
+        String test = "[" //
+                + "{" //
+                + "        \"name\": \"TESTNAME1\","
+                + "        \"description\": \"Dummy execution\","
+                + "        \"query\": \"member(Object, [green_cylinder, blue_handle, green_cylinder, blue_handle]).\"," //
+                + "        \"expected\": [" //
+                + "             { \"Object\": \"blue_handle\" }," //
+                + "             { \"Object\": \"green_cylinder\" }," //
+                + "             { \"Object\": \"red_cube\" }" //
+                + "        ]" //
+                + "}" //
+                + "]";
+        assertThat("result of test upload", instance.uploadTest(test), is(RobocopServer.RESULT_OK));
+        JSONArray result = JSONArray.fromObject(instance.executeTest(null, null));
+        assertThat("result of test execution", ((JSONObject) result.get(0)).getBoolean("result"), is(false));
+        assertThat("first binding",
+                ((JSONObject) result.get(0)).getJSONArray("bindings").getJSONObject(0).getString("Object"),
+                is("green_cylinder"));
+    }
+
+    /**
      * Tests if the notable time points are being parsed correctly and are appended to the test result.
      */
     @SuppressWarnings("boxing")
@@ -136,5 +162,56 @@ public class RobocopTestTests {
         assertThat("timepoint 3 nanos", ((JSONObject) points.getJSONObject(2).get("time")).get("nsec"), is(0));
         assertThat("timepoint 4 seconds", ((JSONObject) points.getJSONObject(3).get("time")).get("sec"), is(99));
         assertThat("timepoint 4 nanos", ((JSONObject) points.getJSONObject(3).get("time")).get("nsec"), is(123456789));
+    }
+
+    /**
+     * Tests if line breaks inside the JSON can distort a test.
+     */
+    @SuppressWarnings("boxing")
+    @Test
+    public void lineBreakCompatibility() {
+        String test = "[\n" //
+                + "{\n" //
+                + "        \"name\": \"TESTNAME1\",\n"
+                + "        \"description\": \"Dummy execution\",\n"
+                + "        \"query\": \"member(Object, [green_cylinder, blue_handle, green_cylinder, blue_handle]).\",\n" //
+                + "        \"expected\": [\n" //
+                + "             { \"Object\": \"blue_handle\" },\n" //
+                + "             { \"Object\": \"green_cylinder\" },\n" //
+                + "             { \"Object\": \"red_cube\" }\n" //
+                + "        ]\n" //
+                + "}\n" //
+                + "]";
+        assertThat("result of test upload", instance.uploadTest(test), is(RobocopServer.RESULT_OK));
+        JSONArray result = JSONArray.fromObject(instance.executeTest(null, null));
+        assertThat("result of test execution", ((JSONObject) result.get(0)).getBoolean("result"), is(false));
+        assertThat("first binding",
+                ((JSONObject) result.get(0)).getJSONArray("bindings").getJSONObject(0).getString("Object"),
+                is("green_cylinder"));
+    }
+
+    /**
+     * Tests if python unicode strings are ignored properly.
+     */
+    @SuppressWarnings("boxing")
+    @Test
+    public void ignorePythonStrings() {
+        String test = "[" //
+                + "{" //
+                + "        u'name': u'TESTNAME1',"
+                + "        u'description': u'Dummy execution',"
+                + "        u'query': u'member(Object, [green_cylinder, blue_handle, green_cylinder, blue_handle]).'," //
+                + "        u'expected': [" //
+                + "             { u'Object': u'blue_handle' }," //
+                + "             { u'Object': u'green_cylinder' }" //
+                + "        ]" //
+                + "}" //
+                + "]";
+        assertThat("result of test upload", instance.uploadTest(test), is(RobocopServer.RESULT_OK));
+        JSONArray result = JSONArray.fromObject(instance.executeTest(null, null));
+        assertThat("result of test execution", ((JSONObject) result.get(0)).getBoolean("result"), is(true));
+        assertThat("first binding",
+                ((JSONObject) result.get(0)).getJSONArray("bindings").getJSONObject(0).getString("Object"),
+                is("green_cylinder"));
     }
 }
