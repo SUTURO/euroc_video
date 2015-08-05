@@ -243,9 +243,6 @@ namespace video_panel_plugin
             ROS_ERROR_STREAM(exc.what());
             VideoPanel::showMessage(exc.what(), "Please see console for further information");
         }
-        // Add exception-handling
-        // Add true/false handling
-        // Add update for available counter
     }
 
     void VideoPanel::handleFailedRunsCheckBox(int state)
@@ -311,9 +308,6 @@ namespace video_panel_plugin
             {
                 selectTopicBox->addItem("No Playable Topics found!");
             }
-
-//            int height = 5 * performedTestsList->visualItemRect(performedTestsList->item(0)).height();
-//            performedTestsList->setFixedHeight(height);
         }
         catch(ServiceUnavailableException &exc)
         {
