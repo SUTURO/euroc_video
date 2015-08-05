@@ -30,7 +30,6 @@ class ServiceManager(object):
         resp.result = True
         simulation_run_name = req.simulation_run_name
         owl_file = TestManager.OWL_PATH + simulation_run_name + '/cram_log.owl'
-        print owl_file
         execute_result = HttpTools.execute_tests(simulation_run_name, owl_file)
         try:
             test_results = execute_result.json()
@@ -53,6 +52,9 @@ class ServiceManager(object):
             # call a method from test_manager that turns the data from resp into a test_result (maybe from dict)
             self.test_manager.add_all_tests_to_simulation_run(sim_run)
             self.test_manager.add_test_results_to_simulation_run(sim_run, test_results)
+            for name, test in sim_run.tests.tests.iteritems():
+                print test.name
+                print test.test_result.notable_time_points
             print "[Voldemort_to_vader] Service: /voldemort/get_executed_tests Result:True"
         else:
             print "[Voldemort_to_vader] Service: /voldemort/get_executed_tests Result:False"

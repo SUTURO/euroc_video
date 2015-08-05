@@ -53,6 +53,7 @@ class TestContainer(object):
         return name
 
     def add_test_result_from_dict(self, test_result_data):
+        test_result = None
         test_result = TestResult()
         test_name = test_result_data['name']
 
@@ -87,7 +88,7 @@ class TestContainer(object):
             test_result.add_notable_time_point_by_values(147, 280)
             test_result.add_notable_time_point_by_values(170, 307)
             test_result.add_notable_time_point_by_values(188, 896)
-        elif test_name == "AllObjectsGrasped":
+        elif test_name == "AllGraspedObjects":
             test_result.add_notable_time_point_by_values(91, 937)
             test_result.add_notable_time_point_by_values(115, 871)
             test_result.add_notable_time_point_by_values(148, 256)
@@ -177,11 +178,11 @@ class Test(object):
         return ros_test
 
 class TestResult(object):
-    def __init__(self, result = None, execution_date=None, notable_time_points=[], bindings={}):
+    def __init__(self, result = None, execution_date=None):
         self.result = result
         self.execution_date = execution_date
-        self.bindings = bindings
-        self.notable_time_points = notable_time_points
+        self.bindings = {}
+        self.notable_time_points = []
 
     def add_notable_time_point(self, ntp_dict):
         ntp_data = ntp_dict['time']
