@@ -8,5 +8,26 @@
 		{"Object": "green_cylinder" },
 		{"Object": "red_cube" }
 	]
+    },
+    {
+	"name": "AllPlacedObjects",
+	"description": "Tests which and where objects have been placed.",
+	"query": "getPlacedObjects(Objects).",
+	"expected": [
+		{"Object": "blue_handle" },
+		{"Object": "green_cylinder" },
+		{"Object": "red_cube" }
+	]
+    },
+    {
+	"name": "AllGraspedObjects",
+	"description": "Tests which and where objects have been grasped.",
+	"query": "getGraspedObjects(Objects).",
+	"expected": [
+		{"Object": "blue_handle" },
+		{"Object": "green_cylinder" },
+		{"Object": "red_cube" }
+	]
     }
+
 ]

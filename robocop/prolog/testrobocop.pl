@@ -1,13 +1,15 @@
-:- module(testrobocop,
-    [numberOfObjects/1,
-    objectsFound/1,
-    getInfoToDesig/3,
-    getPutDownActions/1,
+:- module(testrobocop, 
+    [numberOfObjects/1, 
+    objectsFound/1, 
+    getInfoToDesig/3, 
+    getPutDownActions/1, 
     getTimeForAction/3,
     objectsFoundAsList/1,
     objectsPlacedAsList/1,
     objectsGraspedAsList/1,
-    placedObjectsAsList/1]).
+    placedObjectsAsList/1,
+    getPlacedObjects/1,
+    getGraspedObjects/1]).
 
 numberOfObjects(Count):-
 	findall(RESULT,objectsFound(RESULT)
