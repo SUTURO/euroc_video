@@ -5,6 +5,7 @@ from tools import JsonTools
 from voldemort_to_vader_data import TestContainer, SimulationRunContainer
 
 class TestManager(object):
+    OWL_PATH = "/home/suturo/catkin_ws/src/euroc/euroc_video/test_data/"
     def __init__(self, mongo_tools):
         self.database_names = []
         self.simulation_runs = SimulationRunContainer()

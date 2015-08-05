@@ -5,6 +5,7 @@ from suturo_video_msgs.srv import GetSimulationRuns, GetSimulationRunsRequest, G
     GetTestsRequest, GetTestsResponse, ExecuteTests, ExecuteTestsRequest, ExecuteTestsResponse, AddTests, \
     AddTestsRequest, AddTestsResponse, GetTopicNames, GetTopicNamesRequest, GetTopicNamesResponse
 from tools import HttpTools
+from test_manager import TestManager
 import os
 
 class ServiceManager(object):
@@ -27,35 +28,34 @@ class ServiceManager(object):
         print "[Voldemort_to_vader] Service: /voldemort/get_executed_tests called"
         resp = ExecuteTestsResponse()
         resp.result = True
-        if req.database_name is not None and req.owl_file is not None:
-            database_name = req.database_name
-            owl_file = req.owl_file
-            execute_result = HttpTools.execute_tests(database_name, owl_file)
-            try:
-                test_results = execute_result.json()
-                print "[Voldemort_to_vader] Service: /voldemort/get_executed_tests Test_result="+str(test_results)
+        simulation_run_name = req.simulation_run_name
+        owl_file = TestManager.OWL_PATH + simulation_run_name + '/cram_log.owl'
+        print owl_file
+        execute_result = HttpTools.execute_tests(simulation_run_name, owl_file)
+        try:
+            test_results = execute_result.json()
+            print "[Voldemort_to_vader] Service: /voldemort/get_executed_tests Test_result="+str(test_results)
 
-            except ValueError, e:
-                resp.result = False
-                print e
+        except ValueError, e:
+            resp.result = False
+            print e
 
-
-            if isinstance(test_results, dict):
-                if test_results['result'] not in ['True', 'False']:
-                    print "[Voldemort_to_vader] Service: /voldemort/get_executed_tests Prolog Result Error=" +str(test_results)
-                    resp.result = False
-
-            if execute_result.status_code != 200:
+        if isinstance(test_results, dict):
+            if test_results['result'] not in ['True', 'False']:
+                print "[Voldemort_to_vader] Service: /voldemort/get_executed_tests Prolog Result Error=" +str(test_results)
                 resp.result = False
 
-            if resp.result == True:
-                sim_run = self.test_manager.get_simulation_run_by_name(database_name)
-                # call a method from test_manager that turns the data from resp into a test_result (maybe from dict)
-                self.test_manager.add_all_tests_to_simulation_run(sim_run)
-                self.test_manager.add_test_results_to_simulation_run(sim_run, test_results)
-                print "[Voldemort_to_vader] Service: /voldemort/get_executed_tests Result:True"
-            else:
-                print "[Voldemort_to_vader] Service: /voldemort/get_executed_tests Result:False"
+        if execute_result.status_code != 200:
+            resp.result = False
+
+        if resp.result == True:
+            sim_run = self.test_manager.get_simulation_run_by_name(simulation_run_name)
+            # call a method from test_manager that turns the data from resp into a test_result (maybe from dict)
+            self.test_manager.add_all_tests_to_simulation_run(sim_run)
+            self.test_manager.add_test_results_to_simulation_run(sim_run, test_results)
+            print "[Voldemort_to_vader] Service: /voldemort/get_executed_tests Result:True"
+        else:
+            print "[Voldemort_to_vader] Service: /voldemort/get_executed_tests Result:False"
         return resp
 
     def handle_add_tests(self, req):
