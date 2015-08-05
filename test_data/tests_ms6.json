@@ -2,8 +2,7 @@
     {
 	"name": "AllObjectsRecognized",
 	"description": "Tests if all objects were recognized",
-	"query": "member(_A, [b, c]),
-			  objectsFound(Object).",
+	"query": "member(_A, [b, c]), objectsFound(Object).",
 	"expected": [
 		{"Object": "blue_handle" },
 		{"Object": "green_cylinder" },
