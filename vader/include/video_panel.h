@@ -25,6 +25,8 @@ public:
     PrefixLabel(std::string prefix);
     PrefixLabel(std::string prefix, std::string suffix);
     void updateSuffix(std::string suffix);
+    void updateSuffix(int suffix);
+    std::string getSuffix();
 
 private:
     QLabel label;
@@ -52,7 +54,7 @@ private Q_SLOTS:
 private:
     ROSConnector connector;
     QPushButton *pullRunsButton;
-    QLabel *availableTestsLabel;
+    PrefixLabel *availableTestsLabel;
     QPushButton *addTestsButton;
     QListWidget *availableRunsList;
     QCheckBox *failedRuns;
@@ -82,6 +84,9 @@ private:
     std::vector<suturo_video_msgs::Test> returnedTests;
     std::vector<std::string> playableTopics;
     suturo_video_msgs::Test getTestFromList(QString name);
+
+    void showMessage(std::string text);
+    void showMessage(std::string text, std::string additionalText);
 
     /**
       creates a QString with surround html tags

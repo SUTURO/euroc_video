@@ -52,7 +52,7 @@ namespace video_panel_plugin
         overviewLayout->addWidget(pullRunsButton);
         connect(pullRunsButton, SIGNAL (clicked()), this, SLOT (handlePullButton()));
 
-        // line for decoreation
+        // line for decoration
         QFrame* line = new QFrame();
         line->setObjectName(QString::fromUtf8("line"));
         line->setGeometry(QRect(320, 150, 118, 3));
@@ -218,21 +218,31 @@ namespace video_panel_plugin
         {
             availableRunsList->setEnabled(false);
             ROS_ERROR_STREAM(exc.what());
-//            QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(exc.what()), availableRunsList);
-            QMessageBox msgBox;
-            msgBox.setText(QString::fromStdString(exc.what()));
-            msgBox.setInformativeText(QString("Please check console for additional information"));
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.exec();
+            VideoPanel::showMessage(exc.what(), "Please see console for further information");
         }
     }
 
     void VideoPanel::handleAddTestsButton()
     {
-        QString blub = QFileDialog::getOpenFileName(this, "Select a json file that contains a testcase", QDir::currentPath(), tr("json file (*.json)"));
-        std::cout << blub.toStdString() << std::endl;
-        bool b = connector.addTests(blub.toStdString());
-        std::cout << b << std::endl;
+        QString testfile = QFileDialog::getOpenFileName(this, "Select a json file that contains a testcase", QDir::currentPath(), tr("json file (*.json)"));
+        try
+        {
+            if(connector.addTests(testfile.toStdString()))
+            {
+                // get new number of available tests
+                int n = connector.getAvailableTests("").capacity();
+                availableTestsLabel->updateSuffix(n);
+            }
+            else
+            {
+                VideoPanel::showMessage("Unable to upload file", "Please see console for further information");
+            }
+        }
+        catch(ServiceUnavailableException &exc)
+        {
+            ROS_ERROR_STREAM(exc.what());
+            VideoPanel::showMessage(exc.what(), "Please see console for further information");
+        }
         // Add exception-handling
         // Add true/false handling
         // Add update for available counter
@@ -333,7 +343,7 @@ namespace video_panel_plugin
         // get number of timepoints and set label
         timePointList = testCase.test_result.notableTimePoints;
         timePointsNumber = testCase.test_result.notableTimePoints.capacity();
-        timePointsLabel->updateSuffix(boost::lexical_cast<std::string>(timePointsNumber));
+        timePointsLabel->updateSuffix(timePointsNumber);
 
         // insert timepoints if exist
         timePointsBox->clear();
@@ -408,6 +418,29 @@ namespace video_panel_plugin
     {
         this->suffix = suffix;
         this->setText(QString(this->prefix.c_str()).append(QString(this->suffix.c_str())));
+    }
+
+    void PrefixLabel::updateSuffix(int suffix)
+    {
+        this->suffix = boost::lexical_cast<std::string>(suffix);
+        this->setText(QString(this->prefix.c_str()).append(QString(this->suffix.c_str())));
+    }
+
+    void VideoPanel::showMessage(std::string text)
+    {
+        QMessageBox msgBox;
+        msgBox.setText(QString::fromStdString(text));
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.exec();
+    }
+
+    void VideoPanel::showMessage(std::string text, std::string additionalText)
+    {
+        QMessageBox msgBox;
+        msgBox.setText(QString::fromStdString(text));
+        msgBox.setInformativeText(QString::fromStdString(additionalText));
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.exec();
     }
 }
 
