@@ -37,7 +37,7 @@ std::vector<std::string> ROSConnector::getSimulationRuns()
     else
     {
         std::ostringstream msg;
-        msg << "Service unavailable: " << simulationRunsServiceName;
+        msg << "Service call failed: " << simulationRunsServiceName;
         throw ServiceUnavailableException(msg.str());
     }
 }
@@ -53,7 +53,7 @@ std::vector<suturo_video_msgs::Test> ROSConnector::getAvailableTests(std::string
     else
     {
         std::ostringstream msg;
-        msg << "Service unavailable: " << availableTestsServiceName;
+        msg << "Service call failed: " << availableTestsServiceName;
         throw ServiceUnavailableException(msg.str());
     }
 }
@@ -69,7 +69,7 @@ std::vector<suturo_video_msgs::Test> ROSConnector::getExecutedTests(std::string 
     else
     {
         std::ostringstream msg;
-        msg << "Service unavailable: " << executedTestsServiceName;
+        msg << "Service call failed: " << executedTestsServiceName;
         throw ServiceUnavailableException(msg.str());
     }
 }
@@ -85,7 +85,7 @@ std::vector<std::string> ROSConnector::getPlayableTopics(std::string run)
     else
     {
         std::ostringstream msg;
-        msg << "Service unavailable: " << getPlayableTopicsServiceName;
+        msg << "Service call failed: " << getPlayableTopicsServiceName;
         throw ServiceUnavailableException(msg.str());
     }
 }
@@ -100,7 +100,23 @@ bool ROSConnector::addTests(std::string filePath)
     else
     {
         std::ostringstream msg;
-        msg << "Service unavailable: " << addTestsServiceName;
+        msg << "Service call failed: " << addTestsServiceName;
+        throw ServiceUnavailableException(msg.str());
+    }
+}
+
+bool ROSConnector::executeTests(std::string run)
+{
+    suturo_video_msgs::ExecuteTests srv;
+    srv.request.simulation_run_name = run;
+    if(executeTestsClient.call(srv))
+    {
+        return srv.response.result;
+    }
+    else
+    {
+        std::ostringstream msg;
+        msg << "Service call failed: " << executeTestsServiceName;
         throw ServiceUnavailableException(msg.str());
     }
 }

@@ -4,6 +4,7 @@
 #include <QVBoxLayout>
 #include <QListWidgetItem>
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QDir>
 #include <boost/lexical_cast.hpp>
 
@@ -217,7 +218,12 @@ namespace video_panel_plugin
         {
             availableRunsList->setEnabled(false);
             ROS_ERROR_STREAM(exc.what());
-            QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(exc.what()), availableRunsList);
+//            QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(exc.what()), availableRunsList);
+            QMessageBox msgBox;
+            msgBox.setText(QString::fromStdString(exc.what()));
+            msgBox.setInformativeText(QString("Please check console for additional information"));
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
         }
     }
 
@@ -227,6 +233,9 @@ namespace video_panel_plugin
         std::cout << blub.toStdString() << std::endl;
         bool b = connector.addTests(blub.toStdString());
         std::cout << b << std::endl;
+        // Add exception-handling
+        // Add true/false handling
+        // Add update for available counter
     }
 
     void VideoPanel::handleFailedRunsCheckBox(int state)
@@ -243,7 +252,13 @@ namespace video_panel_plugin
         performedTestsList->clear();
         try
         {
+            int nrAvTest = connector.getAvailableTests(item->text().toStdString()).capacity();
             returnedTests = connector.getExecutedTests(item->text().toStdString());
+            if (nrAvTest > returnedTests.capacity())
+            {
+                connector.executeTests(item->text().toStdString());
+                returnedTests = connector.getExecutedTests(item->text().toStdString());
+            }
             selectedRunLabel->setText(setBoldText(item->text()));
             selectedDatabase = item->text().toStdString();
 
