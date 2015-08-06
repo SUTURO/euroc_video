@@ -12,6 +12,8 @@ import net.sf.json.JSONObject;
  */
 public class Time {
 
+    private static final String CRAM_NS = "http://knowrob.org/kb/cram_log.owl#";
+
     /**
      * Construct a new time point from the given time point
      * 
@@ -19,7 +21,8 @@ public class Time {
      *            a time point from knowrob (eg. 'timepoint_94.123')
      */
     public static JSONObject getTimepoint(String timepoint) {
-        String point = timepoint.substring(timepoint.indexOf("_") + 1);
+        String point = timepoint.replace(CRAM_NS, "");
+        point = point.substring(point.indexOf("_") + 1);
         String[] splitted = point.split("\\.");
         JSONObject outerTime = new JSONObject();
         JSONObject json = new JSONObject();

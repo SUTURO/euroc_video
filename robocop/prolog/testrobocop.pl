@@ -52,11 +52,15 @@ getTimeForAction(Action, Start, End):-
 
 getPlacedObjects(Objects):-
 	getPutDownActions(Actions),
-	getObjectActedOn(Actions, Objects).
+	getObjectActedOn(Actions, Objects),
+	getTimeForAction(Actions, Start, _),
+	addNotableTimepoint(Start).
 
 getGraspedObjects(Objects):-
 	getGraspActions(Actions),
-	getObjectActedOn(Actions, Objects).
+	getObjectActedOn(Actions, Objects),
+	getTimeForAction(Actions, Start, _),
+	addNotableTimepoint(Start).
 
 getObjectActedOn(Action, Obj):-
 	getInfoToDesig(Action,'OBJ.TYPE', Obj).

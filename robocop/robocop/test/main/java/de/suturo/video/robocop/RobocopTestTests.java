@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThat;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -27,6 +28,14 @@ public class RobocopTestTests {
     public static void setUpStatic() {
         instance = new RobocopServer();
         RobocopServer.initProlog();
+    }
+
+    @Before
+    public void setUp() {
+        jpl.Query.oneSolution("retractall(getNotableTimepoints(_)).");
+        jpl.Query.oneSolution("retractall(initializeNotableTimepoints).");
+        jpl.Query.oneSolution("assert(initializeNotableTimepoints :- true).");
+        jpl.Query.oneSolution("assert(getNotableTimepoints(NTP) :- NTP = []).");
     }
 
     /**
@@ -140,11 +149,14 @@ public class RobocopTestTests {
     @SuppressWarnings("boxing")
     @Test
     public void ntpTest() {
+        jpl.Query
+                .oneSolution("retractall(getNotableTimepoints(_)), assertz(getNotableTimepoints(NTP) :- NTP = ['timepoint_96.405', 'timepoint_97.60107', 'http://knowrob.org/kb/cram_log.owl#timepoint_116.208', 'timepoint_99.12345678912']).");
         String test = "[" //
                 + "{" //
                 + "        \"name\": \"TESTNAME1\","
                 + "        \"description\": \"Dummy execution\","
-                + "        \"query\": \"NTP=['timepoint_96.405', 'timepoint_97.60107', 'timepoint_98.0', 'timepoint_99.12345678912'].\","
+                + "        \"getNotableTimepoints\": true,"
+                + "        \"query\": \"member(A, [c]).\","
                 + "        \"expected\": {" //
                 + "                \"A\": \"b\"" //
                 + "        }" //
@@ -158,8 +170,8 @@ public class RobocopTestTests {
         assertThat("timepoint 1 nanos", ((JSONObject) points.getJSONObject(0).get("time")).get("nsec"), is(405000000));
         assertThat("timepoint 2 seconds", ((JSONObject) points.getJSONObject(1).get("time")).get("sec"), is(97));
         assertThat("timepoint 2 nanos", ((JSONObject) points.getJSONObject(1).get("time")).get("nsec"), is(601070000));
-        assertThat("timepoint 3 seconds", ((JSONObject) points.getJSONObject(2).get("time")).get("sec"), is(98));
-        assertThat("timepoint 3 nanos", ((JSONObject) points.getJSONObject(2).get("time")).get("nsec"), is(0));
+        assertThat("timepoint 3 seconds", ((JSONObject) points.getJSONObject(2).get("time")).get("sec"), is(116));
+        assertThat("timepoint 3 nanos", ((JSONObject) points.getJSONObject(2).get("time")).get("nsec"), is(208000000));
         assertThat("timepoint 4 seconds", ((JSONObject) points.getJSONObject(3).get("time")).get("sec"), is(99));
         assertThat("timepoint 4 nanos", ((JSONObject) points.getJSONObject(3).get("time")).get("nsec"), is(123456789));
     }

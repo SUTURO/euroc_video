@@ -51,6 +51,7 @@ public class CopTest {
      * * Executes the test represented by this object. This requires a configured and set up swi-prolog jni environment!
      */
     JSONObject execute() {
+        jpl.Query.oneSolution("initializeNotableTimepoints.");
         List<JSONObject> bindings = allAnswers();
         boolean result = checkMultiExpected(bindings);
         JSONObject test = new JSONObject();
@@ -58,7 +59,7 @@ public class CopTest {
         test.put("executionDate", SDF.format(new Date()));
         test.put("result", Boolean.valueOf(result));
         test.put("bindings", bindings);
-        test.put("notableTimePoints", notableTimes(bindings));
+        test.put("notableTimePoints", notableTimes());
         return test;
     }
 
@@ -71,15 +72,14 @@ public class CopTest {
         return bindings;
     }
 
-    private static JSONArray notableTimes(List<JSONObject> bindings) {
+    @SuppressWarnings("unchecked")
+    private static JSONArray notableTimes() {
+        JSONObject binding = JSONQuery.encodeResult(jpl.Query.oneSolution("getNotableTimepoints(NTP)."));
         JSONArray times = new JSONArray();
-        for (JSONObject binding : bindings) {
-            if (binding.containsKey("NTP") && binding.get("NTP") instanceof JSONArray) {
-                JSONArray ntp = (JSONArray) binding.get("NTP");
-                for (Object object : ntp) {
-                    times.add(Time.getTimepoint((String) object));
-                }
-                binding.remove("NTP");
+        if (binding.containsKey("NTP") && binding.get("NTP") instanceof JSONArray) {
+            JSONArray ntp = (JSONArray) binding.get("NTP");
+            for (Object object : ntp) {
+                times.add(Time.getTimepoint((String) object));
             }
         }
         return times;
