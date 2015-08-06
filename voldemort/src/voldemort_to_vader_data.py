@@ -72,7 +72,7 @@ class TestContainer(object):
         for time_point in test_result_data['notableTimePoints']:
             test_result.add_notable_time_point(time_point)
 
-        self.time_point_no_dirty_hack_hahaha(test_result, test_name)
+        #self.time_point_no_dirty_hack_hahaha(test_result, test_name)
 
         test = self.get_test_by_name(test_name)
         test.test_result = test_result
