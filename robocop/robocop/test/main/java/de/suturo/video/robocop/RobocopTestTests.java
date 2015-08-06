@@ -1,5 +1,6 @@
 package de.suturo.video.robocop;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import net.sf.json.JSONArray;
@@ -115,6 +116,39 @@ public class RobocopTestTests {
         assertThat("result of test execution", ((JSONObject) result.get(0)).getBoolean("result"), is(true));
         assertThat("result of test execution", ((JSONObject) result.get(1)).getBoolean("result"), is(true));
         assertThat("result of test execution", ((JSONObject) result.get(2)).getBoolean("result"), is(false));
+    }
+
+    /**
+     * Tests if an unexpected test execution error is handled correctly and does not affect the following tests.
+     */
+    @SuppressWarnings("boxing")
+    @Test
+    public void testWithError() {
+        String test = "[" //
+                + "{" //
+                + "        \"name\": \"TESTNAME1\","
+                + "        \"description\": \"Dummy execution\","
+                + "        \"query\": \"jibbetnich.\"," //
+                + "        \"expected\": [" //
+                + "             { \"A\": \"d\" }" //
+                + "        ]" //
+                + "}," //
+                + "{" //
+                + "        \"name\": \"TESTNAME2\","
+                + "        \"description\": \"Dummy execution\","
+                + "        \"query\": \"member(A, [b, c, d]).\"," //
+                + "        \"expected\": [" //
+                + "             { \"A\": \"d\" }," //
+                + "             { \"A\": \"c\" }" //
+                + "        ]" //
+                + "}" //
+                + "]";
+        assertThat("result of test upload", instance.uploadTest(test), is(RobocopServer.RESULT_OK));
+        JSONArray result = JSONArray.fromObject(instance.executeTest(null, null));
+        assertThat("result of test execution", ((JSONObject) result.get(0)).getString("result"), is("error"));
+        assertThat("result of test execution", ((JSONObject) result.get(0)).getString("error"),
+                containsString("existence_error"));
+        assertThat("result of test execution", ((JSONObject) result.get(1)).getBoolean("result"), is(true));
     }
 
     /**
