@@ -39,9 +39,21 @@ public class CopTestSuite {
     public JSONArray executeSuite() {
         JSONArray results = new JSONArray();
         for (CopTest test : tests) {
-            results.add(test.execute());
+            try {
+                results.add(test.execute());
+            } catch (Exception e) {
+                results.add(jsonError(test, e));
+            }
         }
         return results;
+    }
+
+    private static JSONObject jsonError(CopTest test, Exception e) {
+        JSONObject err = new JSONObject();
+        err.put("name", test.getName());
+        err.put("result", "error");
+        err.put("error", e.getMessage());
+        return err;
     }
 
     private static String filterPython(String input) {

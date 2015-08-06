@@ -117,4 +117,11 @@ public class CopTest {
         }
         return false;
     }
+
+    /**
+     * The name of this test
+     */
+    public String getName() {
+        return this.name;
+    }
 }
