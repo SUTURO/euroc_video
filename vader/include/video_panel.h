@@ -19,6 +19,14 @@
 
 namespace video_panel_plugin
 {
+class ImageLabel : public QLabel
+{
+public:
+	QPixmap *imagePixmap;
+	void resizeEvent(QResizeEvent *);
+
+};
+
 class PrefixLabel : public QLabel
 {
 public:
@@ -77,6 +85,13 @@ private:
     QComboBox *selectEndTimeBox;
     QPushButton *startLogButton;
     std::string selectedDatabase;
+
+    QWidget *imagesWidget;
+    QListWidget *availableImagesList;
+    QLabel *selectedImageLabel;
+    ImageLabel *imageLabel;
+//    QPixmap *imagePixmap;
+//    QPainter *imageDisplay;
 
     int timePointsNumber;
     std::vector<ros::Time> timePointList;

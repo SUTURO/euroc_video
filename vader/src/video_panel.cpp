@@ -20,6 +20,13 @@ namespace patch
 
 namespace video_panel_plugin
 {
+	void ImageLabel::resizeEvent(QResizeEvent *e) {
+		int w = this->size().width();
+		int h = this->size().height();
+		QPixmap *p = this->imagePixmap;
+		this->setPixmap(p->scaled(w, h, Qt::KeepAspectRatio));
+	}
+
 	VideoPanel::VideoPanel( QWidget* parent)
 	: rviz::Panel(parent)
     {
@@ -160,6 +167,26 @@ namespace video_panel_plugin
 
         // add playlogs to QTabWidget
         tab->addTab(playLogsWidget, "Play Logs");
+
+        imagesWidget = new QWidget();
+        QVBoxLayout* imagesLayout = new QVBoxLayout();
+        imagesWidget->setLayout(imagesLayout);
+
+        selectedImageLabel = new QLabel("Select image to display:");
+        imagesLayout->addWidget(selectedImageLabel);
+        availableImagesList = new QListWidget();
+        imagesLayout->addWidget(availableImagesList);
+        //connect(availableImagesList, SIGNAL (itemDoubleClicked(QListWidgetItem*)), this, SLOT (loadRun(QListWidgetItem*)));
+//        imageDisplay = new QPainter();
+//        imagesLayout->addWidget(imageDisplay);
+        imageLabel = new ImageLabel();
+//        imageLabel->setScaledContents(true);
+        imageLabel->setStyleSheet("border: 1px solid");
+        imageLabel->imagePixmap  = new QPixmap("/home/suturo/catkin_ws/src/euroc/sr_experimental_data/exp-2015-08-01_11-03-48/0__euroc_interface_node_cameras_scene_depth_cam.jpg");
+        imagesLayout->addWidget(imageLabel);
+        //imageLabel->setPixmap(imagePixmap.scaled(imagesWidget->width(), imagesWidget->height(), Qt::KeepAspectRatio));
+//        imageLabel->setPixmap(imagePixmap);
+        tab->addTab(imagesWidget, "Highlights");
 
         // set tabLayout as layout for parent
         setLayout(tabLayout);
