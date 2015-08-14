@@ -182,7 +182,10 @@ namespace video_panel_plugin
         imageLabel = new ImageLabel();
 //        imageLabel->setScaledContents(true);
         imageLabel->setStyleSheet("border: 1px solid");
-        imageLabel->imagePixmap  = new QPixmap("/home/suturo/catkin_ws/src/euroc/sr_experimental_data/exp-2015-08-01_11-03-48/0__euroc_interface_node_cameras_scene_depth_cam.jpg");
+        selectedDatabase = "exp-2015-08-01_11-03-48"; // TODO: Remove to actually use selected database
+        std::string image_name = "0__euroc_interface_node_cameras_scene_depth_cam.jpg";
+        // TODO: get list of images with timestamps from prolog
+        imageLabel->imagePixmap  = new QPixmap(("/home/suturo/catkin_ws/src/euroc/sr_experimental_data/" + selectedDatabase + "/" + image_name).c_str());
         imagesLayout->addWidget(imageLabel);
         //imageLabel->setPixmap(imagePixmap.scaled(imagesWidget->width(), imagesWidget->height(), Qt::KeepAspectRatio));
 //        imageLabel->setPixmap(imagePixmap);
