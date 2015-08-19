@@ -48,8 +48,9 @@ class JsonTools(object):
     @staticmethod
     def parse_from_json_file(file_path):
         with open(file_path) as test_data:
-            test_data = json.load(test_data)
-        return test_data
+            data = test_data.read().replace('\r\n', '').replace('\n','').replace('\t','')
+            return_data = json.loads(data)
+        return return_data
 
 
 class HttpTools(object):
