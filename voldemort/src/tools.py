@@ -12,7 +12,7 @@ class MongoTools(object):
 
     def write_data_to_mongo_db(self, db_name, collection_name, data):
         db = self.client[db_name]
-        db[collection_name].insert_one(data)
+        db[collection_name].insert(data)
 
     def write_test_simulation_data_to_mongo(self, simulation_name):
         test_collection_name = 'test_collection'
