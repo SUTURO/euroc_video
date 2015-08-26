@@ -1,13 +1,17 @@
 __author__ = 'tobi'
 
 import json
+import os
 import requests
 from pymongo import MongoClient
 
 
 class MongoTools(object):
     def __init__(self):
-        self.client = MongoClient()
+        host_ip = os.getenv("MONGO_PORT_27017_TCP_ADDR")
+        if host_ip is None:
+            print "[Voldemort_to_vader] MongoTools: Environment Variable MONGO_PORT_27017_TCP_ADDR is not set"
+        self.client = MongoClient(host=host_ip)
         self.not_playable_topics = ['logged_images_out_compressed', 'system.indexes', 'logged_designators']
 
     def write_data_to_mongo_db(self, db_name, collection_name, data):
