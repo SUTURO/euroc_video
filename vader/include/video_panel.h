@@ -12,7 +12,10 @@
 #include <QWidget>
 #include <QComboBox>
 #include <ROSConnector.h>
+#include <QResizeEvent>
 #include <PlayLogs.h>
+#include <dirent.h>
+#include <stdio.h>
 #include "suturo_video_msgs/Test.h"
 #include "suturo_video_msgs/TestResult.h"
 #endif
@@ -58,6 +61,11 @@ private Q_SLOTS:
     void loadRun(QListWidgetItem* item);
     void handleSelectedTest();
     void handlePlayButton();
+    void handleHighlightsTab();
+    void handleHighlightsRefreshDataSetsButton();
+    void handleHighlightsRefreshImagesButton();
+    void handleSelectDataSet(QListWidgetItem* item);
+    void handleSelectImage(QListWidgetItem* item);
 	
 private:
     ROSConnector connector;
@@ -86,12 +94,26 @@ private:
     QPushButton *startLogButton;
     std::string selectedDatabase;
 
-    QWidget *imagesWidget;
-    QListWidget *availableImagesList;
-    QLabel *selectedImageLabel;
-    ImageLabel *imageLabel;
+    // Widget for highlights as images.
+    const std::string dataDir;
+    const bool imagesDebug;
+    std::string selectedDataSet;
+    std::string selectedImage;
+    QLabel *highlightsSelectDataSetLabel;
+    QListWidget *highlightsAvailableDataSetsList;
+    QPushButton *highlightsRefreshDataSetsButton;
+    QWidget *highlightsImagesWidget;
+    QListWidget *highlightsAvailableImagesList;
+    QPushButton *highlightsRefreshImagesButton;
+    QLabel *highlightsSelectImageLabel;
+    QLabel *highlightsSelectedImageLabel;
+    ImageLabel *highlightsImageLabel;
 //    QPixmap *imagePixmap;
 //    QPainter *imageDisplay;
+    void updateDataSets();
+    void loadDataSet();
+    void loadImage();
+    bool fileHasExtension(std::string file, std::string extension);
 
     int timePointsNumber;
     std::vector<ros::Time> timePointList;

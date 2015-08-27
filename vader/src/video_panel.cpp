@@ -28,7 +28,9 @@ namespace video_panel_plugin
 	}
 
 	VideoPanel::VideoPanel( QWidget* parent)
-	: rviz::Panel(parent)
+	: rviz::Panel(parent),
+	  dataDir("/home/suturo/catkin_ws/src/euroc/sr_experimental_data"),
+	  imagesDebug(true)
     {
         timePointsNumber = 0;
 
@@ -168,34 +170,176 @@ namespace video_panel_plugin
         // add playlogs to QTabWidget
         tab->addTab(playLogsWidget, "Play Logs");
 
-        imagesWidget = new QWidget();
-        QVBoxLayout* imagesLayout = new QVBoxLayout();
-        imagesWidget->setLayout(imagesLayout);
 
-        selectedImageLabel = new QLabel("Select image to display:");
-        imagesLayout->addWidget(selectedImageLabel);
-        availableImagesList = new QListWidget();
-        imagesLayout->addWidget(availableImagesList);
-        //connect(availableImagesList, SIGNAL (itemDoubleClicked(QListWidgetItem*)), this, SLOT (loadRun(QListWidgetItem*)));
+        // Widget for highlights as images.
+        highlightsImagesWidget = new QWidget();
+        QVBoxLayout* highlightsLayout = new QVBoxLayout();
+        QVBoxLayout* highlightsDataSetLayout = new QVBoxLayout();
+        QVBoxLayout* highlightsImagesLayout = new QVBoxLayout();
+        QHBoxLayout* highlightsSelectionLayout = new QHBoxLayout();
+        highlightsImagesWidget->setLayout(highlightsLayout);
+
+        highlightsLayout->addLayout(highlightsSelectionLayout);
+        highlightsSelectionLayout->addLayout(highlightsDataSetLayout);
+        highlightsSelectionLayout->addLayout(highlightsImagesLayout);
+
+        if (imagesDebug) {
+        	highlightsSelectDataSetLabel = new QLabel("Select data set:");
+        	highlightsDataSetLayout->addWidget(highlightsSelectDataSetLabel);
+			highlightsAvailableDataSetsList = new QListWidget();
+			highlightsDataSetLayout->addWidget(highlightsAvailableDataSetsList);
+			connect(highlightsAvailableDataSetsList, SIGNAL (itemActivated(QListWidgetItem*)), this, SLOT (handleSelectDataSet(QListWidgetItem*)));
+			highlightsRefreshDataSetsButton = new QPushButton("Refresh", this);
+			highlightsDataSetLayout->addWidget(highlightsRefreshDataSetsButton);
+			connect(highlightsRefreshDataSetsButton, SIGNAL (clicked()), this, SLOT (handleHighlightsRefreshDataSetsButton()));
+        }
+
+        highlightsSelectImageLabel = new QLabel("Select image (no data set loaded):");
+        highlightsImagesLayout->addWidget(highlightsSelectImageLabel);
+        highlightsAvailableImagesList = new QListWidget();
+        highlightsImagesLayout->addWidget(highlightsAvailableImagesList);
+        highlightsRefreshImagesButton = new QPushButton("Refresh", this);
+        highlightsImagesLayout->addWidget(highlightsRefreshImagesButton);
+		connect(highlightsRefreshImagesButton, SIGNAL (clicked()), this, SLOT (handleHighlightsRefreshImagesButton()));
+        connect(highlightsAvailableImagesList, SIGNAL (itemActivated(QListWidgetItem*)), this, SLOT (handleSelectImage(QListWidgetItem*)));
 //        imageDisplay = new QPainter();
-//        imagesLayout->addWidget(imageDisplay);
-        imageLabel = new ImageLabel();
+//        highlightsLayout->addWidget(imageDisplay);
+        highlightsImageLabel = new ImageLabel();
 //        imageLabel->setScaledContents(true);
-        imageLabel->setStyleSheet("border: 1px solid");
-        selectedDatabase = "exp-2015-08-01_11-03-48"; // TODO: Remove to actually use selected database
-        std::string image_name = "0__euroc_interface_node_cameras_scene_depth_cam.jpg";
+        highlightsImageLabel->setStyleSheet("border: 1px solid");
+        //selectedDatabase = "exp-2015-08-01_11-03-48"; // TODO: Remove to actually use selected database
+        //std::string image_name = "0__euroc_interface_node_cameras_scene_depth_cam.jpg";
         // TODO: get list of images with timestamps from prolog
-        imageLabel->imagePixmap  = new QPixmap(("/home/suturo/catkin_ws/src/euroc/sr_experimental_data/" + selectedDatabase + "/" + image_name).c_str());
-        imagesLayout->addWidget(imageLabel);
+        highlightsImageLabel->setMinimumHeight(200);
+        highlightsImageLabel->imagePixmap  = new QPixmap();
+
+        highlightsSelectedImageLabel = new QLabel("");
+        highlightsLayout->addWidget(highlightsSelectedImageLabel);
+        highlightsLayout->addWidget(highlightsImageLabel);
         //imageLabel->setPixmap(imagePixmap.scaled(imagesWidget->width(), imagesWidget->height(), Qt::KeepAspectRatio));
 //        imageLabel->setPixmap(imagePixmap);
-        tab->addTab(imagesWidget, "Highlights");
+        tab->addTab(highlightsImagesWidget, "Highlights");
 
         // set tabLayout as layout for parent
         setLayout(tabLayout);
 
         // create ROSConnector
         connector = ROSConnector();
+	}
+
+	bool VideoPanel::fileHasExtension(std::string file, std::string extension) {
+		const char *fspec = file.c_str();
+		int len = file.length();
+		if (len >= extension.length()) {
+			if (strcmp(extension.c_str(), fspec + len - extension.length()) == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	void VideoPanel::handleHighlightsTab() {
+		if (!highlightsImagesWidget->isActiveWindow()) {
+			showMessage("Updating!");
+			updateDataSets();
+		}
+	}
+
+	void VideoPanel::handleHighlightsRefreshDataSetsButton() {
+		updateDataSets();
+	}
+
+	void VideoPanel::handleHighlightsRefreshImagesButton() {
+		loadDataSet();
+	}
+
+	void VideoPanel::handleSelectDataSet(QListWidgetItem* item) {
+		selectedDataSet = item->text().toStdString();
+		loadDataSet();
+	}
+
+	void VideoPanel::handleSelectImage(QListWidgetItem* item) {
+		selectedImage = item->text().toStdString();
+		loadImage();
+	}
+
+	void VideoPanel::loadImage() {
+		highlightsSelectedImageLabel->setText(QString::fromStdString(selectedImage));
+		std::string file = dataDir + "/" + selectedDataSet + "/" + selectedImage;
+		//QPixmap tmpPix (file.c_str());
+		//highlightsImageLabel->setPixmap(tmpPix);
+		//highlightsImageLabel->imagePixmap  = new QPixmap("/home/suturo/catkin_ws/src/euroc/sr_experimental_data/exp-2015-08-01_11-03-48/0__euroc_interface_node_cameras_scene_depth_cam.jpg");
+		highlightsImageLabel->imagePixmap  = new QPixmap(QString::fromStdString(file));
+		highlightsImageLabel->repaint();
+		highlightsImageLabel->resizeEvent(new QResizeEvent(highlightsImageLabel->size(), highlightsImageLabel->size()));
+		//highlightsImageLabel->update();
+	}
+
+	void VideoPanel::loadDataSet() {
+		highlightsAvailableImagesList->clear();
+		std::vector<std::string> images;
+
+		DIR *imagesDir = opendir((dataDir + "/" + selectedDataSet).c_str());
+		if (imagesDir == NULL) {
+			highlightsAvailableImagesList->setEnabled(false);
+			highlightsSelectImageLabel->setText("Select image (no data set loaded):");
+			showMessage("Error loading images.", "The directory containing the images could not be opened.");
+			return;
+		} else {
+			struct dirent *entry = readdir(imagesDir);
+			while (entry != NULL) {
+				if (entry->d_type == DT_REG && fileHasExtension(entry->d_name, ".jpg")) {
+					images.push_back(entry->d_name);
+				}
+				entry = readdir(imagesDir);
+			}
+			closedir(imagesDir);
+
+			if (images.empty()) {
+				highlightsAvailableImagesList->setEnabled(false);
+				highlightsSelectImageLabel->setText("Select image (no data set loaded):");
+				QListWidgetItem* item = new QListWidgetItem("No images available", highlightsAvailableImagesList);
+				return;
+			} else {
+				highlightsAvailableImagesList->setEnabled(true);
+				highlightsSelectImageLabel->setText(QString::fromStdString("Select image (data set: " + selectedDataSet + "):"));
+				for (std::vector<std::string>::iterator it = images.begin() ; it != images.end(); ++it) {
+					QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(*it), highlightsAvailableImagesList);
+				}
+			}
+		}
+	}
+
+	void VideoPanel::updateDataSets() {
+		highlightsAvailableDataSetsList->clear();
+		std::vector<std::string> dataSets;
+
+		DIR *dataSetsDir = opendir(dataDir.c_str());
+		if (dataSetsDir == NULL) {
+			highlightsAvailableDataSetsList->setEnabled(false);
+			showMessage("Error loading data sets.", "The directory containing the data sets could not be opened.");
+			return;
+		} else {
+			struct dirent *entry = readdir(dataSetsDir);
+			while (entry != NULL) {
+				if (entry->d_type == DT_DIR && strcmp(entry->d_name, ".") && strcmp(entry->d_name, "..")) {
+					dataSets.push_back(entry->d_name);
+				}
+				entry = readdir(dataSetsDir);
+			}
+			closedir(dataSetsDir);
+
+			if (dataSets.empty()) {
+				highlightsAvailableDataSetsList->setEnabled(false);
+				QListWidgetItem* item = new QListWidgetItem("No data sets available", highlightsAvailableDataSetsList);
+				return;
+			} else {
+				highlightsAvailableDataSetsList->setEnabled(true);
+				for (std::vector<std::string>::iterator it = dataSets.begin() ; it != dataSets.end(); ++it) {
+					QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(*it), highlightsAvailableDataSetsList);
+				}
+			}
+		}
 	}
 
     void VideoPanel::handlePlayButton()
