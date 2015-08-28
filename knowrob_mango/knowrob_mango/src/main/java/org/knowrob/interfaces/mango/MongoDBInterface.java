@@ -410,6 +410,12 @@ public class MongoDBInterface {
         df.setMaximumFractionDigits(9);
         return df.format(mongoDateFormat.parse(date).getTime() / 1000.0);
     }
+    
+    
+    public boolean checkObjectCollision(String object1, String object2) {
+        // TODO: implement this!
+        return false;
+    }
 
     public static void main(String[] args) {
 
