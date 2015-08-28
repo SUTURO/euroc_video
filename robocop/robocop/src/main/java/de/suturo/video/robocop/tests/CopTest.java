@@ -37,8 +37,10 @@ public class CopTest {
         Object exp = singleTest.get("expected");
         expected = new ArrayList<>();
         if (exp instanceof JSONObject) {
+            // A single expected object
             expected.add((JSONObject) exp);
         } else if (exp instanceof JSONArray) {
+            // Multiple expected objects
             for (Object o : ((JSONArray) exp)) {
                 if (o instanceof JSONObject) {
                     expected.add((JSONObject) o);

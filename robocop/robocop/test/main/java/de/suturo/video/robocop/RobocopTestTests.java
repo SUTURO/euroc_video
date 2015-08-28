@@ -73,6 +73,36 @@ public class RobocopTestTests {
     }
 
     /**
+     * Tests if a simple robocop test suite with new structure can be parsed.
+     */
+    @Test
+    public void simpleExtendedTestSuite() {
+        String test = "{"
+                + "\"name\": \"Testsuite\"," //
+                + "\"dependencies\": [\"firstDep\", \"secondDep\"]," //
+                + "\"tests\": [" //
+                + "     {" //
+                + "        \"name\": \"TESTNAME1\","
+                + "        \"description\": \"Dummy execution\","
+                + "        \"query\": \"member(A, [b]).\"," //
+                + "        \"expected\": {" //
+                + "                \"A\": \"b\"" //
+                + "        }" //
+                + "     }," //
+                + "     {" //
+                + "        \"name\": \"TESTNAME2\","
+                + "        \"description\": \"Yet another dummy execution, should fail\","
+                + "        \"query\": \"member(A, [nota]).\"," //
+                + "        \"expected\": {" //
+                + "                \"A\": \"a\"" //
+                + "        }" //
+                + "     }" //
+                + "     ]" //
+                + "}";
+        assertThat("result of test upload", instance.uploadTest(test), is(RobocopServer.RESULT_OK));
+    }
+
+    /**
      * Tests if a list of multiple expected bindings can be tested. The following cases are tested here:
      * <ol>
      * <li>One expected binding is tested for a query which returns multiple answers. The expected binding is amongst
