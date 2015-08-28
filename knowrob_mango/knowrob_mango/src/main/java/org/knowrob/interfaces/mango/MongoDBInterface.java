@@ -413,7 +413,23 @@ public class MongoDBInterface {
     
     
     public boolean checkObjectCollision(String object1, String object2) {
-        // TODO: implement this!
+        DBCollection coll = getDatabase().getCollection("gazebo_contacts");
+        
+        DBObject query = new QueryBuilder()
+        .start()
+        .and(new QueryBuilder().start().put("collision1_name").is(object1).get(),
+            new QueryBuilder().start().put("collision2_name").is(object2).get()
+        ).get();
+
+        DBCursor cursor = coll.find(query);
+
+        while (cursor.hasNext()) {
+            cursor.close();
+            return true;
+        }
+
+        cursor.close();
+
         return false;
     }
 
