@@ -1,10 +1,9 @@
+#include "ros/ros.h"
 #include <gazebo/transport/transport.hh>
 #include <gazebo/msgs/msgs.hh>
 #include <gazebo/gazebo.hh>
 
 #include <gazebo_model_state_publisher/NamedPoseStamped.h>
-
-#include "ros/ros.h"
 
 #include <iostream>
 #include <sys/time.h>
