@@ -1,0 +1,5 @@
+<launch>
+  <node name="robocop" pkg="robocop" type="robocop_server" cwd="node" output="screen" />
+  <node name="voldemort" pkg="voldemort" type="voldemort_to_vader.py" cwd="node" output="screen" />
+  <node name="mongodb_play" pkg="mongodb_play" type="mongodb_play" cwd="node" output="screen" />
+</launch>
