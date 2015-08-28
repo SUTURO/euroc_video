@@ -31,6 +31,9 @@ public class RobocopTestTests {
         RobocopServer.initProlog();
     }
 
+    /**
+     * Fake notable timepoints for tests.
+     */
     @Before
     public void setUp() {
         jpl.Query.oneSolution("retractall(getNotableTimepoints(_)).");
@@ -259,5 +262,66 @@ public class RobocopTestTests {
         assertThat("first binding",
                 ((JSONObject) result.get(0)).getJSONArray("bindings").getJSONObject(0).getString("Object"),
                 is("green_cylinder"));
+    }
+
+    /**
+     * Tests if a simple test which returns true, can be executed and asserted in robocop.
+     */
+    @SuppressWarnings("boxing")
+    @Test
+    public void testNoBindingSuccess() {
+        String test = "[" //
+                + "{" //
+                + "        'name': 'TESTNAME1',"
+                + "        'description': 'Dummy execution',"
+                + "        'query': '4 is 4.'," //
+                + "        'expected': [" //
+                + "             {}" //
+                + "        ]" //
+                + "}" //
+                + "]";
+        assertThat("result of test upload", instance.uploadTest(test), is(RobocopServer.RESULT_OK));
+        JSONArray result = JSONArray.fromObject(instance.executeTest(null, null));
+        assertThat("result of test execution", ((JSONObject) result.get(0)).getBoolean("result"), is(true));
+    }
+
+    /**
+     * Tests if a simple test which returns false, can be executed and asserted in robocop.
+     */
+    @SuppressWarnings("boxing")
+    @Test
+    public void testNoBindingFail() {
+        String test = "[" //
+                + "{" //
+                + "        'name': 'TESTNAME1',"
+                + "        'description': 'Dummy execution',"
+                + "        'query': '4 is 4.'," //
+                + "        'expected': [" //
+                + "             {}" //
+                + "        ]" //
+                + "}" //
+                + "]";
+        assertThat("result of test upload", instance.uploadTest(test), is(RobocopServer.RESULT_OK));
+        JSONArray result = JSONArray.fromObject(instance.executeTest(null, null));
+        assertThat("result of test execution", ((JSONObject) result.get(0)).getBoolean("result"), is(true));
+    }
+
+    /**
+     * Tests if a simple test which returns false, can be executed and asserted in robocop.
+     */
+    @SuppressWarnings("boxing")
+    @Test
+    public void testOnlyFirstSuccess() {
+        String test = "[" //
+                + "{" //
+                + "        'name': 'TESTNAME1',"
+                + "        'description': 'Dummy execution',"
+                + "        'query': '4 is 4; 4 is 3.'," //
+                + "        'expected': {}" //
+                + "}" //
+                + "]";
+        assertThat("result of test upload", instance.uploadTest(test), is(RobocopServer.RESULT_OK));
+        JSONArray result = JSONArray.fromObject(instance.executeTest(null, null));
+        assertThat("result of test execution", ((JSONObject) result.get(0)).getBoolean("result"), is(true));
     }
 }
