@@ -1,18 +1,22 @@
 __author__ = 'tobi'
 
 import json
+import os
 import requests
 from pymongo import MongoClient
 
 
 class MongoTools(object):
     def __init__(self):
-        self.client = MongoClient()
+        host_ip = os.getenv("MONGO_PORT_27017_TCP_ADDR")
+        if host_ip is None:
+            print "[Voldemort_to_vader] MongoTools: Environment Variable MONGO_PORT_27017_TCP_ADDR is not set"
+        self.client = MongoClient(host=host_ip)
         self.not_playable_topics = ['logged_images_out_compressed', 'system.indexes', 'logged_designators']
 
     def write_data_to_mongo_db(self, db_name, collection_name, data):
         db = self.client[db_name]
-        db[collection_name].insert_one(data)
+        db[collection_name].insert(data)
 
     def write_test_simulation_data_to_mongo(self, simulation_name):
         test_collection_name = 'test_collection'
@@ -48,8 +52,9 @@ class JsonTools(object):
     @staticmethod
     def parse_from_json_file(file_path):
         with open(file_path) as test_data:
-            test_data = json.load(test_data)
-        return test_data
+            data = test_data.read().replace('\r\n', '').replace('\n','').replace('\t','')
+            return_data = json.loads(data)
+        return return_data
 
 
 class HttpTools(object):
