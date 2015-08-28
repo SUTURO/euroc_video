@@ -6,6 +6,7 @@
 #include <mongodb_play/tf_player.h>
 #include <mongodb_play/image_player.h>
 #include <mongodb_play/jointstate_player.h>
+#include <mongodb_play/gazebo_to_tf_player.h>
 
 class MongoPlayer
 {

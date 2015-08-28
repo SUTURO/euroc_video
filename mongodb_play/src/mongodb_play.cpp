@@ -29,22 +29,27 @@ void MongoPlayer::goalCallback(actionlib::ActionServer<suturo_video_msgs::PlayAc
   if (gh.getGoal()->msg_type == "std_msgs/String")
   {
     ROS_INFO("Using StringPlayer");
-    dbpl_ptr.reset( new StringPlayer(nh_, gh.getGoal()->output_topic,db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
+    dbpl_ptr.reset( new StringPlayer(nh_, gh.getGoal()->output_topic, db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
   }
   else if (gh.getGoal()->msg_type == "tf2_msgs/TFMessage")
   {
     ROS_INFO("Using TFPlayer");
-    dbpl_ptr.reset( new TFPlayer(nh_, gh.getGoal()->output_topic,db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
+    dbpl_ptr.reset( new TFPlayer(nh_, gh.getGoal()->output_topic, db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
   }
   else if (gh.getGoal()->msg_type == "sensor_msgs/Image")
   {
     ROS_INFO("Using ImagePlayer");
-    dbpl_ptr.reset( new ImagePlayer(nh_, gh.getGoal()->output_topic,db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
+    dbpl_ptr.reset( new ImagePlayer(nh_, gh.getGoal()->output_topic, db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
   }
   else if (gh.getGoal()->msg_type == "sensor_msgs/JointState")
   {
     ROS_INFO("Using JointStatePlayer");
-    dbpl_ptr.reset( new JointStatePlayer(nh_, gh.getGoal()->output_topic,db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
+    dbpl_ptr.reset( new JointStatePlayer(nh_, gh.getGoal()->output_topic, db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
+  }
+  else if (gh.getGoal()->msg_type == "gazebo_to_tf")
+  {
+    ROS_INFO("Using GazeboToTFPlayer");
+    dbpl_ptr.reset( new GazeboToTFPlayer(nh_, gh.getGoal()->output_topic, db_address_, gh.getGoal()->database, gh.getGoal()->collection) );
   }
   else
   {
@@ -82,8 +87,18 @@ int main(int argc, char** argv)
 {
   ros::init(argc, argv, "mongodb_play_node", ros::init_options::AnonymousName);
   ros::NodeHandle node;
+  boost::shared_ptr<MongoPlayer>  mongo_player_ptr;
+  //MongoPlayer mongoPlayer;
 
-  MongoPlayer mongoPlayer(node, "localhost");
+  if (argc > 1)
+  {
+    cout << "DB adress " << argv[1] << endl;
+    mongo_player_ptr.reset( new MongoPlayer(node, argv[1]));
+  }
+  else
+  {
+    mongo_player_ptr.reset( new MongoPlayer(node, "localhost"));
+  }
   ros::spin();
   return 0;
 }
