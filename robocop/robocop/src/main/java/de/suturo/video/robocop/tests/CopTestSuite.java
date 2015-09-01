@@ -16,6 +16,10 @@ public class CopTestSuite {
 
     private final List<CopTest> tests = new ArrayList<>();
 
+    private final String name;
+
+    private final List<String> dependencies = new ArrayList<>();
+
     /**
      * Constructs a robocop test suite from the given JSON string.
      * 
@@ -24,7 +28,22 @@ public class CopTestSuite {
      * @throws ParseException
      */
     public CopTestSuite(String json) throws ParseException {
-        JSONArray testsObject = JSONArray.fromObject(filterPython(json));
+        String sanitized = filterPython(json.trim());
+        JSONArray testsObject;
+        if (json.startsWith("{")) {
+            JSONObject suite = JSONObject.fromObject(sanitized);
+            name = suite.getString("name");
+            for (Object dep : suite.getJSONArray("dependencies")) {
+                if (!(dep instanceof String)) {
+                    throw new ParseException("Invalid dependency value " + dep);
+                }
+                dependencies.add((String) dep);
+            }
+            testsObject = suite.getJSONArray("tests");
+        } else {
+            name = null;
+            testsObject = JSONArray.fromObject(sanitized);
+        }
         for (Object singleTest : testsObject) {
             if (!(singleTest instanceof JSONObject)) {
                 throw new ParseException("Expected a JSON key/value object, got: " + singleTest);
@@ -58,5 +77,19 @@ public class CopTestSuite {
 
     private static String filterPython(String input) {
         return input.replace("u'", "'");
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @return the dependencies
+     */
+    public List<String> getDependencies() {
+        return dependencies;
     }
 }

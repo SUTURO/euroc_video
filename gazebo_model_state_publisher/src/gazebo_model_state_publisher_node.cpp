@@ -1,10 +1,9 @@
+#include "ros/ros.h"
 #include <gazebo/transport/transport.hh>
 #include <gazebo/msgs/msgs.hh>
 #include <gazebo/gazebo.hh>
 
 #include <gazebo_model_state_publisher/NamedPoseStamped.h>
-
-#include "ros/ros.h"
 
 #include <iostream>
 #include <sys/time.h>
@@ -66,7 +65,7 @@ void callback(ConstPosesStampedPtr &_msg)
     pub.publish(ros_named_pose_stamped);
 
     last_updated[gz_pose.name()] = current_time;
-    
+
   }
 }
 

@@ -55,6 +55,16 @@ public class RobocopServer {
             if (db != null && !"".equals(db)) {
                 new jpl.Query("mang_db('" + db + "')").oneSolution();
             }
+            StringBuffer sb = new StringBuffer();
+            for (String dependency : testSuite.getDependencies()) {
+                sb.append("ensure_loaded('");
+                sb.append(findRosPackage(dependency));
+                sb.append("/prolog/init.pl'),");
+            }
+            if (sb.length() > 0) {
+                String query = sb.substring(0, sb.length() - 1);
+                new jpl.Query(query).oneSolution();
+            }
             return testSuite.executeSuite().toString();
         } catch (Exception e) {
             return jsonError(e);
