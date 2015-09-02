@@ -479,23 +479,26 @@ namespace video_panel_plugin
     void VideoPanel::handleAddTestsButton()
     {
         QString testfile = QFileDialog::getOpenFileName(this, "Select a json file that contains a testcase", QDir::currentPath(), tr("json file (*.json)"));
-        try
+        if(testfile != NULL)
         {
-            if(connector.addTests(testfile.toStdString()))
+            try
             {
-                // get new number of available tests
-                int n = connector.getAvailableTests("").capacity();
-                availableTestsLabel->updateSuffix(n);
+                if(connector.addTests(testfile.toStdString()))
+                {
+                    // get new number of available tests
+                    int n = connector.getAvailableTests("").capacity();
+                    availableTestsLabel->updateSuffix(n);
+                }
+                else
+                {
+                    VideoPanel::showMessage("Unable to upload file", "Please see console for further information");
+                }
             }
-            else
+            catch(ServiceUnavailableException &exc)
             {
-                VideoPanel::showMessage("Unable to upload file", "Please see console for further information");
+                ROS_ERROR_STREAM(exc.what());
+                VideoPanel::showMessage(exc.what(), "Please see console for further information");
             }
-        }
-        catch(ServiceUnavailableException &exc)
-        {
-            ROS_ERROR_STREAM(exc.what());
-            VideoPanel::showMessage(exc.what(), "Please see console for further information");
         }
     }
 
