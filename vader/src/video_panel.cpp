@@ -30,9 +30,10 @@ namespace video_panel_plugin
 	VideoPanel::VideoPanel( QWidget* parent)
 	: rviz::Panel(parent),
 	  dataDir("/home/suturo/catkin_ws/src/euroc/sr_experimental_data"),
-	  imagesDebug(true)
+	  imagesDebug(false)
     {
         timePointsNumber = 0;
+        mongoInit();
 
         //QTABWIDGET
         // create the QTabWidget
@@ -194,7 +195,7 @@ namespace video_panel_plugin
 			connect(highlightsRefreshDataSetsButton, SIGNAL (clicked()), this, SLOT (handleHighlightsRefreshDataSetsButton()));
         }
 
-        highlightsSelectImageLabel = new QLabel("Select image (no data set loaded):");
+        highlightsSelectImageLabel = new QLabel("Select image (no data base loaded):");
         highlightsImagesLayout->addWidget(highlightsSelectImageLabel);
         highlightsAvailableImagesList = new QListWidget();
         highlightsImagesLayout->addWidget(highlightsAvailableImagesList);
@@ -225,6 +226,18 @@ namespace video_panel_plugin
 
         // create ROSConnector
         connector = ROSConnector();
+	}
+
+	// Mongo stuff
+	void VideoPanel::mongoInit() {
+//		mongo::client::initialize();
+		mongoClient.connect(getenv("MONGO_PORT_27017_TCP_ADDR"));
+	}
+
+	std::string VideoPanel::timeToString(ros::Time t) {
+		std::stringstream ss;
+		ss << t.sec << "." << t.nsec;
+		return ss.str();
 	}
 
 	bool VideoPanel::fileHasExtension(std::string file, std::string extension) {
@@ -260,10 +273,42 @@ namespace video_panel_plugin
 
 	void VideoPanel::handleSelectImage(QListWidgetItem* item) {
 		selectedImage = item->text().toStdString();
+		selectedImageId = item->data(Qt::UserRole).toString().toStdString();
+		std::cout << "selectedImageId: " << selectedImageId << std::endl;
 		loadImage();
 	}
 
 	void VideoPanel::loadImage() {
+		highlightsSelectedImageLabel->setText(QString::fromStdString(selectedImage));
+
+		std::string ns = selectedDatabase + ".logged_images_out_compressed";
+		BSONObj queryObject = mongo::BSONObjBuilder().append("_id", mongo::OID(selectedImageId)).obj();
+
+		BSONObj objectData = mongoClient.findOne(ns, queryObject);
+				//query(selectedDatabase + ".logged_images_out_compressed", BSONObj());
+
+		std::cout << "ns: " << ns << std::endl;
+		std::cout << "queryObject: " << queryObject << std::endl;
+		std::cout << "queryObject id : " << queryObject.getField("_id").toString(false) << std::endl;
+		std::cout << selectedImageId << ": " << objectData.toString() << std::endl;
+
+		BSONElement imageData = objectData.getField("data");
+		int l = 1000;
+		std::cout << "imageData: " << imageData.binData(l) << std::endl;
+
+
+		/*
+		std::string file = dataDir + "/" + selectedDataSet + "/" + selectedImage;
+		//QPixmap tmpPix (file.c_str());
+		//highlightsImageLabel->setPixmap(tmpPix);
+		//highlightsImageLabel->imagePixmap  = new QPixmap("/home/suturo/catkin_ws/src/euroc/sr_experimental_data/exp-2015-08-01_11-03-48/0__euroc_interface_node_cameras_scene_depth_cam.jpg");
+		highlightsImageLabel->imagePixmap  = new QPixmap(QString::fromStdString(file));
+		highlightsImageLabel->repaint();
+		highlightsImageLabel->resizeEvent(new QResizeEvent(highlightsImageLabel->size(), highlightsImageLabel->size()));
+		//highlightsImageLabel->update();
+		 */
+
+		/*
 		highlightsSelectedImageLabel->setText(QString::fromStdString(selectedImage));
 		std::string file = dataDir + "/" + selectedDataSet + "/" + selectedImage;
 		//QPixmap tmpPix (file.c_str());
@@ -273,11 +318,45 @@ namespace video_panel_plugin
 		highlightsImageLabel->repaint();
 		highlightsImageLabel->resizeEvent(new QResizeEvent(highlightsImageLabel->size(), highlightsImageLabel->size()));
 		//highlightsImageLabel->update();
+		 */
 	}
 
 	void VideoPanel::loadDataSet() {
 		highlightsAvailableImagesList->clear();
-		std::vector<std::string> images;
+		std::vector<std::string> objectIds;
+		std::vector<ros::Time> timeStamps;
+
+		mongo::auto_ptr<mongo::DBClientCursor> cursor = mongoClient.query(selectedDatabase + ".logged_images_out_compressed", BSONObj());
+		while (cursor->more()) {
+			BSONObj doc = cursor->next();
+			BSONObj header = doc.getField("header").Obj();
+			BSONElement date = header.getField("stamp");
+			uint32_t secs = date.Date().millis / 1000;
+			uint32_t nsecs = (date.Date().millis % 1000) * 1000000;
+			ros::Time time(secs, nsecs);
+			mongo::OID id(doc.getField("_id").OID());
+			//std::string id = doc.getField("_id").toString(false);
+			std::cout << "id: " << id.toString() << std::endl;
+			objectIds.push_back(id.toString());
+			timeStamps.push_back(time);
+		}
+
+		if (timeStamps.empty()) {
+			highlightsAvailableImagesList->setEnabled(false);
+			highlightsSelectImageLabel->setText("Select image (no data base loaded):");
+			QListWidgetItem* item = new QListWidgetItem("No images available", highlightsAvailableImagesList);
+			return;
+		} else {
+			highlightsAvailableImagesList->setEnabled(true);
+			highlightsSelectImageLabel->setText(QString::fromStdString("Select image (data base: " + selectedDatabase + "):"));
+			for (size_t i = 0; i<objectIds.size(); ++i) {
+				QListWidgetItem* item = new QListWidgetItem(QString::fromStdString(timeToString(timeStamps[i])), highlightsAvailableImagesList);
+				QVariant objectId = QString::fromStdString(objectIds[i]);
+				item->setData(Qt::UserRole, objectId);
+			}
+		}
+
+		/*
 
 		DIR *imagesDir = opendir((dataDir + "/" + selectedDataSet).c_str());
 		if (imagesDir == NULL) {
@@ -308,6 +387,7 @@ namespace video_panel_plugin
 				}
 			}
 		}
+		*/
 	}
 
 	void VideoPanel::updateDataSets() {
@@ -613,4 +693,4 @@ namespace video_panel_plugin
 }
 
 #include <pluginlib/class_list_macros.h>
-PLUGINLIB_EXPORT_CLASS(video_panel_plugin::VideoPanel,rviz::Panel )
+PLUGINLIB_EXPORT_CLASS(video_panel_plugin::VideoPanel,rviz::Panel)

@@ -2,8 +2,9 @@
 #define VIDEO_PANEL_H 
 
 #ifndef Q_MOC_RUN
-# include <ros/ros.h>
-# include <rviz/panel.h>
+#include <ros/ros.h>
+#include "mongo/client/dbclient.h"
+#include <rviz/panel.h>
 #include <QLabel>
 #include <QPushButton>
 #include <QListWidget>
@@ -19,6 +20,9 @@
 #include "suturo_video_msgs/Test.h"
 #include "suturo_video_msgs/TestResult.h"
 #endif
+
+using mongo::BSONObj;
+using mongo::BSONElement;
 
 namespace video_panel_plugin
 {
@@ -66,8 +70,11 @@ private Q_SLOTS:
     void handleHighlightsRefreshImagesButton();
     void handleSelectDataSet(QListWidgetItem* item);
     void handleSelectImage(QListWidgetItem* item);
+
 	
 private:
+    mongo::DBClientConnection mongoClient;
+
     ROSConnector connector;
     QPushButton *pullRunsButton;
     PrefixLabel *availableTestsLabel;
@@ -99,6 +106,7 @@ private:
     const bool imagesDebug;
     std::string selectedDataSet;
     std::string selectedImage;
+    std::string selectedImageId;
     QLabel *highlightsSelectDataSetLabel;
     QListWidget *highlightsAvailableDataSetsList;
     QPushButton *highlightsRefreshDataSetsButton;
@@ -110,6 +118,7 @@ private:
     ImageLabel *highlightsImageLabel;
 //    QPixmap *imagePixmap;
 //    QPainter *imageDisplay;
+
     void updateDataSets();
     void loadDataSet();
     void loadImage();
@@ -124,6 +133,10 @@ private:
 
     void showMessage(std::string text);
     void showMessage(std::string text, std::string additionalText);
+
+    void mongoInit();
+    std::string timeToString(ros::Time t);
+
 
     /**
       creates a QString with surround html tags
