@@ -15,6 +15,7 @@ ROSConnector::ROSConnector(void)
     getPlayableTopicsServiceName = "/voldemort/get_playable_topic_names";
     addTestsServiceName = "/voldemort/add_tests";
     executeTestsServiceName = "/voldemort/execute_tests";
+    getSavedImagesServiceName = "/voldemort/get_saved_images";
 
     // create service clients
     simulationRunsClient = n.serviceClient<suturo_video_msgs::GetSimulationRuns>(simulationRunsServiceName);
@@ -25,6 +26,7 @@ ROSConnector::ROSConnector(void)
     getPlayableTopicsClient = n.serviceClient<suturo_video_msgs::GetTopicNames>(getPlayableTopicsServiceName);
     addTestsClient = n.serviceClient<suturo_video_msgs::AddTests>(addTestsServiceName);
     executeTestsClient = n.serviceClient<suturo_video_msgs::ExecuteTests>(executeTestsServiceName);
+    getSavedImagesClient = n.serviceClient<suturo_video_msgs::GetSavedImages>(getSavedImagesServiceName);
 }
 
 std::vector<std::string> ROSConnector::getSimulationRuns()
@@ -119,4 +121,19 @@ bool ROSConnector::executeTests(std::string run)
         msg << "Service call failed: " << executeTestsServiceName;
         throw ServiceUnavailableException(msg.str());
     }
+}
+
+std::vector<suturo_video_msgs::SavedImage> ROSConnector::getSavedImages(std::string run)
+{
+  suturo_video_msgs::GetSavedImages srv;
+  srv.request.simulation_run_name = run;
+  if(getSavedImagesClient.call(srv))
+  {
+    return srv.response.images;
+  }
+  else {
+    std::ostringstream msg;
+    msg << "Service call failed: " << getSavedImagesServiceName;
+    throw ServiceUnavailableException(msg.str());
+  }
 }

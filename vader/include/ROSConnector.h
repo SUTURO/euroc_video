@@ -9,6 +9,7 @@
 #include "suturo_video_msgs/GetTopicNames.h"
 #include "suturo_video_msgs/AddTests.h"
 #include "suturo_video_msgs/ExecuteTests.h"
+#include "suturo_video_msgs/GetSavedImages.h"
 
 class ROSConnector
 {
@@ -22,6 +23,7 @@ public:
     std::vector<std::string> getPlayableTopics(std::string run);
     bool addTests(std::string filePath);
     bool executeTests(std::string run);
+    std::vector<suturo_video_msgs::SavedImage> getSavedImages(std::string run);
 
 private:
     ros::NodeHandle n;
@@ -33,6 +35,7 @@ private:
     ros::ServiceClient getPlayableTopicsClient;
     ros::ServiceClient addTestsClient;
     ros::ServiceClient executeTestsClient;
+    ros::ServiceClient getSavedImagesClient;
     std::string simulationRunsServiceName;
     std::string availableTestsServiceName;
     std::string executedTestsServiceName;
@@ -41,6 +44,7 @@ private:
     std::string getPlayableTopicsServiceName;
     std::string addTestsServiceName;
     std::string executeTestsServiceName;
+    std::string getSavedImagesServiceName;
 };
 
 #endif // ROSCONNECTOR_H
